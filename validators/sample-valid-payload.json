@@ -1,0 +1,61 @@
+{
+  "surveyId": "survey_n4w8k2qp",
+  "submittedAt": "2026-04-21T09:30:00.000Z",
+  "answers": [
+    {
+      "questionId": "question_t9m2x1qp",
+      "questionType": "radio",
+      "value": {
+        "optionId": "option_b2m9x3qp",
+        "child": [
+          {
+            "childId": "child_c3m9x4qp",
+            "dataType": "text",
+            "value": "我要做一个 AI Native 风格问卷"
+          }
+        ]
+      }
+    },
+    {
+      "questionId": "question_score_k5m1p2rt",
+      "questionType": "score",
+      "value": [
+        {
+          "optionId": "option_score_appearance",
+          "score": 4
+        },
+        {
+          "optionId": "option_score_warm",
+          "score": 5
+        }
+      ]
+    },
+    {
+      "questionId": "question_i6m9x7qp",
+      "questionType": "input",
+      "value": [
+        {
+          "optionId": "option_j7m9x8qp",
+          "dataType": "email",
+          "value": "name@example.com"
+        },
+        {
+          "optionId": "option_range_demo",
+          "dataType": "dateRange",
+          "value": {
+            "start": "2026-04-21",
+            "end": "2026-04-28"
+          }
+        }
+      ]
+    },
+    {
+      "questionId": "question_nps_z8m2k4qp",
+      "questionType": "nps",
+      "value": {
+        "optionId": "option_nps_scale_1",
+        "score": 9
+      }
+    }
+  ]
+}

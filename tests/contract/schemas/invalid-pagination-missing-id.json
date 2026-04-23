@@ -1,0 +1,52 @@
+{
+  "survey": {
+    "type": "survey",
+    "id": "survey_invalid_pagination_missing_id",
+    "title": "<h1>Invalid Pagination Missing Id</h1>",
+    "description": "<p>missing id</p>",
+    "attribute": {
+      "onePageOneQuestion": true,
+      "allowBack": false,
+      "media": []
+    }
+  },
+  "questions": [
+    {
+      "type": "radio",
+      "id": "question_a",
+      "title": "<p>Q1</p>",
+      "description": "<p>D1</p>",
+      "attribute": {
+        "required": true,
+        "random": false,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_a1",
+          "title": "<p>A1</p>",
+          "attribute": {
+            "media": []
+          }
+        },
+        {
+          "id": "option_a2",
+          "title": "<p>A2</p>",
+          "attribute": {
+            "media": []
+          }
+        }
+      ]
+    },
+    {
+      "type": "Pagination"
+    }
+  ],
+  "finish": {
+    "type": "finish",
+    "id": "finish_invalid_1",
+    "title": "<h2>完成</h2>",
+    "description": "<p>done</p>",
+    "media": []
+  }
+}

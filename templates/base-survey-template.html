@@ -1,0 +1,1449 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Survey Creator HTML Template</title>
+  <style>
+    :root {
+      --bg: #0b1220;
+      --bg-soft: #111a2f;
+      --panel: rgba(255,255,255,0.96);
+      --panel-dark: rgba(15,23,42,0.88);
+      --text: #132033;
+      --text-soft: rgba(19, 32, 51, 0.68);
+      --text-light: #f7faff;
+      --text-light-soft: rgba(247, 250, 255, 0.68);
+      --line: rgba(20, 42, 84, 0.12);
+      --line-dark: rgba(255,255,255,0.1);
+      --brand: #5b7cff;
+      --brand-2: #25c2a0;
+      --danger: #e25270;
+      --radius-xl: 28px;
+      --radius-lg: 18px;
+      --radius-md: 14px;
+      --shadow: 0 24px 80px rgba(8, 20, 52, 0.18);
+      --font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; font-family: var(--font); }
+    body {
+      background:
+        radial-gradient(circle at 0% 0%, rgba(91,124,255,.24), transparent 24%),
+        radial-gradient(circle at 100% 0%, rgba(37,194,160,.18), transparent 28%),
+        linear-gradient(180deg, #eff4ff 0%, #f7faff 48%, #edf3ff 100%);
+      color: var(--text);
+      padding: 24px 16px 48px;
+    }
+    .app { width: 100%; max-width: 1100px; margin: 0 auto; }
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 8px 12px;
+      background: rgba(255,255,255,.76);
+      color: var(--text-soft);
+      font-size: 12px;
+      letter-spacing: .04em;
+    }
+    .progress {
+      flex: 1;
+      min-width: 120px;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(91,124,255,.12);
+      overflow: hidden;
+    }
+    .progress-bar {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--brand), var(--brand-2));
+      transition: width .24s ease;
+    }
+    .screen { display: none; }
+    .screen.is-active { display: block; }
+    .card {
+      width: 100%;
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--line);
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .card.dark {
+      background: linear-gradient(180deg, rgba(16,24,39,.95), rgba(8,15,26,.98));
+      color: var(--text-light);
+      border-color: var(--line-dark);
+    }
+    .card-body {
+      padding: 32px;
+      display: grid;
+      gap: 20px;
+    }
+    .hero-grid, .finish-grid {
+      grid-template-columns: minmax(0, 1.2fr) minmax(280px, .8fr);
+      align-items: start;
+    }
+    .question-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+    .question-index {
+      margin-bottom: 8px;
+      font-size: 12px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--brand);
+    }
+    .rich h1, .rich h2, .rich h3, .rich h4, .rich p, .rich ul, .rich ol, .rich blockquote { margin-top: 0; }
+    .rich h1 { font-size: 42px; line-height: 1.06; letter-spacing: -.04em; margin-bottom: 14px; }
+    .rich h2 { font-size: 30px; line-height: 1.14; letter-spacing: -.03em; margin-bottom: 12px; }
+    .rich h3 { font-size: 22px; line-height: 1.24; margin-bottom: 10px; }
+    .rich p, .rich li, .rich blockquote { font-size: 15px; line-height: 1.8; color: var(--text-soft); }
+    .dark .rich p, .dark .rich li, .dark .rich blockquote { color: var(--text-light-soft); }
+    .rich a { color: var(--brand); text-decoration: none; border-bottom: 1px solid rgba(91,124,255,.35); }
+    .rich code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      padding: 2px 6px;
+      border-radius: 8px;
+      background: rgba(91,124,255,.1);
+      color: inherit;
+      font-size: 13px;
+    }
+    .meta-grid { display: grid; gap: 12px; }
+    .meta {
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.6);
+      padding: 16px;
+    }
+    .dark .meta {
+      border-color: var(--line-dark);
+      background: rgba(255,255,255,.04);
+    }
+    .meta strong { display: block; margin-bottom: 8px; }
+    .meta span { display: block; font-size: 13px; line-height: 1.7; opacity: .76; }
+    .chip-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .chip {
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(91,124,255,.08);
+      color: var(--brand);
+      font-size: 12px;
+      padding: 8px 10px;
+    }
+    .chip.warn {
+      color: #b96f15;
+      background: rgba(217,156,50,.1);
+    }
+    .required { color: var(--danger); margin-left: 4px; }
+    .media-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 10px;
+    }
+    .media-item {
+      min-width: 0;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.58);
+      padding: 10px;
+    }
+    .dark .media-item {
+      border-color: var(--line-dark);
+      background: rgba(255,255,255,.04);
+    }
+    .media-item small {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 12px;
+      color: var(--text-soft);
+    }
+    .dark .media-item small { color: var(--text-light-soft); }
+    .media-item img {
+      width: 100%;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 10px;
+      display: block;
+    }
+    .media-item audio, .media-item video {
+      width: 100%;
+      max-height: 90px;
+    }
+    .media-fallback {
+      font-size: 12px;
+      line-height: 1.6;
+      word-break: break-all;
+      color: var(--text-soft);
+    }
+    .options, .fields, .score-list { display: grid; gap: 12px; }
+    .score-item {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255,255,255,.62);
+      padding: 16px;
+      display: grid;
+      gap: 12px;
+    }
+    .score-scale {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .score-pill {
+      min-width: 44px;
+      height: 40px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: .18s ease;
+    }
+    .score-pill.is-active {
+      background: linear-gradient(90deg, var(--brand), var(--brand-2));
+      color: #fff;
+      border-color: transparent;
+      box-shadow: 0 10px 24px rgba(91,124,255,.22);
+    }
+    .score-desc {
+      font-size: 13px;
+      line-height: 1.7;
+      color: var(--text-soft);
+    }
+    .option {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      overflow: hidden;
+      background: rgba(255,255,255,.62);
+      transition: border-color .18s ease, transform .18s ease;
+    }
+    .option:hover { border-color: rgba(91,124,255,.3); transform: translateY(-1px); }
+    .option-label {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 16px;
+      cursor: pointer;
+    }
+    .option-label input {
+      width: 18px;
+      height: 18px;
+      margin-top: 4px;
+      accent-color: var(--brand);
+    }
+    .child-list {
+      display: none;
+      padding: 0 16px 16px 48px;
+      gap: 12px;
+    }
+    .child-list.is-visible { display: grid; }
+    .field { display: grid; gap: 8px; }
+    .field-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .field-label { font-weight: 700; }
+    .input, .textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fff;
+      color: var(--text);
+      padding: 14px 16px;
+      font-size: 14px;
+      font-family: inherit;
+      outline: none;
+    }
+    .textarea {
+      min-height: 140px;
+      resize: vertical;
+      line-height: 1.75;
+    }
+    .input:focus, .textarea:focus {
+      border-color: rgba(91,124,255,.45);
+      box-shadow: 0 0 0 4px rgba(91,124,255,.12);
+    }
+    .coverage {
+      font-size: 12px;
+      line-height: 1.65;
+      color: var(--text-soft);
+    }
+    .error {
+      display: none;
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--danger);
+    }
+    .error.is-visible { display: block; }
+    .is-hidden-by-logic { display: none !important; }
+    .is-invalid {
+      border-color: rgba(226,82,112,.5) !important;
+      box-shadow: 0 0 0 4px rgba(226,82,112,.08) !important;
+    }
+    .actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .actions-right {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-left: auto;
+    }
+    .btn {
+      border: none;
+      border-radius: 999px;
+      padding: 14px 22px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+      background: linear-gradient(90deg, var(--brand), var(--brand-2));
+      box-shadow: 0 12px 32px rgba(91,124,255,.26);
+      cursor: pointer;
+    }
+    .btn.secondary {
+      background: rgba(91,124,255,.08);
+      color: var(--brand);
+      box-shadow: none;
+      border: 1px solid rgba(91,124,255,.12);
+    }
+    .btn:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+    @media (max-width: 900px) {
+      .hero-grid, .finish-grid { grid-template-columns: 1fr; }
+      .media-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      body { padding: 16px 12px 32px; }
+      .card-body { padding: 22px 18px; }
+      .rich h1 { font-size: 34px; }
+      .rich h2 { font-size: 26px; }
+      .field-row { grid-template-columns: 1fr; }
+      .actions, .actions-right { width: 100%; }
+      .actions-right > * { flex: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="topbar">
+      <div class="badge">survey-creator · HTML Template</div>
+      <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
+      <div class="badge" id="stepCounter">1 / 1</div>
+    </div>
+
+    <form id="surveyForm" action="#">
+      <!-- screens rendered by schema -->
+    </form>
+  </div>
+
+  <script>
+    const richMediaImg = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzIwIiBoZWlnaHQ9IjQwMCIgdmlld0JveD0iMCAwIDcyMCA0MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjcyMCIgaGVpZ2h0PSI0MDAiIHJ4PSIzMiIgZmlsbD0idXJsKCNnKSIvPjxjaXJjbGUgY3g9IjEyNSIgY3k9IjExNSIgcj0iNjAiIGZpbGw9IndoaXRlIiBmaWxsLW9wYWNpdHk9Ii4xNSIvPjxwYXRoIGQ9Ik02MCAzMjBDMTQ1IDI1NSAyNTUgMjI1IDM2MCAyNDVDNDU1IDI2MyA1NTIgMzQwIDY2MCAyNzVWNDAwSDYwVjMyMFoiIGZpbGw9IndoaXRlIiBmaWxsLW9wYWNpdHk9Ii4xMiIvPjxkZWZzPjxsaW5lYXJHcmFkaWVudCBpZD0iZyIgeDE9IjAiIHkxPSIwIiB4Mj0iNzIwIiB5Mj0iNDAwIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHN0b3Agc3RvcC1jb2xvcj0iIzVCN0NGRiIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzI1QzJBMCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjwvc3ZnPg==';
+
+    const surveySchema = {
+      survey: {
+        type: 'survey',
+        id: 'survey_tpl_k8m4x2qp',
+        title: '<h1>把你的问卷需求，变成 <strong>可提交 HTML</strong></h1>',
+        description: '<p>这是 <code>survey-creator</code> 的通用模板。你可以替换 schema 内容来生成任意风格问卷，并保留富文本、分页、缓存、child 输入、datatype 校验和提交协议。</p><ul><li>支持 <strong>survey / radio / checkbox / input / finish</strong></li><li>支持 <strong>onePageOneQuestion</strong> 与 <strong>allowBack</strong></li><li>支持 <strong>localStorage</strong> 步进缓存</li></ul>',
+        attribute: {
+          onePageOneQuestion: true,
+          allowBack: true,
+          media: [
+            { type: 'image', url: richMediaImg }
+          ]
+        }
+      },
+      questions: [
+        {
+          type: 'radio',
+          id: 'question_tpl_r7m4x3qp',
+          title: '<h2>你想优先生成哪种问卷？<span class="required">*</span></h2>',
+          description: '<p>单选题示例，覆盖 <strong>required</strong>、<strong>random</strong>、选项 child 输入和富文本。</p>',
+          attribute: { required: true, random: true, media: [] },
+          option: [
+            { title: '<p><strong>用户满意度调研</strong></p>', id: 'option_tpl_r7a1x4qp', attribute: { random: false, media: [] } },
+            { title: '<p><strong>活动报名</strong></p>', id: 'option_tpl_r7b2x5qp', attribute: { media: [] } },
+            {
+              title: '<p><strong>其他，请说明</strong></p>',
+              id: 'option_tpl_r7c3x6qp',
+              attribute: { media: [] },
+              child: [
+                {
+                  type: 'input',
+                  id: 'child_tpl_r7d4x7qp',
+                  title: '<p>补充说明</p>',
+                  attribute: { dataType: 'text', required: true, placeholder: '请输入你的问卷场景', minLength: 2, maxLength: 120 }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          type: 'checkbox',
+          id: 'question_tpl_c8m4x8qp',
+          title: '<h2>你希望模板默认支持哪些能力？<span class="required">*</span></h2>',
+          description: '<p>多选题示例，覆盖 <strong>exclusive</strong> 与 <strong>mutual-exclusion</strong>。</p>',
+          attribute: { required: true, random: true, media: [] },
+          option: [
+            { title: '<p>富文本标题/描述</p>', id: 'option_tpl_c8a1x9qp', attribute: { random: false } },
+            { title: '<p>一页一题</p>', id: 'option_tpl_c8b2y1qp', attribute: {} },
+            { title: '<p>本地缓存</p>', id: 'option_tpl_c8c3y2qp', attribute: {} },
+            { title: '<p>仅生成单页整表单</p>', id: 'option_tpl_c8d4y3qp', attribute: { 'mutual-exclusion': true } },
+            { title: '<p>仅生成分页问卷</p>', id: 'option_tpl_c8e5y4qp', attribute: { 'mutual-exclusion': true } },
+            { title: '<p>以上都不需要</p>', id: 'option_tpl_c8f6y5qp', attribute: { exclusive: true } }
+          ]
+        },
+        {
+          type: 'input',
+          id: 'question_tpl_i9m4y6qp',
+          title: '<h2>补充你的问卷需求</h2>',
+          description: '<p>输入题示例，覆盖多个 option 输入字段，以及 <strong>email / dateRange / text</strong> 等 datatype。</p>',
+          attribute: { required: false, media: [] },
+          option: [
+            {
+              title: '<p>联系人邮箱</p>',
+              id: 'option_tpl_i9a1y7qp',
+              attribute: { dataType: 'email', required: false, placeholder: 'name@example.com', minLength: 0, maxLength: 120 }
+            },
+            {
+              title: '<p>预计调研时间范围</p>',
+              id: 'option_tpl_i9b2y8qp',
+              attribute: { dataType: 'dateRange', required: false, placeholder: '', minLength: 0, maxLength: 40 }
+            },
+            {
+              title: '<p>风格说明</p>',
+              id: 'option_tpl_i9c3y9qp',
+              attribute: { dataType: 'text', required: false, placeholder: '例如：AI Native、黑色高级感、轻盈 toC', minLength: 0, maxLength: 240 }
+            }
+          ]
+        }
+      ],
+      finish: {
+        type: 'finish',
+        id: 'finish_tpl_f2m5z1qp',
+        title: '<h2>模板已准备好，可以直接提交测试</h2>',
+        description: '<p>点击提交后，会按照默认 submission contract 组装 payload，并执行 <code>console.log(payload)</code>。提交成功后自动清空当前问卷缓存。</p>',
+        media: []
+      }
+    };
+
+    const form = document.getElementById('surveyForm');
+    const progressBar = document.getElementById('progressBar');
+    const stepCounter = document.getElementById('stepCounter');
+    const surveyId = surveySchema.survey.id;
+    const cacheKey = `survey_step_cache_${surveyId}`;
+    const logicRules = Array.isArray(surveySchema.logic) ? surveySchema.logic : [];
+    const rawQuestions = Array.isArray(surveySchema.questions) ? surveySchema.questions : [];
+    const answerableQuestions = rawQuestions.filter((question) => question?.type !== 'Pagination');
+    const hasManualPagination = rawQuestions.some((question) => question?.type === 'Pagination');
+    const manualPages = buildManualPagesFromSeparators(rawQuestions);
+    const questionOrder = new Map(answerableQuestions.map((question, index) => [question.id, index]));
+    const questionToScreenId = new Map();
+    const logicShowQuestionTargets = new Set(logicRules.filter((rule) => rule?.action?.type === 'show_question' && rule?.action?.targetQuestionId).map((rule) => rule.action.targetQuestionId));
+    const logicShowOptionTargets = new Set(logicRules.filter((rule) => rule?.action?.type === 'show_option' && rule?.action?.targetQuestionId && rule?.action?.targetOptionId).map((rule) => `${rule.action.targetQuestionId}::${rule.action.targetOptionId}`));
+    let logicState = { hiddenQuestions: new Set(), hiddenOptions: new Set(), skippedQuestions: new Set(), jumpTargets: new Map(), autoSelects: [] };
+    let current = 0;
+    let cache = loadCache();
+
+    function loadCache() {
+      try {
+        return JSON.parse(localStorage.getItem(cacheKey)) || { surveyId, updatedAt: new Date().toISOString(), answers: {} };
+      } catch {
+        return { surveyId, updatedAt: new Date().toISOString(), answers: {} };
+      }
+    }
+
+    function saveCache() {
+      cache.updatedAt = new Date().toISOString();
+      localStorage.setItem(cacheKey, JSON.stringify(cache));
+    }
+
+    function buildManualPagesFromSeparators(questions) {
+      const pages = [];
+      let group = [];
+      questions.forEach((question) => {
+        if (!question || question.type === 'Pagination') {
+          if (group.length) pages.push(group);
+          group = [];
+          return;
+        }
+        group.push(question);
+      });
+      if (group.length) pages.push(group);
+      if (!pages.length && answerableQuestions.length) pages.push([...answerableQuestions]);
+      return pages;
+    }
+
+    function questionNumber(questionId) {
+      return (questionOrder.get(questionId) ?? 0) + 1;
+    }
+
+    function questionById(questionId) {
+      return answerableQuestions.find((question) => question.id === questionId) || null;
+    }
+
+
+    function flattenAnswerValue(value) {
+      if (value == null) return [];
+      if (typeof value === 'object') {
+        const start = value.start != null ? String(value.start) : '';
+        const end = value.end != null ? String(value.end) : '';
+        return [start, end, `${start} ${end}`.trim()].filter(Boolean);
+      }
+      return [String(value)];
+    }
+
+    function selectedOptionIds(answer) {
+      if (!answer) return [];
+      if (answer.questionType === 'radio' && answer.value?.optionId) return [answer.value.optionId];
+      if (answer.questionType === 'checkbox') return (answer.value || []).map((item) => item.optionId).filter(Boolean);
+      return [];
+    }
+
+    function scalarAnswerValues(answer) {
+      if (!answer) return [];
+      const values = [];
+      if (answer.questionType === 'radio') {
+        values.push(...selectedOptionIds(answer));
+        (answer.value?.child || []).forEach((item) => values.push(...flattenAnswerValue(item.value)));
+      } else if (answer.questionType === 'checkbox') {
+        (answer.value || []).forEach((item) => {
+          if (item.optionId) values.push(String(item.optionId));
+          (item.child || []).forEach((child) => values.push(...flattenAnswerValue(child.value)));
+        });
+      } else if (answer.questionType === 'input') {
+        (answer.value || []).forEach((item) => values.push(...flattenAnswerValue(item.value)));
+      } else if (answer.questionType === 'score') {
+        (answer.value || []).forEach((item) => values.push(String(item.score)));
+      } else if (answer.questionType === 'nps') {
+        if (answer.value?.score != null) values.push(String(answer.value.score));
+      }
+      return values.filter(Boolean);
+    }
+
+    function compareLogicValue(actual, expected) {
+      if (expected == null) return false;
+      return String(actual) === String(expected);
+    }
+
+    function evaluateLogicCondition(condition) {
+      const answer = cache.answers?.[condition.questionId];
+      const operator = condition.operator;
+      const optionIds = selectedOptionIds(answer);
+      const scalarValues = scalarAnswerValues(answer);
+      if (operator === 'answered') return !!answer;
+      if (operator === 'not_answered') return !answer;
+      if (operator === 'selected') return optionIds.includes(condition.optionId);
+      if (operator === 'not_selected') return !optionIds.includes(condition.optionId);
+      if (operator === 'exists') return optionIds.some((id) => (condition.optionIds || []).includes(id));
+      if (operator === 'not_exists') return optionIds.every((id) => !(condition.optionIds || []).includes(id));
+      if (operator === 'contains') {
+        if (condition.optionId) return optionIds.includes(condition.optionId);
+        return scalarValues.some((value) => String(value).includes(String(condition.value ?? '')));
+      }
+      if (operator === 'not_contains') {
+        if (condition.optionId) return !optionIds.includes(condition.optionId);
+        return scalarValues.every((value) => !String(value).includes(String(condition.value ?? '')));
+      }
+      if (operator === 'eq') return scalarValues.some((value) => compareLogicValue(value, condition.value));
+      if (operator === 'neq') return !!answer && scalarValues.every((value) => !compareLogicValue(value, condition.value));
+      if (operator === 'gt') return scalarValues.some((value) => Number(value) > Number(condition.value));
+      if (operator === 'lt') return scalarValues.some((value) => Number(value) < Number(condition.value));
+      return false;
+    }
+
+    function computeLogicState() {
+      const hiddenQuestions = new Set(logicShowQuestionTargets);
+      const hiddenOptions = new Set(logicShowOptionTargets);
+      const jumpTargets = new Map();
+      const autoSelects = [];
+      logicRules.forEach((rule) => {
+        if (!rule?.when || !rule?.action) return;
+        if (!evaluateLogicCondition(rule.when)) return;
+        const action = rule.action;
+        const optionKey = action.targetQuestionId && action.targetOptionId ? `${action.targetQuestionId}::${action.targetOptionId}` : null;
+        if (action.type === 'show_question' && action.targetQuestionId) hiddenQuestions.delete(action.targetQuestionId);
+        if (action.type === 'hide_question' && action.targetQuestionId) hiddenQuestions.add(action.targetQuestionId);
+        if (action.type === 'show_option' && optionKey) hiddenOptions.delete(optionKey);
+        if (action.type === 'hide_option' && optionKey) hiddenOptions.add(optionKey);
+        if ((action.type === 'jump_to_question' || action.type === 'jump_to_page') && action.targetQuestionId && rule.when.questionId) {
+          jumpTargets.set(rule.when.questionId, action.targetQuestionId);
+        }
+        if (action.type === 'end_survey' && rule.when.questionId) jumpTargets.set(rule.when.questionId, surveySchema.finish.id);
+        if (action.type === 'auto_select_option' && optionKey) autoSelects.push({ questionId: action.targetQuestionId, optionId: action.targetOptionId });
+      });
+      return { hiddenQuestions, hiddenOptions, jumpTargets, autoSelects };
+    }
+
+    function isQuestionHidden(questionId) {
+      return logicState.hiddenQuestions.has(questionId);
+    }
+
+    function isQuestionSkipped(questionId) {
+      return logicState.skippedQuestions.has(questionId);
+    }
+
+    function isQuestionUnavailable(questionId) {
+      return isQuestionHidden(questionId) || isQuestionSkipped(questionId);
+    }
+
+    function isOptionHidden(questionId, optionId) {
+      return logicState.hiddenOptions.has(`${questionId}::${optionId}`);
+    }
+
+    function clearQuestionState(question) {
+      const screen = document.querySelector(`[data-screen-id="${question.id}"]`);
+      if (!screen) return;
+      screen.querySelectorAll('input, textarea').forEach((input) => {
+        input.value = '';
+        input.checked = false;
+      });
+      screen.querySelectorAll('.score-pill').forEach((pill) => {
+        pill.classList.remove('is-active');
+        pill.setAttribute('aria-pressed', 'false');
+      });
+      screen.querySelectorAll('.error').forEach((el) => el.classList.remove('is-visible'));
+      screen.querySelectorAll('.is-invalid').forEach((el) => el.classList.remove('is-invalid'));
+    }
+
+    function clearFieldValue(field) {
+      if (!field) return;
+      if (field.matches('[data-range-type]')) {
+        field.querySelectorAll('input').forEach((input) => { input.value = ''; });
+        return;
+      }
+      if (field.matches('input, textarea')) field.value = '';
+      field.querySelectorAll('input, textarea').forEach((input) => { input.value = ''; input.checked = false; });
+    }
+
+    function clearUnavailableState() {
+      answerableQuestions.forEach((question) => {
+        if (isQuestionUnavailable(question.id)) {
+          delete cache.answers[question.id];
+          clearQuestionState(question);
+        }
+        (question.option || []).forEach((option) => {
+          if (!isOptionHidden(question.id, option.id)) return;
+          const selectors = [
+            `.option[data-option-id="${option.id}"] input`,
+            `[data-option-field="${option.id}"] [data-option-id="${option.id}"]`,
+            `[data-score-option="${option.id}"] .score-pill`,
+            `[data-nps-option="${option.id}"] .score-pill`
+          ];
+          document.querySelectorAll(selectors.join(',')).forEach((node) => {
+            if (node.matches('input')) node.checked = false;
+            if (node.matches('.score-pill')) {
+              node.classList.remove('is-active');
+              node.setAttribute('aria-pressed', 'false');
+            }
+          });
+          document.querySelectorAll(`[data-option-field="${option.id}"] [data-option-id="${option.id}"], [data-child-wrap="${option.id}"] [data-child-id]`).forEach(clearFieldValue);
+        });
+      });
+    }
+
+    function applyAutoSelects() {
+      logicState.autoSelects.forEach(({ questionId, optionId }) => {
+        if (isQuestionUnavailable(questionId) || isOptionHidden(questionId, optionId)) return;
+        const input = document.querySelector(`.option[data-option-id="${optionId}"] input[name="${questionId}"]`);
+        if (!input) return;
+        if (input.type === 'radio') {
+          document.querySelectorAll(`input[name="${questionId}"]`).forEach((node) => { if (node !== input) node.checked = false; });
+        }
+        input.checked = true;
+      });
+    }
+
+    function syncCacheFromDom(save = true) {
+      answerableQuestions.forEach((question) => {
+        if (isQuestionUnavailable(question.id)) {
+          delete cache.answers[question.id];
+          return;
+        }
+        const collected = collectQuestion(question);
+        if (collected) cache.answers[question.id] = collected;
+        else delete cache.answers[question.id];
+      });
+      if (save) saveCache();
+    }
+
+    function computeSkippedQuestions(jumpTargets) {
+      const skippedQuestions = new Set();
+      const orderedScreens = screens().filter((screen) => !['survey', 'finish', 'survey-all'].includes(screen.dataset.schemaType));
+      const screenIndexMap = new Map(orderedScreens.map((screen, index) => [screen.dataset.screenId, index]));
+      jumpTargets.forEach((targetId, sourceQuestionId) => {
+        const sourceScreenId = resolveScreenId(sourceQuestionId) || sourceQuestionId;
+        const targetScreenId = resolveScreenId(targetId) || targetId;
+        const sourceIndex = screenIndexMap.get(sourceScreenId);
+        const targetIndex = screenIndexMap.get(targetScreenId);
+        if (sourceIndex == null) return;
+        const endExclusive = targetId === surveySchema.finish.id
+          ? orderedScreens.length
+          : targetIndex;
+        if (endExclusive == null || endExclusive <= sourceIndex + 1) return;
+        for (let index = sourceIndex + 1; index < endExclusive; index += 1) {
+          questionsOnScreen(orderedScreens[index]).forEach((question) => skippedQuestions.add(question.id));
+        }
+      });
+      return skippedQuestions;
+    }
+
+    function applyLogicRuntime(options = {}) {
+      const preserveActiveId = options.preserveActiveId || document.querySelector('.screen.is-active')?.dataset.screenId || null;
+      logicState = computeLogicState();
+      logicState.skippedQuestions = computeSkippedQuestions(logicState.jumpTargets);
+      document.querySelectorAll('[data-screen-id][data-schema-type]').forEach((node) => {
+        let hidden = false;
+        if (!['survey', 'finish', 'survey-all'].includes(node.dataset.schemaType)) {
+          if (node.dataset.schemaType === 'page') {
+            const pageQuestions = questionsOnScreen(node);
+            hidden = pageQuestions.length > 0 ? pageQuestions.every((question) => isQuestionUnavailable(question.id)) : false;
+          } else {
+            hidden = isQuestionUnavailable(node.dataset.screenId);
+          }
+        }
+        node.classList.toggle('is-hidden-by-logic', hidden);
+        node.dataset.logicHidden = hidden ? 'true' : 'false';
+        if (hidden) node.classList.remove('is-active');
+      });
+      answerableQuestions.forEach((question) => {
+        (question.option || []).forEach((option) => {
+          const hidden = isOptionHidden(question.id, option.id);
+          const selector = [
+            `.option[data-option-id="${option.id}"]`,
+            `[data-option-field="${option.id}"]`,
+            `[data-score-option="${option.id}"]`,
+            `[data-nps-option="${option.id}"]`
+          ].join(',');
+          document.querySelectorAll(selector).forEach((node) => {
+            node.classList.toggle('is-hidden-by-logic', hidden);
+            node.dataset.logicHidden = hidden ? 'true' : 'false';
+          });
+        });
+      });
+      clearUnavailableState();
+      applyAutoSelects();
+      updateChildVisibility();
+      syncCacheFromDom(false);
+      const visibleIds = visibleScreens().map((screen) => screen.dataset.screenId);
+      const nextActiveId = preserveActiveId && visibleIds.includes(preserveActiveId) ? preserveActiveId : visibleIds[0] || null;
+      if (nextActiveId) showById(nextActiveId);
+      else saveCache();
+    }
+
+    function shuffleIfNeeded(items, shouldRandom) {
+      const list = [...items];
+      if (!shouldRandom || list.length <= 1) return list;
+      const fixed = [];
+      const movable = [];
+      list.forEach((item, index) => {
+        if (item.attribute?.random === false) fixed.push({ index, item });
+        else movable.push(item);
+      });
+      for (let i = movable.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [movable[i], movable[j]] = [movable[j], movable[i]];
+      }
+      const next = new Array(list.length);
+      fixed.forEach(({ index, item }) => { next[index] = item; });
+      let cursor = 0;
+      for (let i = 0; i < next.length; i++) if (!next[i]) next[i] = movable[cursor++];
+      return next;
+    }
+
+    function sanitizeRichText(html) {
+      const input = typeof html === 'string' ? html : '';
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(`<div>${input}</div>`, 'text/html');
+      const root = doc.body.firstElementChild;
+      const allowedTags = new Set(['DIV', 'P', 'SPAN', 'STRONG', 'B', 'EM', 'I', 'U', 'BR', 'UL', 'OL', 'LI', 'BLOCKQUOTE', 'CODE', 'PRE', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'A']);
+      const allowedAttrs = { A: new Set(['href', 'target', 'rel']) };
+      const isSafeHref = (value) => /^(https?:|mailto:|tel:|#|\/)/i.test(value);
+
+      function clean(node) {
+        const children = Array.from(node.childNodes);
+        for (const child of children) {
+          if (child.nodeType === Node.TEXT_NODE) continue;
+          if (child.nodeType !== Node.ELEMENT_NODE) {
+            child.remove();
+            continue;
+          }
+          const tag = child.tagName.toUpperCase();
+          if (!allowedTags.has(tag)) {
+            const fragment = doc.createDocumentFragment();
+            while (child.firstChild) fragment.appendChild(child.firstChild);
+            child.replaceWith(fragment);
+            clean(node);
+            continue;
+          }
+          Array.from(child.attributes).forEach((attr) => {
+            const attrName = attr.name.toLowerCase();
+            const allowSet = allowedAttrs[tag] || new Set();
+            if (!allowSet.has(attr.name) && !allowSet.has(attrName)) child.removeAttribute(attr.name);
+          });
+          if (tag === 'A') {
+            const href = child.getAttribute('href') || '';
+            if (!isSafeHref(href)) child.removeAttribute('href');
+            if (child.getAttribute('target') === '_blank') child.setAttribute('rel', 'noopener noreferrer');
+          }
+          clean(child);
+        }
+      }
+
+      clean(root);
+      return root.innerHTML;
+    }
+
+    function renderRich(html) {
+      return `<div class="rich">${sanitizeRichText(html || '')}</div>`;
+    }
+
+    function renderMedia(media = []) {
+      if (!media.length) return '';
+      return `<div class="media-grid">${media.map((m) => {
+        const label = `<small>${m.type} · ${String(m.url || '').startsWith('data:') ? 'base64' : 'link'}</small>`;
+        if (m.type === 'image') return `<div class="media-item">${label}<img src="${m.url}" alt="问卷媒体资源" /></div>`;
+        if (m.type === 'audio') return `<div class="media-item">${label}<audio controls src="${m.url}"></audio><div class="media-fallback">audio resource</div></div>`;
+        if (m.type === 'video') return `<div class="media-item">${label}<video controls src="${m.url}"></video><div class="media-fallback">video resource</div></div>`;
+        return `<div class="media-item">${label}<div class="media-fallback">${m.url}</div></div>`;
+      }).join('')}</div>`;
+    }
+
+    function createInputControl(dataType, attrs, name = '', dataOptionId = '', dataChildId = '') {
+      const placeholder = attrs?.placeholder || '';
+      const maxLength = attrs?.maxLength ?? '';
+      const dt = dataType || 'text';
+      if (dt === 'text' && Number(attrs?.maxLength || 0) > 100) {
+        return `<textarea class="textarea" ${name ? `name="${name}"` : ''} ${dataOptionId ? `data-option-id="${dataOptionId}"` : ''} ${dataChildId ? `data-child-id="${dataChildId}"` : ''} data-input-attribute='${JSON.stringify(attrs || {})}' placeholder="${placeholder}" maxlength="${maxLength}"></textarea>`;
+      }
+      if (dt === 'dateRange' || dt === 'timeRange' || dt === 'dateTimeRange') {
+        const type = dt === 'dateRange' ? 'date' : dt === 'timeRange' ? 'time' : 'datetime-local';
+        const startName = name ? `${name}__start` : '';
+        const endName = name ? `${name}__end` : '';
+        return `<div class="field-row" data-range-type="${dt}" ${dataOptionId ? `data-option-id="${dataOptionId}"` : ''} ${dataChildId ? `data-child-id="${dataChildId}"` : ''} data-input-attribute='${JSON.stringify(attrs || {})}'><input class="input" type="${type}" ${startName ? `name="${startName}"` : ''} data-range-role="start" /><input class="input" type="${type}" ${endName ? `name="${endName}"` : ''} data-range-role="end" /></div>`;
+      }
+      const typeMap = { text: 'text', email: 'email', tel: 'tel', number: 'number', date: 'date', time: 'time', dateTime: 'datetime-local' };
+      const htmlType = typeMap[dt] || 'text';
+      return `<input class="input" type="${htmlType}" ${name ? `name="${name}"` : ''} ${dataOptionId ? `data-option-id="${dataOptionId}"` : ''} ${dataChildId ? `data-child-id="${dataChildId}"` : ''} data-input-attribute='${JSON.stringify(attrs || {})}' placeholder="${placeholder}" maxlength="${maxLength}" />`;
+    }
+
+    function scoreValues(option) {
+      const attr = option.attribute || {};
+      const scope = Array.isArray(attr.scope) && attr.scope.length === 2 ? attr.scope : [1, 5];
+      const step = attr.step === 0.5 ? 0.5 : 1;
+      const values = [];
+      let cur = Number(scope[0]);
+      const max = Number(scope[1]);
+      while (cur <= max + 1e-9) {
+        values.push(Number(cur.toFixed(1)));
+        cur += step;
+      }
+      return values;
+    }
+
+    function formatScoreValue(value) {
+      return Number(value) % 1 === 0 ? String(Number(value).toFixed(0)) : String(Number(value).toFixed(1));
+    }
+
+    function renderScoreQuestion(question) {
+      return `<div class="score-list">${(question.option || []).map((opt) => {
+        const descMap = opt.attribute?.scoreDesc || {};
+        const values = scoreValues(opt);
+        return `<div class="score-item" data-score-option="${opt.id}" data-option-field="${opt.id}"><div class="field-label">${renderRich(opt.title)}</div>${renderMedia(opt.attribute?.media || [])}<div class="score-scale">${values.map((value) => {
+          const display = formatScoreValue(value);
+          return `<button class="score-pill" type="button" aria-pressed="false" aria-label="评分 ${display}" data-score-option-id="${opt.id}" data-score-value="${display}">${display}</button>`;
+        }).join('')}</div><div class="score-desc" data-score-desc-for="${opt.id}"></div><div class="coverage">score.attribute: ${escapeHtml(JSON.stringify(opt.attribute || {}))}</div></div>`;
+      }).join('')}</div><div class="error" role="alert" data-error>请完成当前评分题。</div>`;
+    }
+
+
+    function npsValues(option) {
+      const scope = Array.isArray(option?.attribute?.scope) && option.attribute.scope.length === 2 ? option.attribute.scope : [0, 10];
+      const min = Number(scope[0]);
+      const max = Number(scope[1]);
+      const values = [];
+      for (let cur = min; cur <= max; cur += 1) values.push(cur);
+      return values;
+    }
+
+    function renderNpsQuestion(question) {
+      const opt = (question.option || [])[0] || { id: `${question.id}_nps`, attribute: { scope: [0, 10] } };
+      const values = npsValues(opt);
+      return `<div class="score-list nps-list"><div class="score-item nps-item" data-nps-option="${opt.id}" data-option-field="${opt.id}">${renderMedia(opt.attribute?.media || [])}<div class="score-scale nps-scale">${values.map((value) => {
+        const display = formatScoreValue(value);
+        return `<button class="score-pill nps-pill" type="button" aria-pressed="false" aria-label="NPS ${display} 分" data-score-option-id="${opt.id}" data-score-value="${display}">${display}</button>`;
+      }).join('')}</div><div class="score-desc" data-score-desc-for="${opt.id}"></div><div class="coverage">nps.attribute: ${escapeHtml(JSON.stringify(opt.attribute || {}))}</div></div></div><div class="error" role="alert" data-error>请选择一个 NPS 分值。</div>`;
+    }
+
+    function renderSurvey() {
+      const s = surveySchema.survey;
+      return screenShell(s.id, 'survey', `<div>${renderRich(s.title)}${renderRich(s.description)}</div><div class="meta-grid"><div class="meta"><strong>survey.attribute</strong><span>onePageOneQuestion: ${s.attribute.onePageOneQuestion}<br />allowBack: ${s.attribute.allowBack}</span></div>${renderMedia(s.attribute.media || [])}</div><div class="actions" style="grid-column:1 / -1;"><span></span><div class="actions-right"><button class="btn" type="button" data-next>开始问卷</button></div></div>`, true);
+    }
+
+    function renderOption(question, option) {
+      const children = option.child || [];
+      const childHtml = children.length
+        ? `<div class="child-list" data-child-wrap="${option.id}">${children.map((child) => `<div class="field"><div class="field-label">${renderRich(child.title)}</div>${createInputControl(child.attribute?.dataType || 'text', child.attribute || {}, `${question.id}__${option.id}__${child.id}`, '', child.id)}<div class="coverage">child.attribute: ${escapeHtml(JSON.stringify(child.attribute || {}))}</div><div class="error" role="alert" data-child-error="${child.id}">请按 child.attribute 正确填写。</div></div>`).join('')}</div>`
+        : '';
+      const exclusive = option.attribute?.exclusive === true;
+      const mutual = option.attribute?.['mutual-exclusion'] === true;
+      return `<div class="option" data-option-id="${option.id}" data-exclusive="${exclusive}" data-mutual-exclusion="${mutual}"><label class="option-label"><input type="${question.type === 'radio' ? 'radio' : 'checkbox'}" name="${question.id}" value="${option.id}" data-option-id="${option.id}" ${children.length ? 'data-has-child="true"' : ''} /><div class="option-title">${renderRich(option.title)}${renderMedia(option.attribute?.media || [])}</div></label>${childHtml}</div>`;
+    }
+
+    function renderQuestion(question) {
+      const options = question.option ? shuffleIfNeeded(question.option, question.attribute?.random === true) : [];
+      const content = question.type === 'input'
+        ? `<div class="fields">${question.option.map((opt) => `<div class="field" data-option-field="${opt.id}"><div class="field-label">${renderRich(opt.title)}</div>${createInputControl(opt.attribute?.dataType || 'text', opt.attribute || {}, question.id, opt.id, '')}<div class="coverage">input.option.attribute: ${escapeHtml(JSON.stringify(opt.attribute || {}))}</div></div>`).join('')}<div class="error" role="alert" data-error>请按输入题规则完成填写。</div></div>`
+        : question.type === 'score'
+        ? renderScoreQuestion(question)
+        : question.type === 'nps'
+        ? renderNpsQuestion(question)
+        : `<div class="options">${options.map((opt) => renderOption(question, opt)).join('')}</div><div class="error" role="alert" data-error>请完成当前题目。</div>`;
+      const allowBack = surveySchema.survey.attribute?.allowBack === true;
+      return screenShell(question.id, question.type, `<div class="question-head" style="grid-column:1 / -1;"><div><div class="question-index">Question ${String(questionNumber(question.id)).padStart(2, '0')}</div>${renderRich(question.title)}${renderRich(question.description)}</div><div class="chip-row"><span class="chip">${question.type}</span><span class="chip ${question.attribute?.required ? 'warn' : ''}">${question.attribute?.required ? 'required=true' : 'required=false'}</span><span class="chip">random=${question.attribute?.random ?? false}</span></div></div><div style="grid-column:1 / -1;">${renderMedia(question.attribute?.media || [])}${content}</div><div class="actions" style="grid-column:1 / -1;">${allowBack ? '<button class="btn secondary" type="button" data-prev>上一页</button>' : '<span></span>'}<div class="actions-right"><button class="btn" type="button" data-next>下一页</button></div></div>`);
+    }
+
+    function renderManualPage(group, pageIndex) {
+      const allowBack = surveySchema.survey.attribute?.allowBack === true;
+      const blocks = group.map((question) => renderQuestionBlock(question)).join('');
+      return screenShell(`page_${String(pageIndex + 1).padStart(2, '0')}`, 'page', `${blocks}<div class="actions" style="grid-column:1 / -1;">${allowBack ? '<button class="btn secondary" type="button" data-prev>上一页</button>' : '<span></span>'}<div class="actions-right"><button class="btn" type="button" data-next>下一页</button></div></div>`);
+    }
+
+    function renderFinish() {
+      const f = surveySchema.finish;
+      const allowBack = surveySchema.survey.attribute?.allowBack === true;
+      return screenShell(f.id, 'finish', `<div>${renderRich(f.title)}${renderRich(f.description)}</div><div class="meta-grid">${renderMedia(f.media || [])}</div><div class="actions" style="grid-column:1 / -1;">${allowBack ? '<button class="btn secondary" type="button" data-prev>上一页</button>' : '<span></span>'}<div class="actions-right"><button class="btn secondary" type="button" id="previewPayloadBtn">预览 payload</button><button class="btn" type="submit">提交问卷</button></div></div>`, true);
+    }
+
+    function screenShell(id, type, inner, dark = false) {
+      return `<section class="screen" data-screen-id="${id}" data-schema-type="${type}"><article class="card ${dark ? 'dark' : ''}"><div class="card-body ${type === 'survey' ? 'hero-grid' : type === 'finish' ? 'finish-grid' : ''}">${inner}</div></article></section>`;
+    }
+
+    function screens() {
+      return Array.from(document.querySelectorAll('.screen'));
+    }
+
+    function questionsOnScreen(screen) {
+      if (!screen) return [];
+      if (screen.dataset.schemaType === 'page') {
+        return Array.from(screen.querySelectorAll('.field[data-screen-id]')).map((field) => questionById(field.dataset.screenId)).filter(Boolean);
+      }
+      if (['survey', 'finish', 'survey-all'].includes(screen.dataset.schemaType)) return [];
+      const question = questionById(screen.dataset.screenId);
+      return question ? [question] : [];
+    }
+
+    function rebuildQuestionScreenMap() {
+      questionToScreenId.clear();
+      screens().forEach((screen) => {
+        const screenId = screen.dataset.screenId;
+        const schemaType = screen.dataset.schemaType;
+        if (schemaType === 'page') {
+          screen.querySelectorAll('.field[data-screen-id]').forEach((field) => {
+            if (field.dataset.screenId) questionToScreenId.set(field.dataset.screenId, screenId);
+          });
+          return;
+        }
+        if (!['survey', 'finish', 'survey-all'].includes(schemaType)) {
+          questionToScreenId.set(screenId, screenId);
+        }
+      });
+    }
+
+    function visibleScreens() {
+      return screens().filter((screen) => !screen.classList.contains('is-hidden-by-logic') && screen.dataset.logicHidden !== 'true');
+    }
+
+    function show(index, save = true) {
+      const list = visibleScreens();
+      if (!list.length) return;
+      current = Math.max(0, Math.min(index, list.length - 1));
+      const active = list[current];
+      screens().forEach((screen) => screen.classList.toggle('is-active', screen === active));
+      progressBar.style.width = `${list.length <= 1 ? 100 : (current / (list.length - 1)) * 100}%`;
+      stepCounter.textContent = `${current + 1} / ${list.length}`;
+      if (save) saveCache();
+    }
+
+    function resolveScreenId(screenOrQuestionId) {
+      if (!screenOrQuestionId) return null;
+      if (screens().some((screen) => screen.dataset.screenId === screenOrQuestionId)) return screenOrQuestionId;
+      return questionToScreenId.get(screenOrQuestionId) || null;
+    }
+
+    function showById(screenId, save = true) {
+      const resolvedId = resolveScreenId(screenId) || screenId;
+      const list = visibleScreens();
+      const index = list.findIndex((screen) => screen.dataset.screenId === resolvedId);
+      show(index >= 0 ? index : 0, save);
+    }
+
+    function render() {
+      const onePageOneQuestion = surveySchema.survey.attribute?.onePageOneQuestion === true;
+      if (hasManualPagination && !onePageOneQuestion) {
+        form.innerHTML = [renderSurvey(), ...manualPages.map((group, index) => renderManualPage(group, index)), renderFinish()].join('');
+      } else if (onePageOneQuestion) {
+        form.innerHTML = [renderSurvey(), ...answerableQuestions.map(renderQuestion), renderFinish()].join('');
+      } else {
+        form.innerHTML = screenShell('all_in_one', 'survey-all', `<div style="grid-column:1 / -1;">${renderRich(surveySchema.survey.title)}${renderRich(surveySchema.survey.description)}</div>${answerableQuestions.map((q) => renderQuestionBlock(q)).join('')}<div style="grid-column:1 / -1;">${renderRich(surveySchema.finish.title)}${renderRich(surveySchema.finish.description)}</div><div class="actions" style="grid-column:1 / -1;"><span></span><div class="actions-right"><button class="btn secondary" type="button" id="previewPayloadBtn">预览 payload</button><button class="btn" type="submit">提交问卷</button></div></div>`);
+      }
+      rebuildQuestionScreenMap();
+      bindEvents();
+      hydrateAll();
+      applyLogicRuntime({ preserveActiveId: surveySchema.survey.id });
+      if (!document.querySelector('.screen.is-active')) show(0);
+    }
+
+    function renderQuestionBlock(question) {
+      const options = question.option ? shuffleIfNeeded(question.option, question.attribute?.random === true) : [];
+      const content = question.type === 'input'
+        ? `<div class="fields">${question.option.map((opt) => `<div class="field" data-option-field="${opt.id}"><div class="field-label">${renderRich(opt.title)}</div>${createInputControl(opt.attribute?.dataType || 'text', opt.attribute || {}, question.id, opt.id, '')}</div>`).join('')}<div class="error" role="alert" data-error>请按输入题规则完成填写。</div></div>`
+        : question.type === 'score'
+        ? renderScoreQuestion(question)
+        : question.type === 'nps'
+        ? renderNpsQuestion(question)
+        : `<div class="options">${options.map((opt) => renderOption(question, opt)).join('')}</div><div class="error" role="alert" data-error>请完成当前题目。</div>`;
+      return `<section class="field" data-screen-id="${question.id}" data-schema-type="${question.type}"><div class="question-head"><div><div class="question-index">Question ${String(questionNumber(question.id)).padStart(2, '0')}</div>${renderRich(question.title)}${renderRich(question.description)}</div><div class="chip-row"><span class="chip">${question.type}</span></div></div>${renderMedia(question.attribute?.media || [])}${content}</section>`;
+    }
+
+    function visibleChildWrapForInput(input) {
+      return input.closest('.option')?.querySelector(`[data-child-wrap="${input.value}"]`);
+    }
+
+    function updateChildVisibility() {
+      document.querySelectorAll('.option input[data-has-child]').forEach((input) => {
+        const wrap = visibleChildWrapForInput(input);
+        if (wrap) wrap.classList.toggle('is-visible', input.checked && !input.closest('.option')?.classList.contains('is-hidden-by-logic'));
+      });
+    }
+
+    function scoreDescForValue(scoreDesc = {}, scoreValue) {
+      if (scoreDesc[scoreValue]) return scoreDesc[scoreValue];
+      const numeric = Number(scoreValue);
+      for (const [range, label] of Object.entries(scoreDesc)) {
+        if (!range.includes('-')) continue;
+        const [start, end] = range.split('-').map(Number);
+        if (!Number.isNaN(start) && !Number.isNaN(end) && numeric >= start && numeric <= end) return label;
+      }
+      return '';
+    }
+
+    function updateScoreDisplay(button) {
+      const optionId = button.dataset.scoreOptionId;
+      const scoreValue = button.dataset.scoreValue;
+      const screen = button.closest('[data-screen-id]');
+      screen.querySelectorAll(`[data-score-option-id="${optionId}"]`).forEach((el) => {
+        const active = el === button;
+        el.classList.toggle('is-active', active);
+        el.setAttribute('aria-pressed', active ? 'true' : 'false');
+      });
+      const candidateQuestions = questionsOnScreen(screen);
+      const question = (candidateQuestions.length ? candidateQuestions : answerableQuestions).find((item) => (item.option || []).some((opt) => opt.id === optionId));
+      const option = question?.option?.find((item) => item.id === optionId);
+      const desc = scoreDescForValue(option?.attribute?.scoreDesc || {}, scoreValue);
+      const descEl = screen.querySelector(`[data-score-desc-for="${optionId}"]`);
+      if (descEl) descEl.textContent = desc;
+    }
+
+    function extractFieldValue(field) {
+      if (!field) return null;
+      if (field.matches('[data-range-type]')) {
+        const start = field.querySelector('[data-range-role="start"]')?.value || '';
+        const end = field.querySelector('[data-range-role="end"]')?.value || '';
+        return start || end ? { start, end } : null;
+      }
+      const value = (field.value || '').trim();
+      return value || null;
+    }
+
+    function validateByDataType(field, attr = {}) {
+      const type = attr.dataType || 'text';
+      const value = extractFieldValue(field);
+      const empty = !value || (typeof value === 'object' && !value.start && !value.end);
+      if (attr.required && empty) return '该字段必填';
+      if (empty) return '';
+      const scalar = typeof value === 'object' ? `${value.start || ''}${value.end || ''}` : value;
+      if (attr.minLength && scalar.length < Number(attr.minLength)) return `至少 ${attr.minLength} 字`;
+      if (attr.maxLength && scalar.length > Number(attr.maxLength)) return `最多 ${attr.maxLength} 字`;
+      if (type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) return '邮箱格式不正确';
+      if (type === 'tel' && !/^[+()\-\s\d]{6,20}$/.test(value)) return '请输入有效电话';
+      if (type === 'number' && Number.isNaN(Number(value))) return '请输入有效数字';
+      if (type === 'date' && !/^\d{4}-\d{2}-\d{2}$/.test(value)) return '请输入有效日期';
+      if (type === 'time' && !/^\d{2}:\d{2}$/.test(value)) return '请输入有效时间';
+      if (type === 'dateTime' && !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/.test(value)) return '请输入有效日期时间';
+      if ((type === 'dateRange' || type === 'timeRange' || type === 'dateTimeRange') && (!value.start || !value.end)) return '请完整填写开始和结束';
+      return '';
+    }
+
+    function readChildAnswers(optionEl) {
+      const wrap = optionEl.querySelector('.child-list');
+      if (!wrap || !wrap.classList.contains('is-visible')) return [];
+      return Array.from(wrap.querySelectorAll('[data-child-id]')).map((field) => ({
+        childId: field.dataset.childId,
+        dataType: JSON.parse(field.dataset.inputAttribute || '{}').dataType || 'text',
+        value: extractFieldValue(field)
+      })).filter((item) => item.value);
+    }
+
+    function collectQuestion(question) {
+      const screen = document.querySelector(`[data-screen-id="${question.id}"]`);
+      if (!screen || isQuestionUnavailable(question.id)) return null;
+
+      if (question.type === 'radio') {
+        const checked = Array.from(screen.querySelectorAll(`input[name="${question.id}"]:checked`)).find((input) => !isOptionHidden(question.id, input.value));
+        if (!checked) return null;
+        const optionEl = checked.closest('.option');
+        const child = readChildAnswers(optionEl);
+        const value = { optionId: checked.value };
+        if (child.length) value.child = child;
+        return { questionType: question.type, value };
+      }
+
+      if (question.type === 'checkbox') {
+        const checked = Array.from(screen.querySelectorAll(`input[name="${question.id}"]:checked`)).filter((input) => !isOptionHidden(question.id, input.value));
+        if (!checked.length) return null;
+        return {
+          questionType: question.type,
+          value: checked.map((input) => {
+            const optionEl = input.closest('.option');
+            const item = { optionId: input.value };
+            const child = readChildAnswers(optionEl);
+            if (child.length) item.child = child;
+            return item;
+          })
+        };
+      }
+
+      if (question.type === 'input') {
+        const value = question.option.filter((opt) => !isOptionHidden(question.id, opt.id)).map((opt) => {
+          const field = screen.querySelector(`[data-option-id="${opt.id}"]`);
+          const extracted = extractFieldValue(field);
+          if (!extracted) return null;
+          return { optionId: opt.id, dataType: opt.attribute?.dataType || 'text', value: extracted };
+        }).filter(Boolean);
+        if (!value.length) return null;
+        return { questionType: question.type, value };
+      }
+
+      if (question.type === 'score') {
+        const value = Array.from(screen.querySelectorAll('[data-score-option]')).filter((row) => !row.classList.contains('is-hidden-by-logic')).map((row) => {
+          const optionId = row.dataset.scoreOption;
+          const active = row.querySelector('.score-pill.is-active');
+          if (!active) return null;
+          return { optionId, score: Number(active.dataset.scoreValue) };
+        }).filter(Boolean);
+        if (!value.length) return null;
+        return { questionType: question.type, value };
+      }
+
+      if (question.type === 'nps') {
+        const row = Array.from(screen.querySelectorAll('[data-nps-option]')).find((node) => !node.classList.contains('is-hidden-by-logic'));
+        const active = row?.querySelector('.score-pill.is-active');
+        if (!row || !active) return null;
+        return { questionType: question.type, value: { optionId: row.dataset.npsOption, score: Number(active.dataset.scoreValue) } };
+      }
+
+      return null;
+    }
+
+    function validateQuestion(question) {
+      if (!question || isQuestionUnavailable(question.id)) return true;
+      const screen = document.querySelector(`[data-screen-id="${question.id}"]`);
+      if (!screen) return true;
+      screen.querySelectorAll('.error').forEach((el) => el.classList.remove('is-visible'));
+      screen.querySelectorAll('.is-invalid').forEach((el) => el.classList.remove('is-invalid'));
+
+      const collected = collectQuestion(question);
+      if (question.attribute?.required && !collected) {
+        screen.querySelector('[data-error]')?.classList.add('is-visible');
+        return false;
+      }
+
+      if (question.type === 'input') {
+        for (const opt of question.option.filter((item) => !isOptionHidden(question.id, item.id))) {
+          const field = screen.querySelector(`[data-option-id="${opt.id}"]`);
+          const msg = validateByDataType(field, opt.attribute || {});
+          if (msg) {
+            field.classList.add('is-invalid');
+            const err = screen.querySelector('[data-error]');
+            if (err) {
+              err.textContent = msg;
+              err.classList.add('is-visible');
+            }
+            return false;
+          }
+        }
+      }
+
+      if (question.type === 'score' && question.attribute?.required) {
+        const rows = Array.from(screen.querySelectorAll('[data-score-option]')).filter((row) => !row.classList.contains('is-hidden-by-logic'));
+        const complete = rows.every((row) => row.querySelector('.score-pill.is-active'));
+        if (!complete) {
+          screen.querySelector('[data-error]')?.classList.add('is-visible');
+          return false;
+        }
+      }
+
+      if (question.type === 'nps' && question.attribute?.required) {
+        const row = Array.from(screen.querySelectorAll('[data-nps-option]')).find((node) => !node.classList.contains('is-hidden-by-logic'));
+        if (!row?.querySelector('.score-pill.is-active')) {
+          screen.querySelector('[data-error]')?.classList.add('is-visible');
+          return false;
+        }
+      }
+
+      for (const optionEl of screen.querySelectorAll('.option')) {
+        const checked = optionEl.querySelector('input:checked');
+        if (!checked) continue;
+        const childFields = optionEl.querySelectorAll('[data-child-id]');
+        for (const field of childFields) {
+          const attr = JSON.parse(field.dataset.inputAttribute || '{}');
+          const msg = validateByDataType(field, attr);
+          if (msg) {
+            field.classList.add('is-invalid');
+            const err = optionEl.querySelector(`[data-child-error="${field.dataset.childId}"]`);
+            if (err) {
+              err.textContent = msg;
+              err.classList.add('is-visible');
+            }
+            return false;
+          }
+        }
+      }
+      return true;
+    }
+
+    function persist(question, save = true) {
+      if (!question) return;
+      const collected = collectQuestion(question);
+      if (collected) cache.answers[question.id] = collected;
+      else delete cache.answers[question.id];
+      if (save) saveCache();
+    }
+
+    function hydrateRangeField(field, value) {
+      if (!field || !value || typeof value !== 'object') return;
+      const start = field.querySelector('[data-range-role="start"]');
+      const end = field.querySelector('[data-range-role="end"]');
+      if (start) start.value = value.start || '';
+      if (end) end.value = value.end || '';
+    }
+
+    function hydrateAll() {
+      Object.entries(cache.answers || {}).forEach(([questionId, answer]) => {
+        const screen = document.querySelector(`[data-screen-id="${questionId}"]`);
+        if (!screen) return;
+
+        if (answer.questionType === 'radio') {
+          const input = screen.querySelector(`input[value="${answer.value.optionId}"]`);
+          if (input) input.checked = true;
+          (answer.value.child || []).forEach((item) => {
+            const child = screen.querySelector(`[data-child-id="${item.childId}"]`);
+            if (!child) return;
+            if (child.matches('[data-range-type]')) hydrateRangeField(child, item.value);
+            else child.value = typeof item.value === 'object' ? '' : (item.value || '');
+          });
+        }
+
+        if (answer.questionType === 'checkbox') {
+          (answer.value || []).forEach((item) => {
+            const input = screen.querySelector(`input[value="${item.optionId}"]`);
+            if (input) input.checked = true;
+            (item.child || []).forEach((childItem) => {
+              const child = screen.querySelector(`[data-child-id="${childItem.childId}"]`);
+              if (!child) return;
+              if (child.matches('[data-range-type]')) hydrateRangeField(child, childItem.value);
+              else child.value = typeof childItem.value === 'object' ? '' : (childItem.value || '');
+            });
+          });
+        }
+
+        if (answer.questionType === 'input') {
+          (answer.value || []).forEach((item) => {
+            const field = screen.querySelector(`[data-option-id="${item.optionId}"]`);
+            if (!field) return;
+            if (field.matches('[data-range-type]')) hydrateRangeField(field, item.value);
+            else field.value = typeof item.value === 'object' ? '' : (item.value || '');
+          });
+        }
+
+        if (answer.questionType === 'score') {
+          (answer.value || []).forEach((item) => {
+            const button = screen.querySelector(`[data-score-option-id="${item.optionId}"][data-score-value="${formatScoreValue(item.score)}"]`);
+            if (button) updateScoreDisplay(button);
+          });
+        }
+
+
+        if (answer.questionType === 'nps') {
+          const button = screen.querySelector(`[data-score-option-id="${answer.value.optionId}"][data-score-value="${formatScoreValue(answer.value.score)}"]`);
+          if (button) updateScoreDisplay(button);
+        }
+      });
+      updateChildVisibility();
+    }
+
+    function assemblePayload() {
+      answerableQuestions.forEach((q) => persist(q));
+      return {
+        surveyId,
+        submittedAt: new Date().toISOString(),
+        answers: Object.entries(cache.answers).filter(([questionId]) => !isQuestionHidden(questionId)).map(([questionId, answer]) => ({
+          questionId,
+          questionType: answer.questionType,
+          value: answer.value
+        })).filter((item) => !isQuestionUnavailable(item.questionId))
+      };
+    }
+
+    function currentQuestion() {
+      return currentScreenQuestions()[0] || null;
+    }
+
+    function currentScreenQuestions() {
+      const screen = visibleScreens()[current] || screens()[current];
+      return questionsOnScreen(screen);
+    }
+
+    function currentScreenId() {
+      return (visibleScreens()[current] || screens()[current])?.dataset.screenId || document.querySelector('.screen.is-active')?.dataset.screenId || null;
+    }
+
+    function persistQuestions(questions, save = true) {
+      questions.forEach((question) => persist(question, false));
+      if (save) saveCache();
+    }
+
+    function validateQuestions(questions) {
+      for (const question of questions) {
+        if (!validateQuestion(question)) return false;
+      }
+      return true;
+    }
+
+    function bindEvents() {
+      form.addEventListener('click', (e) => {
+        if (e.target.matches('[data-next]')) {
+          const questions = currentScreenQuestions();
+          if (!validateQuestions(questions)) return;
+          persistQuestions(questions, false);
+          const preserveId = currentScreenId();
+          applyLogicRuntime({ preserveActiveId: preserveId });
+          const nextTarget = questions.map((question) => logicState.jumpTargets.get(question.id)).find(Boolean);
+          if (nextTarget) showById(nextTarget);
+          else show(current + 1);
+        }
+        if (e.target.matches('[data-prev]')) {
+          persistQuestions(currentScreenQuestions(), false);
+          applyLogicRuntime({ preserveActiveId: currentScreenId() });
+          show(current - 1);
+        }
+        if (e.target.id === 'previewPayloadBtn') {
+          console.log(assemblePayload());
+          alert('payload 已输出到 console');
+        }
+        const scoreBtn = e.target.closest('.score-pill');
+        if (scoreBtn) {
+          updateScoreDisplay(scoreBtn);
+          const questions = currentScreenQuestions();
+          if (questions.length) {
+            persistQuestions(questions, false);
+            applyLogicRuntime({ preserveActiveId: currentScreenId() });
+          }
+        }
+      });
+
+      form.addEventListener('change', (e) => {
+        if (e.target.matches('input[type="checkbox"]')) {
+          const option = e.target.closest('.option');
+          const all = Array.from(e.target.closest('.options').querySelectorAll('input[type="checkbox"]'));
+          const exclusive = option?.dataset.exclusive === 'true';
+          const mutual = option?.dataset.mutualExclusion === 'true';
+          if (e.target.checked && exclusive) {
+            all.forEach((item) => { if (item !== e.target) item.checked = false; });
+          } else if (e.target.checked) {
+            all.forEach((item) => { if (item.closest('.option')?.dataset.exclusive === 'true') item.checked = false; });
+          }
+          if (e.target.checked && mutual) {
+            all.forEach((item) => {
+              const otherMutual = item.closest('.option')?.dataset.mutualExclusion === 'true';
+              if (item !== e.target && otherMutual) item.checked = false;
+            });
+          }
+        }
+        updateChildVisibility();
+        persistQuestions(currentScreenQuestions(), false);
+        applyLogicRuntime({ preserveActiveId: currentScreenId() });
+      });
+
+      form.addEventListener('input', () => {
+        persistQuestions(currentScreenQuestions(), false);
+        applyLogicRuntime({ preserveActiveId: currentScreenId() });
+      });
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        applyLogicRuntime({ preserveActiveId: currentScreenId() });
+        for (let i = 0; i < answerableQuestions.length; i++) {
+          const question = answerableQuestions[i];
+          if (isQuestionUnavailable(question.id)) continue;
+          if (!validateQuestion(question)) {
+            if (surveySchema.survey.attribute?.onePageOneQuestion === true) showById(question.id);
+            return;
+          }
+          persist(question, false);
+        }
+        saveCache();
+        const payload = assemblePayload();
+        console.log(payload);
+        localStorage.removeItem(cacheKey);
+        cache = { surveyId, updatedAt: new Date().toISOString(), answers: {} };
+        form.reset();
+        updateChildVisibility();
+        show(0, false);
+        alert('提交成功：payload 已输出到 console，缓存已清空。');
+      });
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+    }
+
+    render();
+  </script>
+</body>
+</html>

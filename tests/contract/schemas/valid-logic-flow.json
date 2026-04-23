@@ -1,0 +1,130 @@
+{
+  "survey": {
+    "type": "survey",
+    "id": "survey_logic_contract",
+    "title": "<h1>Logic Contract</h1>",
+    "description": "<p>验证逻辑控制。</p>",
+    "attribute": {
+      "onePageOneQuestion": true,
+      "allowBack": true,
+      "media": []
+    }
+  },
+  "questions": [
+    {
+      "type": "radio",
+      "id": "question_entry",
+      "title": "<h2>是否需要高级能力？</h2>",
+      "description": "<p>选择 yes 会显示后续问题。</p>",
+      "attribute": {
+        "required": true,
+        "random": false,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_entry_yes",
+          "title": "<p>需要</p>",
+          "attribute": { "random": false, "media": [] }
+        },
+        {
+          "id": "option_entry_no",
+          "title": "<p>不需要</p>",
+          "attribute": { "media": [] }
+        }
+      ]
+    },
+    {
+      "type": "input",
+      "id": "question_followup",
+      "title": "<h2>请填写你的详细诉求</h2>",
+      "description": "<p>这是一个默认隐藏、按逻辑显示的问题。</p>",
+      "attribute": {
+        "required": true,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_followup_text",
+          "title": "<p>诉求说明</p>",
+          "attribute": {
+            "dataType": "text",
+            "required": true,
+            "placeholder": "请输入你的需求",
+            "maxLength": 120
+          }
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "question_modes",
+      "title": "<h2>你更希望工具偏向哪种模式？</h2>",
+      "description": "<p>自动勾选 AI 模式，隐藏手工模式。</p>",
+      "attribute": {
+        "required": true,
+        "random": false,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_mode_ai",
+          "title": "<p>AI 模式</p>",
+          "attribute": { "media": [] }
+        },
+        {
+          "id": "option_mode_manual",
+          "title": "<p>手工模式</p>",
+          "attribute": { "media": [] }
+        }
+      ]
+    }
+  ],
+  "finish": {
+    "type": "finish",
+    "id": "finish_logic_contract",
+    "title": "<h2>完成</h2>",
+    "description": "<p>感谢填写。</p>",
+    "media": []
+  },
+  "logic": [
+    {
+      "id": "logic_show_followup",
+      "when": {
+        "questionId": "question_entry",
+        "operator": "selected",
+        "optionId": "option_entry_yes"
+      },
+      "action": {
+        "type": "show_question",
+        "targetQuestionId": "question_followup"
+      }
+    },
+    {
+      "id": "logic_auto_select_ai",
+      "when": {
+        "questionId": "question_entry",
+        "operator": "selected",
+        "optionId": "option_entry_yes"
+      },
+      "action": {
+        "type": "auto_select_option",
+        "targetQuestionId": "question_modes",
+        "targetOptionId": "option_mode_ai"
+      }
+    },
+    {
+      "id": "logic_hide_manual",
+      "when": {
+        "questionId": "question_entry",
+        "operator": "selected",
+        "optionId": "option_entry_yes"
+      },
+      "action": {
+        "type": "hide_option",
+        "targetQuestionId": "question_modes",
+        "targetOptionId": "option_mode_manual"
+      }
+    }
+  ]
+}

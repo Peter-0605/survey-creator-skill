@@ -1,0 +1,324 @@
+{
+  "survey": {
+    "type": "survey",
+    "id": "survey_complex_regression_2x7v",
+    "title": "<h1><strong>复杂业务问卷回归测试</strong></h1>",
+    "description": "<p>该问卷用于验证 schema 字段、渲染、交互与提交协议。<a href='https://example.com'>查看说明</a></p>",
+    "attribute": {
+      "onePageOneQuestion": true,
+      "allowBack": true,
+      "media": [
+        {
+          "type": "image",
+          "url": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMzIwJyBoZWlnaHQ9JzE4MCcgdmlld0JveD0nMCAwIDMyMCAxODAnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zyc+PHJlY3Qgd2lkdGg9JzMyMCcgaGVpZ2h0PScxODAnIHJ4PScyNCcgZmlsbD0nI0ZGRDcwMCcvPjxjaXJjbGUgY3g9JzI2MCcgY3k9JzUwJyByPSczMicgZmlsbD0nI0ZGRkZGRicgZmlsbC1vcGFjaXR5PScuNDUnLz48dGV4dCB4PSczMCcgeT0nOTYnIGZvbnQtc2l6ZT0nMjQnIGZpbGw9JyMyMjInIGZvbnQtZmFtaWx5PSdBcmlhbCc+U3VydmV5IE1lZGlhPC90ZXh0Pjwvc3ZnPg=="
+        },
+        {
+          "type": "audio",
+          "url": "data:audio/mp3;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU4LjIwLjEwMAAAAAAAAAAAAAAA"
+        },
+        {
+          "type": "video",
+          "url": "data:video/mp4;base64,AAAAIGZ0eXBpc29tAAACAGlzb21pc28yYXZjMW1wNDE="
+        }
+      ]
+    }
+  },
+  "questions": [
+    {
+      "type": "radio",
+      "id": "question_complex_radio",
+      "title": "<h2>你当前的主要目标是什么？</h2>",
+      "description": "<p>请选择最符合的一项。</p>",
+      "attribute": {
+        "required": true,
+        "random": true,
+        "media": [
+          {
+            "type": "image",
+            "url": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMzIwJyBoZWlnaHQ9JzE4MCcgdmlld0JveD0nMCAwIDMyMCAxODAnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zyc+PHJlY3Qgd2lkdGg9JzMyMCcgaGVpZ2h0PScxODAnIHJ4PScyNCcgZmlsbD0nI0ZGRDcwMCcvPjxjaXJjbGUgY3g9JzI2MCcgY3k9JzUwJyByPSczMicgZmlsbD0nI0ZGRkZGRicgZmlsbC1vcGFjaXR5PScuNDUnLz48dGV4dCB4PSczMCcgeT0nOTYnIGZvbnQtc2l6ZT0nMjQnIGZpbGw9JyMyMjInIGZvbnQtZmFtaWx5PSdBcmlhbCc+U3VydmV5IE1lZGlhPC90ZXh0Pjwvc3ZnPg=="
+          }
+        ]
+      },
+      "option": [
+        {
+          "id": "option_goal_growth",
+          "title": "<p><strong>增长获客</strong></p>",
+          "attribute": {
+            "random": false,
+            "media": []
+          }
+        },
+        {
+          "id": "option_goal_research",
+          "title": "<p>用户研究</p>",
+          "attribute": {
+            "media": []
+          }
+        },
+        {
+          "id": "option_goal_other",
+          "title": "<p>其他，请说明</p>",
+          "attribute": {
+            "media": []
+          },
+          "child": [
+            {
+              "type": "input",
+              "id": "child_goal_other_text",
+              "title": "<p>目标说明</p>",
+              "attribute": {
+                "dataType": "text",
+                "required": true,
+                "placeholder": "请描述目标",
+                "maxLength": 120
+              }
+            },
+            {
+              "type": "input",
+              "id": "child_goal_contact_time",
+              "title": "<p>可联系时间</p>",
+              "attribute": {
+                "dataType": "timeRange",
+                "required": false
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "question_complex_checkbox",
+      "title": "<h2>需要哪些能力？</h2>",
+      "description": "<p>可多选，请按实际情况选择。</p>",
+      "attribute": {
+        "required": true,
+        "random": true,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_need_ai",
+          "title": "<p>AI 生成</p>",
+          "attribute": {
+            "random": false,
+            "media": []
+          }
+        },
+        {
+          "id": "option_need_logic",
+          "title": "<p>题目逻辑</p>",
+          "attribute": {
+            "media": []
+          }
+        },
+        {
+          "id": "option_need_single_page",
+          "title": "<p>只要单页</p>",
+          "attribute": {
+            "mutual-exclusion": true,
+            "media": []
+          }
+        },
+        {
+          "id": "option_need_step",
+          "title": "<p>只要分页</p>",
+          "attribute": {
+            "mutual-exclusion": true,
+            "media": []
+          }
+        },
+        {
+          "id": "option_need_none",
+          "title": "<p>以上都不需要</p>",
+          "attribute": {
+            "exclusive": true,
+            "media": []
+          }
+        }
+      ]
+    },
+    {
+      "type": "input",
+      "id": "question_complex_input",
+      "title": "<h2>基础联系信息</h2>",
+      "description": "<p>补充信息将帮助我们更好理解你的需求。</p>",
+      "attribute": {
+        "required": true,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_complex_email",
+          "title": "<p>邮箱</p>",
+          "attribute": {
+            "dataType": "email",
+            "required": true,
+            "placeholder": "name@example.com",
+            "maxLength": 120
+          }
+        },
+        {
+          "id": "option_complex_tel",
+          "title": "<p>电话</p>",
+          "attribute": {
+            "dataType": "tel",
+            "required": false,
+            "placeholder": "13800000000",
+            "maxLength": 20
+          }
+        },
+        {
+          "id": "option_complex_number",
+          "title": "<p>预计样本量</p>",
+          "attribute": {
+            "dataType": "number",
+            "required": true,
+            "placeholder": "例如 200"
+          }
+        },
+        {
+          "id": "option_complex_datetime",
+          "title": "<p>期望开始时间</p>",
+          "attribute": {
+            "dataType": "dateTime",
+            "required": false
+          }
+        },
+        {
+          "id": "option_complex_daterange",
+          "title": "<p>项目周期</p>",
+          "attribute": {
+            "dataType": "dateRange",
+            "required": false
+          }
+        }
+      ]
+    },
+    {
+      "type": "score",
+      "id": "question_complex_score",
+      "title": "<h2>请评价当前方案</h2>",
+      "description": "<p>请按你的真实体验评分，1 分最低，5 分最高。</p>",
+      "attribute": {
+        "required": true,
+        "media": [
+          {
+            "type": "image",
+            "url": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMzIwJyBoZWlnaHQ9JzE4MCcgdmlld0JveD0nMCAwIDMyMCAxODAnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zyc+PHJlY3Qgd2lkdGg9JzMyMCcgaGVpZ2h0PScxODAnIHJ4PScyNCcgZmlsbD0nI0ZGRDcwMCcvPjxjaXJjbGUgY3g9JzI2MCcgY3k9JzUwJyByPSczMicgZmlsbD0nI0ZGRkZGRicgZmlsbC1vcGFjaXR5PScuNDUnLz48dGV4dCB4PSczMCcgeT0nOTYnIGZvbnQtc2l6ZT0nMjQnIGZpbGw9JyMyMjInIGZvbnQtZmFtaWx5PSdBcmlhbCc+U3VydmV5IE1lZGlhPC90ZXh0Pjwvc3ZnPg=="
+          },
+          {
+            "type": "audio",
+            "url": "data:audio/mp3;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU4LjIwLjEwMAAAAAAAAAAAAAAA"
+          },
+          {
+            "type": "video",
+            "url": "data:video/mp4;base64,AAAAIGZ0eXBpc29tAAACAGlzb21pc28yYXZjMW1wNDE="
+          }
+        ]
+      },
+      "option": [
+        {
+          "id": "option_complex_score_speed",
+          "title": "<p>生成速度</p>",
+          "attribute": {
+            "scope": [
+              1,
+              5
+            ],
+            "step": 1,
+            "scoreDesc": {
+              "1": "非常不满意",
+              "2": "不满意",
+              "3": "一般",
+              "4": "满意",
+              "5": "非常满意"
+            },
+            "media": [
+              {
+                "type": "image",
+                "url": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMzIwJyBoZWlnaHQ9JzE4MCcgdmlld0JveD0nMCAwIDMyMCAxODAnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zyc+PHJlY3Qgd2lkdGg9JzMyMCcgaGVpZ2h0PScxODAnIHJ4PScyNCcgZmlsbD0nI0ZGRDcwMCcvPjxjaXJjbGUgY3g9JzI2MCcgY3k9JzUwJyByPSczMicgZmlsbD0nI0ZGRkZGRicgZmlsbC1vcGFjaXR5PScuNDUnLz48dGV4dCB4PSczMCcgeT0nOTYnIGZvbnQtc2l6ZT0nMjQnIGZpbGw9JyMyMjInIGZvbnQtZmFtaWx5PSdBcmlhbCc+U3VydmV5IE1lZGlhPC90ZXh0Pjwvc3ZnPg=="
+              }
+            ]
+          }
+        },
+        {
+          "id": "option_complex_score_quality",
+          "title": "<p>结果质量</p>",
+          "attribute": {
+            "scope": [
+              1,
+              5
+            ],
+            "step": 1,
+            "scoreDesc": {
+              "1": "非常不满意",
+              "2": "不满意",
+              "3": "一般",
+              "4": "满意",
+              "5": "非常满意"
+            },
+            "media": [
+              {
+                "type": "audio",
+                "url": "data:audio/mp3;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU4LjIwLjEwMAAAAAAAAAAAAAAA"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "type": "nps",
+      "id": "question_complex_nps",
+      "title": "<h2>你愿意推荐这个方案吗？</h2>",
+      "description": "<p>0 表示完全不推荐，10 表示非常愿意推荐。</p>",
+      "attribute": {
+        "required": true,
+        "media": [
+          {
+            "type": "image",
+            "url": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMzIwJyBoZWlnaHQ9JzE4MCcgdmlld0JveD0nMCAwIDMyMCAxODAnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zyc+PHJlY3Qgd2lkdGg9JzMyMCcgaGVpZ2h0PScxODAnIHJ4PScyNCcgZmlsbD0nI0ZGRDcwMCcvPjxjaXJjbGUgY3g9JzI2MCcgY3k9JzUwJyByPSczMicgZmlsbD0nI0ZGRkZGRicgZmlsbC1vcGFjaXR5PScuNDUnLz48dGV4dCB4PSczMCcgeT0nOTYnIGZvbnQtc2l6ZT0nMjQnIGZpbGw9JyMyMjInIGZvbnQtZmFtaWx5PSdBcmlhbCc+U3VydmV5IE1lZGlhPC90ZXh0Pjwvc3ZnPg=="
+          }
+        ]
+      },
+      "option": [
+        {
+          "id": "option_question_complex_nps_scale",
+          "attribute": {
+            "scope": [
+              0,
+              10
+            ],
+            "media": [
+              {
+                "type": "image",
+                "url": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMzIwJyBoZWlnaHQ9JzE4MCcgdmlld0JveD0nMCAwIDMyMCAxODAnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zyc+PHJlY3Qgd2lkdGg9JzMyMCcgaGVpZ2h0PScxODAnIHJ4PScyNCcgZmlsbD0nI0ZGRDcwMCcvPjxjaXJjbGUgY3g9JzI2MCcgY3k9JzUwJyByPSczMicgZmlsbD0nI0ZGRkZGRicgZmlsbC1vcGFjaXR5PScuNDUnLz48dGV4dCB4PSczMCcgeT0nOTYnIGZvbnQtc2l6ZT0nMjQnIGZpbGw9JyMyMjInIGZvbnQtZmFtaWx5PSdBcmlhbCc+U3VydmV5IE1lZGlhPC90ZXh0Pjwvc3ZnPg=="
+              },
+              {
+                "type": "audio",
+                "url": "data:audio/mp3;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU4LjIwLjEwMAAAAAAAAAAAAAAA"
+              },
+              {
+                "type": "video",
+                "url": "data:video/mp4;base64,AAAAIGZ0eXBpc29tAAACAGlzb21pc28yYXZjMW1wNDE="
+              }
+            ],
+            "scoreDesc": {
+              "0-6": "不推荐",
+              "7-8": "中立",
+              "9-10": "愿意推荐"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "finish": {
+    "type": "finish",
+    "id": "finish_complex",
+    "title": "<h1>提交成功</h1>",
+    "description": "<p>感谢填写，提交后将只在控制台输出 payload，并清空本地缓存。</p>",
+    "media": []
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "survey": {
+    "type": "survey",
+    "id": "survey_invalid_pagination_one_question",
+    "title": "<h1>Invalid Pagination With One Page One Question</h1>",
+    "description": "<p>Pagination conflicts with onePageOneQuestion.</p>",
+    "attribute": {
+      "onePageOneQuestion": true,
+      "allowBack": true,
+      "media": []
+    }
+  },
+  "questions": [
+    {
+      "type": "radio",
+      "id": "question_a",
+      "title": "<p>Q1</p>",
+      "description": "<p>D1</p>",
+      "attribute": {
+        "required": true,
+        "random": false,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_a1",
+          "title": "<p>A1</p>",
+          "attribute": {
+            "media": []
+          }
+        },
+        {
+          "id": "option_a2",
+          "title": "<p>A2</p>",
+          "attribute": {
+            "media": []
+          }
+        }
+      ]
+    },
+    {
+      "type": "Pagination",
+      "id": "page_conflict"
+    },
+    {
+      "type": "input",
+      "id": "question_b",
+      "title": "<p>Q2</p>",
+      "description": "<p>D2</p>",
+      "attribute": {
+        "required": false,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_b1",
+          "title": "<p>Text</p>",
+          "attribute": {
+            "dataType": "text",
+            "required": false,
+            "placeholder": "Text"
+          }
+        }
+      ]
+    }
+  ],
+  "finish": {
+    "type": "finish",
+    "id": "finish_invalid_pagination_one_question",
+    "title": "<h2>Done</h2>",
+    "description": "<p>done</p>",
+    "media": []
+  }
+}

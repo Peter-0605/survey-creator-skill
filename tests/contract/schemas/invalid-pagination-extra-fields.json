@@ -1,0 +1,48 @@
+{
+  "survey": {
+    "type": "survey",
+    "id": "survey_invalid_pagination_extra",
+    "title": "<h1>Invalid Pagination Extra Fields</h1>",
+    "description": "<p>extra fields</p>",
+    "attribute": {
+      "onePageOneQuestion": true,
+      "allowBack": true,
+      "media": []
+    }
+  },
+  "questions": [
+    {
+      "type": "Pagination",
+      "id": "page_sep_invalid",
+      "title": "<p>should not have title</p>"
+    },
+    {
+      "type": "input",
+      "id": "question_input_a",
+      "title": "<p>输入</p>",
+      "description": "<p>desc</p>",
+      "attribute": {
+        "required": true,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_input_a1",
+          "title": "<p>邮箱</p>",
+          "attribute": {
+            "dataType": "email",
+            "required": true,
+            "placeholder": "name@example.com"
+          }
+        }
+      ]
+    }
+  ],
+  "finish": {
+    "type": "finish",
+    "id": "finish_invalid_2",
+    "title": "<h2>完成</h2>",
+    "description": "<p>done</p>",
+    "media": []
+  }
+}

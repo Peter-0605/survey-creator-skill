@@ -1,0 +1,211 @@
+{
+  "survey": {
+    "type": "survey",
+    "id": "survey_wechat_feedback_4p8s",
+    "title": "<h1>产品使用反馈</h1>",
+    "description": "<p>感谢你在微信内完成这份简短反馈，我们会根据结果持续优化体验。</p>",
+    "attribute": {
+      "onePageOneQuestion": true,
+      "allowBack": true,
+      "media": []
+    }
+  },
+  "questions": [
+    {
+      "type": "radio",
+      "id": "question_usage_freq",
+      "title": "<h2>你最近使用产品的频率是？</h2>",
+      "description": "<p>请选择最符合的一项。</p>",
+      "attribute": {
+        "required": true,
+        "random": false,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_freq_daily",
+          "title": "<p>每天都用</p>",
+          "attribute": {
+            "media": []
+          }
+        },
+        {
+          "id": "option_freq_weekly",
+          "title": "<p>每周几次</p>",
+          "attribute": {
+            "media": []
+          }
+        },
+        {
+          "id": "option_freq_rare",
+          "title": "<p>偶尔使用</p>",
+          "attribute": {
+            "media": []
+          }
+        }
+      ]
+    },
+    {
+      "type": "score",
+      "id": "question_product_score",
+      "title": "<h2>请为整体体验评分</h2>",
+      "description": "<p>请按你的真实体验评分，1 分最低，5 分最高。</p>",
+      "attribute": {
+        "required": true,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_score_ease",
+          "title": "<p>易用性</p>",
+          "attribute": {
+            "scope": [
+              1,
+              5
+            ],
+            "step": 1,
+            "scoreDesc": {
+              "1": "非常不满意",
+              "2": "不满意",
+              "3": "一般",
+              "4": "满意",
+              "5": "非常满意"
+            },
+            "media": []
+          }
+        },
+        {
+          "id": "option_score_stability",
+          "title": "<p>稳定性</p>",
+          "attribute": {
+            "scope": [
+              1,
+              5
+            ],
+            "step": 1,
+            "scoreDesc": {
+              "1": "非常不满意",
+              "2": "不满意",
+              "3": "一般",
+              "4": "满意",
+              "5": "非常满意"
+            },
+            "media": []
+          }
+        },
+        {
+          "id": "option_score_value",
+          "title": "<p>价值感</p>",
+          "attribute": {
+            "scope": [
+              1,
+              5
+            ],
+            "step": 1,
+            "scoreDesc": {
+              "1": "非常不满意",
+              "2": "不满意",
+              "3": "一般",
+              "4": "满意",
+              "5": "非常满意"
+            },
+            "media": []
+          }
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "question_product_problem",
+      "title": "<h2>你遇到过哪些问题？</h2>",
+      "description": "<p>可多选，请按实际情况选择。</p>",
+      "attribute": {
+        "required": false,
+        "random": false,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_problem_slow",
+          "title": "<p>加载慢</p>",
+          "attribute": {
+            "media": []
+          }
+        },
+        {
+          "id": "option_problem_complex",
+          "title": "<p>操作复杂</p>",
+          "attribute": {
+            "media": []
+          }
+        },
+        {
+          "id": "option_problem_bug",
+          "title": "<p>遇到报错或异常</p>",
+          "attribute": {
+            "media": []
+          }
+        },
+        {
+          "id": "option_problem_none",
+          "title": "<p>没有明显问题</p>",
+          "attribute": {
+            "exclusive": true,
+            "media": []
+          }
+        }
+      ]
+    },
+    {
+      "type": "input",
+      "id": "question_feedback_text",
+      "title": "<h2>请留下具体反馈</h2>",
+      "description": "<p>补充信息将帮助我们更好理解你的需求。</p>",
+      "attribute": {
+        "required": false,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_feedback_text",
+          "title": "<p>意见或建议</p>",
+          "attribute": {
+            "dataType": "text",
+            "required": false,
+            "placeholder": "请描述你希望改进的地方",
+            "maxLength": 260
+          }
+        }
+      ]
+    },
+    {
+      "type": "input",
+      "id": "question_feedback_contact",
+      "title": "<h2>联系方式（可选）</h2>",
+      "description": "<p>补充信息将帮助我们更好理解你的需求。</p>",
+      "attribute": {
+        "required": false,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_feedback_email",
+          "title": "<p>邮箱</p>",
+          "attribute": {
+            "dataType": "email",
+            "required": false,
+            "placeholder": "name@example.com",
+            "maxLength": 120
+          }
+        }
+      ]
+    }
+  ],
+  "finish": {
+    "type": "finish",
+    "id": "finish_wechat",
+    "title": "<h1>提交成功</h1>",
+    "description": "<p>感谢填写，提交后将只在控制台输出 payload，并清空本地缓存。</p>",
+    "media": []
+  }
+}

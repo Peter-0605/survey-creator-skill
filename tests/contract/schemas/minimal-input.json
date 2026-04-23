@@ -1,0 +1,44 @@
+{
+  "survey": {
+    "type": "survey",
+    "id": "survey_input_min",
+    "title": "<h1>测试问卷</h1>",
+    "description": "<p>contract</p>",
+    "attribute": {
+      "onePageOneQuestion": true,
+      "allowBack": true,
+      "media": []
+    }
+  },
+  "questions": [
+    {
+      "type": "input",
+      "id": "question_input_min",
+      "title": "<h2>输入</h2>",
+      "description": "<p>请输入</p>",
+      "attribute": {
+        "required": true,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_input_1",
+          "title": "<p>姓名</p>",
+          "attribute": {
+            "dataType": "text",
+            "placeholder": "请输入",
+            "minLength": 1,
+            "maxLength": 50
+          }
+        }
+      ]
+    }
+  ],
+  "finish": {
+    "type": "finish",
+    "id": "finish_input_min",
+    "title": "<h2>完成</h2>",
+    "description": "<p>done</p>",
+    "media": []
+  }
+}

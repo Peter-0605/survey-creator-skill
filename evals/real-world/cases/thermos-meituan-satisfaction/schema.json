@@ -1,0 +1,233 @@
+{
+  "survey": {
+    "type": "survey",
+    "id": "survey_thermos_meituan_7k3p",
+    "title": "<h1>保温杯使用满意度调查</h1>",
+    "description": "<p>这份问卷面向已购买保温杯的用户，用于了解外观、实用性、容量与保温体验。</p>",
+    "attribute": {
+      "onePageOneQuestion": true,
+      "allowBack": true,
+      "media": []
+    }
+  },
+  "questions": [
+    {
+      "type": "score",
+      "id": "question_thermos_score",
+      "title": "<h2>请为保温杯核心体验打分</h2>",
+      "description": "<p>请按你的真实体验评分，1 分最低，5 分最高。</p>",
+      "attribute": {
+        "required": true,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_score_appearance",
+          "title": "<p>外观设计</p>",
+          "attribute": {
+            "scope": [
+              1,
+              5
+            ],
+            "step": 1,
+            "scoreDesc": {
+              "1": "非常不满意",
+              "2": "不满意",
+              "3": "一般",
+              "4": "满意",
+              "5": "非常满意"
+            },
+            "media": []
+          }
+        },
+        {
+          "id": "option_score_practical",
+          "title": "<p>实用性</p>",
+          "attribute": {
+            "scope": [
+              1,
+              5
+            ],
+            "step": 1,
+            "scoreDesc": {
+              "1": "非常不满意",
+              "2": "不满意",
+              "3": "一般",
+              "4": "满意",
+              "5": "非常满意"
+            },
+            "media": []
+          }
+        },
+        {
+          "id": "option_score_capacity",
+          "title": "<p>容积大小</p>",
+          "attribute": {
+            "scope": [
+              1,
+              5
+            ],
+            "step": 1,
+            "scoreDesc": {
+              "1": "非常不满意",
+              "2": "不满意",
+              "3": "一般",
+              "4": "满意",
+              "5": "非常满意"
+            },
+            "media": []
+          }
+        },
+        {
+          "id": "option_score_warmth",
+          "title": "<p>保温时长</p>",
+          "attribute": {
+            "scope": [
+              1,
+              5
+            ],
+            "step": 1,
+            "scoreDesc": {
+              "1": "非常不满意",
+              "2": "不满意",
+              "3": "一般",
+              "4": "满意",
+              "5": "非常满意"
+            },
+            "media": []
+          }
+        }
+      ]
+    },
+    {
+      "type": "radio",
+      "id": "question_thermos_scene",
+      "title": "<h2>你最常在什么场景使用？</h2>",
+      "description": "<p>请选择最符合的一项。</p>",
+      "attribute": {
+        "required": true,
+        "random": true,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_scene_office",
+          "title": "<p>办公室 / 通勤</p>",
+          "attribute": {
+            "random": false,
+            "media": []
+          }
+        },
+        {
+          "id": "option_scene_outdoor",
+          "title": "<p>户外 / 运动</p>",
+          "attribute": {
+            "media": []
+          }
+        },
+        {
+          "id": "option_scene_other",
+          "title": "<p>其他，请说明</p>",
+          "attribute": {
+            "media": []
+          },
+          "child": [
+            {
+              "type": "input",
+              "id": "child_scene_other_text",
+              "title": "<p>请补充使用场景</p>",
+              "attribute": {
+                "required": true,
+                "dataType": "text",
+                "placeholder": "例如：带娃出门、露营",
+                "maxLength": 80
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "question_thermos_issues",
+      "title": "<h2>你遇到过哪些问题？</h2>",
+      "description": "<p>可多选，请按实际情况选择。</p>",
+      "attribute": {
+        "required": false,
+        "random": true,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_issue_leak",
+          "title": "<p>偶尔漏水</p>",
+          "attribute": {
+            "random": false,
+            "media": []
+          }
+        },
+        {
+          "id": "option_issue_heavy",
+          "title": "<p>杯身偏重</p>",
+          "attribute": {
+            "media": []
+          }
+        },
+        {
+          "id": "option_issue_clean",
+          "title": "<p>清洗不方便</p>",
+          "attribute": {
+            "media": []
+          }
+        },
+        {
+          "id": "option_issue_none",
+          "title": "<p>以上都没有</p>",
+          "attribute": {
+            "exclusive": true,
+            "media": []
+          }
+        }
+      ]
+    },
+    {
+      "type": "input",
+      "id": "question_thermos_contact",
+      "title": "<h2>留下建议或联系方式</h2>",
+      "description": "<p>补充信息将帮助我们更好理解你的需求。</p>",
+      "attribute": {
+        "required": false,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_suggestion_text",
+          "title": "<p>改进建议</p>",
+          "attribute": {
+            "dataType": "text",
+            "required": false,
+            "placeholder": "请写下你最希望改进的地方",
+            "maxLength": 240
+          }
+        },
+        {
+          "id": "option_contact_tel",
+          "title": "<p>手机号（可选）</p>",
+          "attribute": {
+            "dataType": "tel",
+            "required": false,
+            "placeholder": "用于后续回访，可不填",
+            "maxLength": 20
+          }
+        }
+      ]
+    }
+  ],
+  "finish": {
+    "type": "finish",
+    "id": "finish_thermos",
+    "title": "<h1>提交成功</h1>",
+    "description": "<p>感谢填写，提交后将只在控制台输出 payload，并清空本地缓存。</p>",
+    "media": []
+  }
+}

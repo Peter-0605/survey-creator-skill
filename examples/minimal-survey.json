@@ -1,0 +1,49 @@
+{
+  "survey": {
+    "type": "survey",
+    "id": "example_survey_minimal",
+    "title": "<h1>Minimal Survey Example</h1>",
+    "description": "<p>This is a minimal example for the survey-creator pipeline.</p>",
+    "attribute": {
+      "onePageOneQuestion": true,
+      "allowBack": true,
+      "media": []
+    }
+  },
+  "questions": [
+    {
+      "type": "radio",
+      "id": "question_satisfaction",
+      "title": "<h2>How satisfied are you?</h2>",
+      "description": "<p>Please choose one option.</p>",
+      "attribute": {
+        "required": true,
+        "random": false,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_good",
+          "title": "<p>Satisfied</p>",
+          "attribute": {
+            "media": []
+          }
+        },
+        {
+          "id": "option_bad",
+          "title": "<p>Not satisfied</p>",
+          "attribute": {
+            "media": []
+          }
+        }
+      ]
+    }
+  ],
+  "finish": {
+    "type": "finish",
+    "id": "finish_example_minimal",
+    "title": "<h2>Thank you</h2>",
+    "description": "<p>Your response has been recorded.</p>",
+    "media": []
+  }
+}

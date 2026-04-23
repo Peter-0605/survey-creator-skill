@@ -1,0 +1,274 @@
+{
+  "survey": {
+    "type": "survey",
+    "id": "survey_kindergarten_xhs_9m2q",
+    "title": "<h1>幼儿园报名意向登记</h1>",
+    "description": "<p>请填写孩子基础信息和家庭关注点，我们会用于报名沟通与园区服务优化。</p>",
+    "attribute": {
+      "onePageOneQuestion": true,
+      "allowBack": true,
+      "media": []
+    }
+  },
+  "questions": [
+    {
+      "type": "input",
+      "id": "question_child_basic",
+      "title": "<h2>孩子与联系人信息</h2>",
+      "description": "<p>补充信息将帮助我们更好理解你的需求。</p>",
+      "attribute": {
+        "required": true,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_child_name",
+          "title": "<p>孩子姓名</p>",
+          "attribute": {
+            "dataType": "text",
+            "required": true,
+            "placeholder": "请输入孩子姓名",
+            "maxLength": 40
+          }
+        },
+        {
+          "id": "option_child_birth",
+          "title": "<p>孩子出生日期</p>",
+          "attribute": {
+            "dataType": "date",
+            "required": true,
+            "placeholder": "请选择日期"
+          }
+        },
+        {
+          "id": "option_parent_tel",
+          "title": "<p>家长手机号</p>",
+          "attribute": {
+            "dataType": "tel",
+            "required": true,
+            "placeholder": "请输入手机号",
+            "maxLength": 20
+          }
+        }
+      ]
+    },
+    {
+      "type": "radio",
+      "id": "question_grade_intent",
+      "title": "<h2>计划报名的班级阶段</h2>",
+      "description": "<p>请选择最符合的一项。</p>",
+      "attribute": {
+        "required": true,
+        "random": false,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_grade_small",
+          "title": "<p>小班</p>",
+          "attribute": {
+            "media": []
+          }
+        },
+        {
+          "id": "option_grade_middle",
+          "title": "<p>中班</p>",
+          "attribute": {
+            "media": []
+          }
+        },
+        {
+          "id": "option_grade_large",
+          "title": "<p>大班</p>",
+          "attribute": {
+            "media": []
+          }
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "question_family_focus",
+      "title": "<h2>你最关注幼儿园哪些方面？</h2>",
+      "description": "<p>可多选，请按实际情况选择。</p>",
+      "attribute": {
+        "required": true,
+        "random": true,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_focus_safety",
+          "title": "<p>安全与接送管理</p>",
+          "attribute": {
+            "random": false,
+            "media": []
+          }
+        },
+        {
+          "id": "option_focus_teacher",
+          "title": "<p>师资与陪伴质量</p>",
+          "attribute": {
+            "media": []
+          }
+        },
+        {
+          "id": "option_focus_food",
+          "title": "<p>餐食与营养</p>",
+          "attribute": {
+            "media": []
+          }
+        },
+        {
+          "id": "option_focus_course",
+          "title": "<p>课程与习惯培养</p>",
+          "attribute": {
+            "media": []
+          }
+        },
+        {
+          "id": "option_focus_unsure",
+          "title": "<p>暂时不确定</p>",
+          "attribute": {
+            "exclusive": true,
+            "media": []
+          }
+        }
+      ]
+    },
+    {
+      "type": "score",
+      "id": "question_kindergarten_score",
+      "title": "<h2>请评价你对园区信息的初步感受</h2>",
+      "description": "<p>请按你的真实体验评分，1 分最低，5 分最高。</p>",
+      "attribute": {
+        "required": true,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_score_environment",
+          "title": "<p>环境整洁度</p>",
+          "attribute": {
+            "scope": [
+              1,
+              5
+            ],
+            "step": 1,
+            "scoreDesc": {
+              "1": "非常不满意",
+              "2": "不满意",
+              "3": "一般",
+              "4": "满意",
+              "5": "非常满意"
+            },
+            "media": []
+          }
+        },
+        {
+          "id": "option_score_teacher",
+          "title": "<p>老师专业感</p>",
+          "attribute": {
+            "scope": [
+              1,
+              5
+            ],
+            "step": 1,
+            "scoreDesc": {
+              "1": "非常不满意",
+              "2": "不满意",
+              "3": "一般",
+              "4": "满意",
+              "5": "非常满意"
+            },
+            "media": []
+          }
+        },
+        {
+          "id": "option_score_commute",
+          "title": "<p>接送便利性</p>",
+          "attribute": {
+            "scope": [
+              1,
+              5
+            ],
+            "step": 1,
+            "scoreDesc": {
+              "1": "非常不满意",
+              "2": "不满意",
+              "3": "一般",
+              "4": "满意",
+              "5": "非常满意"
+            },
+            "media": []
+          }
+        }
+      ]
+    },
+    {
+      "type": "nps",
+      "id": "question_kindergarten_nps",
+      "title": "<h2>你愿意把这个园区推荐给其他家长吗？</h2>",
+      "description": "<p>0 表示完全不推荐，10 表示非常愿意推荐。</p>",
+      "attribute": {
+        "required": true,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_question_kindergarten_nps_scale",
+          "attribute": {
+            "scope": [
+              0,
+              10
+            ],
+            "media": [],
+            "scoreDesc": {
+              "0-6": "不推荐",
+              "7-8": "中立",
+              "9-10": "愿意推荐"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "input",
+      "id": "question_visit_time",
+      "title": "<h2>预约参观时间</h2>",
+      "description": "<p>补充信息将帮助我们更好理解你的需求。</p>",
+      "attribute": {
+        "required": false,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_visit_range",
+          "title": "<p>方便参观的日期范围</p>",
+          "attribute": {
+            "dataType": "dateRange",
+            "required": false,
+            "placeholder": "请选择日期范围"
+          }
+        },
+        {
+          "id": "option_visit_note",
+          "title": "<p>补充说明</p>",
+          "attribute": {
+            "dataType": "text",
+            "required": false,
+            "placeholder": "例如：希望周末上午",
+            "maxLength": 120
+          }
+        }
+      ]
+    }
+  ],
+  "finish": {
+    "type": "finish",
+    "id": "finish_kindergarten",
+    "title": "<h1>报名信息已收到</h1>",
+    "description": "<p>感谢填写，提交后将只在控制台输出 payload，并清空本地缓存。</p>",
+    "media": []
+  }
+}

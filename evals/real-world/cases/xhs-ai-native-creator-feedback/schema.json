@@ -1,0 +1,194 @@
+{
+  "survey": {
+    "type": "survey",
+    "id": "survey_xhs_ai_native_6c1n",
+    "title": "<h1>AI 问卷创建体验反馈</h1>",
+    "description": "<p>这份问卷用于了解你对“用 AI 对话生成问卷草稿”的接受度。</p>",
+    "attribute": {
+      "onePageOneQuestion": true,
+      "allowBack": true,
+      "media": []
+    }
+  },
+  "questions": [
+    {
+      "type": "radio",
+      "id": "question_ai_understand",
+      "title": "<h2>你是否理解“和 AI 对话生成问卷草稿”？</h2>",
+      "description": "<p>请选择最符合的一项。</p>",
+      "attribute": {
+        "required": true,
+        "random": false,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_understand_yes",
+          "title": "<p>很清楚</p>",
+          "attribute": {
+            "media": []
+          }
+        },
+        {
+          "id": "option_understand_some",
+          "title": "<p>大概理解</p>",
+          "attribute": {
+            "media": []
+          }
+        },
+        {
+          "id": "option_understand_no",
+          "title": "<p>不太理解，需要解释</p>",
+          "attribute": {
+            "media": []
+          },
+          "child": [
+            {
+              "type": "input",
+              "id": "child_understand_confuse",
+              "title": "<p>哪里不清楚？</p>",
+              "attribute": {
+                "dataType": "text",
+                "required": false,
+                "placeholder": "请写下疑问",
+                "maxLength": 120
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "question_ai_value",
+      "title": "<h2>你觉得 AI 创建最有价值的地方是？</h2>",
+      "description": "<p>可多选，请按实际情况选择。</p>",
+      "attribute": {
+        "required": true,
+        "random": false,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_value_fast",
+          "title": "<p>更快起草</p>",
+          "attribute": {
+            "media": []
+          }
+        },
+        {
+          "id": "option_value_structure",
+          "title": "<p>自动整理题目结构</p>",
+          "attribute": {
+            "media": []
+          }
+        },
+        {
+          "id": "option_value_copy",
+          "title": "<p>优化题目文案</p>",
+          "attribute": {
+            "media": []
+          }
+        },
+        {
+          "id": "option_value_none",
+          "title": "<p>暂时没有价值</p>",
+          "attribute": {
+            "exclusive": true,
+            "media": []
+          }
+        }
+      ]
+    },
+    {
+      "type": "radio",
+      "id": "question_ai_next_action",
+      "title": "<h2>AI 生成草稿后，你更想做什么？</h2>",
+      "description": "<p>请选择最符合的一项。</p>",
+      "attribute": {
+        "required": true,
+        "random": false,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_next_publish",
+          "title": "<p>直接发布</p>",
+          "attribute": {
+            "media": []
+          }
+        },
+        {
+          "id": "option_next_designer",
+          "title": "<p>进入设计器继续精修</p>",
+          "attribute": {
+            "media": []
+          }
+        },
+        {
+          "id": "option_next_chat",
+          "title": "<p>继续和 AI 对话修改</p>",
+          "attribute": {
+            "media": []
+          }
+        }
+      ]
+    },
+    {
+      "type": "nps",
+      "id": "question_ai_nps",
+      "title": "<h2>你愿意推荐这个 AI 创建方式吗？</h2>",
+      "description": "<p>0 表示完全不推荐，10 表示非常愿意推荐。</p>",
+      "attribute": {
+        "required": true,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_question_ai_nps_scale",
+          "attribute": {
+            "scope": [
+              0,
+              10
+            ],
+            "media": [],
+            "scoreDesc": {
+              "0-6": "不推荐",
+              "7-8": "中立",
+              "9-10": "愿意推荐"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "input",
+      "id": "question_ai_suggestion",
+      "title": "<h2>你希望它继续优化什么？</h2>",
+      "description": "<p>补充信息将帮助我们更好理解你的需求。</p>",
+      "attribute": {
+        "required": false,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_ai_suggestion_text",
+          "title": "<p>建议</p>",
+          "attribute": {
+            "dataType": "text",
+            "required": false,
+            "placeholder": "例如：更像小红书、更少配置感",
+            "maxLength": 240
+          }
+        }
+      ]
+    }
+  ],
+  "finish": {
+    "type": "finish",
+    "id": "finish_xhs_ai",
+    "title": "<h1>反馈已收到</h1>",
+    "description": "<p>感谢填写，提交后将只在控制台输出 payload，并清空本地缓存。</p>",
+    "media": []
+  }
+}

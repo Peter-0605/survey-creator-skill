@@ -1,0 +1,33 @@
+{
+  "survey": {
+    "type": "survey",
+    "id": "survey_invalid_radio_missing",
+    "title": "<h1>测试</h1>",
+    "description": "<p>x</p>",
+    "attribute": {
+      "onePageOneQuestion": true,
+      "allowBack": true,
+      "media": []
+    }
+  },
+  "questions": [
+    {
+      "type": "radio",
+      "id": "question_radio_missing",
+      "title": "<h2>单选</h2>",
+      "description": "<p>x</p>",
+      "attribute": {
+        "required": true,
+        "random": false,
+        "media": []
+      }
+    }
+  ],
+  "finish": {
+    "type": "finish",
+    "id": "finish_invalid_radio_missing",
+    "title": "<h2>完成</h2>",
+    "description": "<p>x</p>",
+    "media": []
+  }
+}

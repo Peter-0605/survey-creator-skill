@@ -1,0 +1,49 @@
+{
+  "survey": {
+    "type": "survey",
+    "id": "survey_invalid_nps_scope",
+    "title": "<h1>测试问卷</h1>",
+    "description": "<p>contract</p>",
+    "attribute": {
+      "onePageOneQuestion": true,
+      "allowBack": true,
+      "media": []
+    }
+  },
+  "questions": [
+    {
+      "type": "nps",
+      "id": "question_invalid_nps_scope",
+      "title": "<h2>愿意推荐吗</h2>",
+      "description": "<p>0-10</p>",
+      "attribute": {
+        "required": true,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_invalid_nps_scope",
+          "attribute": {
+            "scope": [
+              10,
+              0
+            ],
+            "scoreDesc": {
+              "0-6": "不推荐",
+              "7-8": "中立",
+              "9-10": "推荐"
+            },
+            "media": []
+          }
+        }
+      ]
+    }
+  ],
+  "finish": {
+    "type": "finish",
+    "id": "finish_invalid_nps_scope",
+    "title": "<h2>完成</h2>",
+    "description": "<p>done</p>",
+    "media": []
+  }
+}

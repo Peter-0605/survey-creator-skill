@@ -1,0 +1,53 @@
+{
+    "title": "NPS题标题",
+    "description": "NPS题描述",
+    "type": "nps",
+    "id": "question-id",
+    "attribute": {
+        "required": true,
+        "media": [
+            {
+                "type": "image",
+                "url": "媒体链接"
+            },
+            {
+                "type": "video",
+                "url": "媒体链接"
+            },
+            {
+                "type": "audio",
+                "url": "媒体链接"
+            }
+        ]
+    },
+    "option": [
+        {
+            "id": "option-id-1",
+            "attribute": {
+                "scope": [
+                    0,
+                    10
+                ],
+                "media": [
+                    {
+                        "type": "image",
+                        "url": "媒体链接"
+                    },
+                    {
+                        "type": "video",
+                        "url": "媒体链接"
+                    },
+                    {
+                        "type": "audio",
+                        "url": "媒体链接"
+                    }
+                ],
+                "scoreDesc": {
+                    "0-6": "非常不满意",
+                    "7-8": "一般",
+                    "9-10": "非常满意"
+                }
+            }
+        }
+    ]
+}

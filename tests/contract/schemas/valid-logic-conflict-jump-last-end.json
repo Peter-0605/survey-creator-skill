@@ -1,0 +1,123 @@
+{
+  "survey": {
+    "type": "survey",
+    "id": "survey_logic_conflict_jump_last_end",
+    "title": "<h1>Logic Conflict Jump Last End</h1>",
+    "description": "<p>验证同一来源题多个跳转冲突时，最后命中的跳转生效。</p>",
+    "attribute": {
+      "onePageOneQuestion": false,
+      "allowBack": true,
+      "media": []
+    }
+  },
+  "questions": [
+    {
+      "type": "radio",
+      "id": "question_jump_gate",
+      "title": "<h2>是否触发跳转冲突？</h2>",
+      "description": "<p>选择触发后，先跳目标页，最后 end_survey，应直接完成。</p>",
+      "attribute": {
+        "required": true,
+        "random": false,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_jump_yes",
+          "title": "<p>触发</p>",
+          "attribute": { "media": [] }
+        },
+        {
+          "id": "option_jump_no",
+          "title": "<p>不触发</p>",
+          "attribute": { "media": [] }
+        }
+      ]
+    },
+    {
+      "type": "Pagination",
+      "id": "page_sep_jump_middle"
+    },
+    {
+      "type": "input",
+      "id": "question_jump_middle_required",
+      "title": "<h2>中间页必填题</h2>",
+      "description": "<p>最终 end_survey 生效后，这题应被跳过并豁免。</p>",
+      "attribute": {
+        "required": true,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_jump_middle_text",
+          "title": "<p>中间页说明</p>",
+          "attribute": {
+            "dataType": "text",
+            "required": true,
+            "placeholder": "请输入说明",
+            "maxLength": 120
+          }
+        }
+      ]
+    },
+    {
+      "type": "Pagination",
+      "id": "page_sep_jump_target"
+    },
+    {
+      "type": "checkbox",
+      "id": "question_jump_target_required",
+      "title": "<h2>目标页必填题</h2>",
+      "description": "<p>如果最后跳转不是 end_survey，这题会被填写；本用例应被跳过。</p>",
+      "attribute": {
+        "required": true,
+        "random": false,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_jump_target_ai",
+          "title": "<p>AI 模式</p>",
+          "attribute": { "media": [] }
+        },
+        {
+          "id": "option_jump_target_manual",
+          "title": "<p>手工模式</p>",
+          "attribute": { "media": [] }
+        }
+      ]
+    }
+  ],
+  "finish": {
+    "type": "finish",
+    "id": "finish_logic_conflict_jump_last_end",
+    "title": "<h2>完成</h2>",
+    "description": "<p>感谢填写。</p>",
+    "media": []
+  },
+  "logic": [
+    {
+      "id": "logic_jump_first_to_target",
+      "when": {
+        "questionId": "question_jump_gate",
+        "operator": "selected",
+        "optionId": "option_jump_yes"
+      },
+      "action": {
+        "type": "jump_to_page",
+        "targetQuestionId": "question_jump_target_required"
+      }
+    },
+    {
+      "id": "logic_jump_last_end_survey",
+      "when": {
+        "questionId": "question_jump_gate",
+        "operator": "selected",
+        "optionId": "option_jump_yes"
+      },
+      "action": {
+        "type": "end_survey"
+      }
+    }
+  ]
+}

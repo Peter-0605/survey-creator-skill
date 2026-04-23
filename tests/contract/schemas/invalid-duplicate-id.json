@@ -1,0 +1,230 @@
+{
+  "survey": {
+    "type": "survey",
+    "id": "survey_contract",
+    "title": "<h1>Contract</h1>",
+    "description": "<p>合法性测试</p>",
+    "attribute": {
+      "onePageOneQuestion": true,
+      "allowBack": true,
+      "media": []
+    }
+  },
+  "questions": [
+    {
+      "type": "radio",
+      "id": "question_radio",
+      "title": "<h2>单选</h2>",
+      "description": "<p>请选择</p>",
+      "attribute": {
+        "required": true,
+        "random": true,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_radio_a",
+          "title": "<p>A</p>",
+          "attribute": {
+            "random": false,
+            "media": []
+          }
+        },
+        {
+          "id": "option_radio_other",
+          "title": "<p>其他，请说明</p>",
+          "child": [
+            {
+              "type": "input",
+              "id": "child_radio_other",
+              "title": "<p>说明</p>",
+              "attribute": {
+                "required": false,
+                "dataType": "text",
+                "placeholder": "请输入",
+                "maxLength": 80
+              }
+            }
+          ],
+          "attribute": {
+            "media": []
+          }
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "question_radio",
+      "title": "<h2>多选</h2>",
+      "description": "<p>可多选</p>",
+      "attribute": {
+        "required": true,
+        "random": false,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_checkbox_a",
+          "title": "<p>A</p>",
+          "attribute": {
+            "media": []
+          }
+        },
+        {
+          "id": "option_checkbox_none",
+          "title": "<p>以上都不符合</p>",
+          "attribute": {
+            "exclusive": true,
+            "media": []
+          }
+        }
+      ]
+    },
+    {
+      "type": "input",
+      "id": "question_input",
+      "title": "<h2>联系方式</h2>",
+      "description": "<p>请输入</p>",
+      "attribute": {
+        "required": true,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_input_email",
+          "title": "<p>邮箱</p>",
+          "attribute": {
+            "dataType": "email",
+            "placeholder": "name@example.com",
+            "maxLength": 120
+          }
+        },
+        {
+          "id": "option_input_range",
+          "title": "<p>可联系时间</p>",
+          "attribute": {
+            "dataType": "timeRange",
+            "placeholder": "请选择时间"
+          }
+        }
+      ]
+    },
+    {
+      "type": "score",
+      "id": "question_score",
+      "title": "<h2>打分</h2>",
+      "description": "<p>请评分</p>",
+      "attribute": {
+        "required": true,
+        "media": [
+          {
+            "type": "image",
+            "url": "https://example.com/a.png"
+          },
+          {
+            "type": "video",
+            "url": "https://example.com/a.mp4"
+          },
+          {
+            "type": "audio",
+            "url": "https://example.com/a.mp3"
+          }
+        ]
+      },
+      "option": [
+        {
+          "id": "option_score_a",
+          "title": "<p>服务</p>",
+          "attribute": {
+            "scope": [
+              1,
+              5
+            ],
+            "step": 1,
+            "media": [
+              {
+                "type": "image",
+                "url": "https://example.com/a.png"
+              },
+              {
+                "type": "video",
+                "url": "https://example.com/a.mp4"
+              },
+              {
+                "type": "audio",
+                "url": "https://example.com/a.mp3"
+              }
+            ],
+            "scoreDesc": {
+              "1": "很差",
+              "2": "较差",
+              "3": "一般",
+              "4": "满意",
+              "5": "非常满意"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "nps",
+      "id": "question_nps",
+      "title": "<h2>推荐吗</h2>",
+      "description": "<p>0-10</p>",
+      "attribute": {
+        "required": true,
+        "media": [
+          {
+            "type": "image",
+            "url": "https://example.com/a.png"
+          },
+          {
+            "type": "video",
+            "url": "https://example.com/a.mp4"
+          },
+          {
+            "type": "audio",
+            "url": "https://example.com/a.mp3"
+          }
+        ]
+      },
+      "option": [
+        {
+          "id": "option_nps",
+          "attribute": {
+            "scope": [
+              0,
+              10
+            ],
+            "media": [
+              {
+                "type": "image",
+                "url": "https://example.com/a.png"
+              },
+              {
+                "type": "video",
+                "url": "https://example.com/a.mp4"
+              },
+              {
+                "type": "audio",
+                "url": "https://example.com/a.mp3"
+              }
+            ],
+            "scoreDesc": {
+              "0-6": "不推荐",
+              "7-8": "中立",
+              "9-10": "推荐"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "finish": {
+    "type": "finish",
+    "id": "finish_contract",
+    "title": "<h2>完成</h2>",
+    "description": "<p>Thanks</p>",
+    "media": []
+  }
+}

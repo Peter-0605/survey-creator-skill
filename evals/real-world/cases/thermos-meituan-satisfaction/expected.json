@@ -1,0 +1,12 @@
+{
+  "questionTypes": [
+    "score",
+    "radio",
+    "checkbox",
+    "input"
+  ],
+  "mustIncludeQuestionIds": [
+    "question_thermos_score"
+  ],
+  "minQuestions": 4
+}

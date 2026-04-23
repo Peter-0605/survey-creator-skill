@@ -1,0 +1,102 @@
+{
+  "survey": {
+    "type": "survey",
+    "id": "survey_pagination_contract",
+    "title": "<h1>分页分组问卷</h1>",
+    "description": "<p>用于验证 Pagination 手动分页能力。</p>",
+    "attribute": {
+      "onePageOneQuestion": false,
+      "allowBack": true,
+      "media": []
+    }
+  },
+  "questions": [
+    {
+      "type": "radio",
+      "id": "question_budget",
+      "title": "<h2>你每月在 AI 工具上的预算是？</h2>",
+      "description": "<p>单选一项</p>",
+      "attribute": {
+        "required": true,
+        "random": false,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_budget_1",
+          "title": "<p>100 元以内</p>",
+          "attribute": {
+            "media": []
+          }
+        },
+        {
+          "id": "option_budget_2",
+          "title": "<p>100-300 元</p>",
+          "attribute": {
+            "media": []
+          }
+        }
+      ]
+    },
+    {
+      "type": "Pagination",
+      "id": "page_sep_1"
+    },
+    {
+      "type": "checkbox",
+      "id": "question_features",
+      "title": "<h2>你最关注哪些能力？</h2>",
+      "description": "<p>可多选</p>",
+      "attribute": {
+        "required": true,
+        "random": false,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_feature_ux",
+          "title": "<p>高质量 UI 出图</p>",
+          "attribute": {
+            "media": []
+          }
+        },
+        {
+          "id": "option_feature_logic",
+          "title": "<p>问卷逻辑与校验</p>",
+          "attribute": {
+            "media": []
+          }
+        }
+      ]
+    },
+    {
+      "type": "input",
+      "id": "question_contact",
+      "title": "<h2>联系方式</h2>",
+      "description": "<p>用于后续回访</p>",
+      "attribute": {
+        "required": true,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_contact_email",
+          "title": "<p>邮箱</p>",
+          "attribute": {
+            "dataType": "email",
+            "required": true,
+            "placeholder": "name@example.com",
+            "maxLength": 120
+          }
+        }
+      ]
+    }
+  ],
+  "finish": {
+    "type": "finish",
+    "id": "finish_pagination",
+    "title": "<h2>提交完成</h2>",
+    "description": "<p>感谢参与。</p>",
+    "media": []
+  }
+}

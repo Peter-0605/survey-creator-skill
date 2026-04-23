@@ -1,0 +1,53 @@
+{
+  "survey": {
+    "type": "survey",
+    "id": "survey_score_min",
+    "title": "<h1>测试问卷</h1>",
+    "description": "<p>contract</p>",
+    "attribute": {
+      "onePageOneQuestion": true,
+      "allowBack": true,
+      "media": []
+    }
+  },
+  "questions": [
+    {
+      "type": "score",
+      "id": "question_score_min",
+      "title": "<h2>评分</h2>",
+      "description": "<p>请评分</p>",
+      "attribute": {
+        "required": true,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_score_1",
+          "title": "<p>服务</p>",
+          "attribute": {
+            "scope": [
+              1,
+              5
+            ],
+            "step": 1,
+            "scoreDesc": {
+              "1": "差",
+              "2": "较差",
+              "3": "一般",
+              "4": "好",
+              "5": "很好"
+            },
+            "media": []
+          }
+        }
+      ]
+    }
+  ],
+  "finish": {
+    "type": "finish",
+    "id": "finish_score_min",
+    "title": "<h2>完成</h2>",
+    "description": "<p>done</p>",
+    "media": []
+  }
+}

@@ -1,0 +1,122 @@
+{
+  "survey": {
+    "type": "survey",
+    "id": "survey_logic_conflict_option_last_hide",
+    "title": "<h1>Logic Conflict Option Last Hide</h1>",
+    "description": "<p>验证同一选项的 show/hide 冲突以最后命中的逻辑为准。</p>",
+    "attribute": {
+      "onePageOneQuestion": true,
+      "allowBack": true,
+      "media": []
+    }
+  },
+  "questions": [
+    {
+      "type": "radio",
+      "id": "question_option_conflict_gate",
+      "title": "<h2>是否触发选项冲突？</h2>",
+      "description": "<p>选择触发后，高级选项先 show 后 hide，最终应隐藏。</p>",
+      "attribute": {
+        "required": true,
+        "random": false,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_option_conflict_yes",
+          "title": "<p>触发</p>",
+          "attribute": { "media": [] }
+        },
+        {
+          "id": "option_option_conflict_no",
+          "title": "<p>不触发</p>",
+          "attribute": { "media": [] }
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "question_option_conflict_package",
+      "title": "<h2>请选择方案</h2>",
+      "description": "<p>高级选项最终隐藏，基础选项自动选择。</p>",
+      "attribute": {
+        "required": true,
+        "random": false,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_option_conflict_basic",
+          "title": "<p>基础方案</p>",
+          "attribute": { "media": [] }
+        },
+        {
+          "id": "option_option_conflict_advanced",
+          "title": "<p>高级方案</p>",
+          "attribute": { "media": [] }
+        }
+      ]
+    }
+  ],
+  "finish": {
+    "type": "finish",
+    "id": "finish_logic_conflict_option_last_hide",
+    "title": "<h2>完成</h2>",
+    "description": "<p>感谢填写。</p>",
+    "media": []
+  },
+  "logic": [
+    {
+      "id": "logic_conflict_show_advanced_first",
+      "when": {
+        "questionId": "question_option_conflict_gate",
+        "operator": "selected",
+        "optionId": "option_option_conflict_yes"
+      },
+      "action": {
+        "type": "show_option",
+        "targetQuestionId": "question_option_conflict_package",
+        "targetOptionId": "option_option_conflict_advanced"
+      }
+    },
+    {
+      "id": "logic_conflict_hide_advanced_last",
+      "when": {
+        "questionId": "question_option_conflict_gate",
+        "operator": "selected",
+        "optionId": "option_option_conflict_yes"
+      },
+      "action": {
+        "type": "hide_option",
+        "targetQuestionId": "question_option_conflict_package",
+        "targetOptionId": "option_option_conflict_advanced"
+      }
+    },
+    {
+      "id": "logic_conflict_auto_select_hidden_advanced_ignored",
+      "when": {
+        "questionId": "question_option_conflict_gate",
+        "operator": "selected",
+        "optionId": "option_option_conflict_yes"
+      },
+      "action": {
+        "type": "auto_select_option",
+        "targetQuestionId": "question_option_conflict_package",
+        "targetOptionId": "option_option_conflict_advanced"
+      }
+    },
+    {
+      "id": "logic_conflict_auto_select_basic",
+      "when": {
+        "questionId": "question_option_conflict_gate",
+        "operator": "selected",
+        "optionId": "option_option_conflict_yes"
+      },
+      "action": {
+        "type": "auto_select_option",
+        "targetQuestionId": "question_option_conflict_package",
+        "targetOptionId": "option_option_conflict_basic"
+      }
+    }
+  ]
+}

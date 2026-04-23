@@ -1,0 +1,63 @@
+{
+  "survey": {
+    "type": "survey",
+    "id": "survey_contract",
+    "title": "<h1>Contract</h1>",
+    "description": "<p>合法性测试</p>",
+    "attribute": {
+      "onePageOneQuestion": true,
+      "allowBack": true,
+      "media": []
+    }
+  },
+  "questions": [
+    {
+      "type": "radio",
+      "id": "question_radio",
+      "title": "<h2>单选</h2>",
+      "description": "<p>请选择</p>",
+      "attribute": {
+        "required": true,
+        "random": true,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_radio_a",
+          "title": "<p>A</p>",
+          "attribute": {
+            "random": false,
+            "media": []
+          }
+        },
+        {
+          "id": "option_radio_other",
+          "title": "<p>其他，请说明</p>",
+          "child": [
+            {
+              "type": "input",
+              "id": "child_radio_other",
+              "title": "<p>说明</p>",
+              "attribute": {
+                "required": false,
+                "dataType": "text",
+                "placeholder": "请输入",
+                "maxLength": 80
+              }
+            }
+          ],
+          "attribute": {
+            "media": []
+          }
+        }
+      ]
+    }
+  ],
+  "finish": {
+    "type": "finish",
+    "id": "finish_contract",
+    "title": "<h2>完成</h2>",
+    "description": "<p>Thanks</p>",
+    "media": []
+  }
+}

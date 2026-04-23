@@ -1,0 +1,79 @@
+{
+  "survey": {
+    "type": "survey",
+    "id": "survey_logic_end_survey",
+    "title": "<h1>End Survey Contract</h1>",
+    "description": "<p>验证 end_survey 会让后续必填题自动豁免。</p>",
+    "attribute": {
+      "onePageOneQuestion": true,
+      "allowBack": true,
+      "media": []
+    }
+  },
+  "questions": [
+    {
+      "type": "radio",
+      "id": "question_gate",
+      "title": "<h2>是否继续完整调研？</h2>",
+      "description": "<p>选择立即结束会直接进入完成页。</p>",
+      "attribute": {
+        "required": true,
+        "random": false,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_end_now",
+          "title": "<p>不用了，直接结束</p>",
+          "attribute": { "media": [] }
+        },
+        {
+          "id": "option_continue",
+          "title": "<p>继续调研</p>",
+          "attribute": { "media": [] }
+        }
+      ]
+    },
+    {
+      "type": "input",
+      "id": "question_required_detail",
+      "title": "<h2>请填写详细原因</h2>",
+      "description": "<p>这是一个必填题，若触发 end_survey 应自动豁免。</p>",
+      "attribute": {
+        "required": true,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_detail_text",
+          "title": "<p>原因说明</p>",
+          "attribute": {
+            "dataType": "text",
+            "required": true,
+            "placeholder": "请输入原因"
+          }
+        }
+      ]
+    }
+  ],
+  "finish": {
+    "type": "finish",
+    "id": "finish_logic_end_survey",
+    "title": "<h2>已结束</h2>",
+    "description": "<p>感谢参与。</p>",
+    "media": []
+  },
+  "logic": [
+    {
+      "id": "logic_end_survey_now",
+      "when": {
+        "questionId": "question_gate",
+        "operator": "selected",
+        "optionId": "option_end_now"
+      },
+      "action": {
+        "type": "end_survey"
+      }
+    }
+  ]
+}

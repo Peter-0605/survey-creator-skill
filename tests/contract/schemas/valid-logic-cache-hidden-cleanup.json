@@ -1,0 +1,81 @@
+{
+  "survey": {
+    "type": "survey",
+    "id": "survey_logic_cache_hidden_cleanup",
+    "title": "<h1>Logic Cache Hidden Cleanup</h1>",
+    "description": "<p>验证已填写题目后续变隐藏时，缓存和 payload 都会清理。</p>",
+    "attribute": {
+      "onePageOneQuestion": true,
+      "allowBack": true,
+      "media": []
+    }
+  },
+  "questions": [
+    {
+      "type": "radio",
+      "id": "question_cleanup_gate",
+      "title": "<h2>是否需要补充说明？</h2>",
+      "description": "<p>先选需要，填写下一题；回退改成不需要后，下一题应被清理。</p>",
+      "attribute": {
+        "required": true,
+        "random": false,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_cleanup_yes",
+          "title": "<p>需要</p>",
+          "attribute": { "media": [] }
+        },
+        {
+          "id": "option_cleanup_no",
+          "title": "<p>不需要</p>",
+          "attribute": { "media": [] }
+        }
+      ]
+    },
+    {
+      "type": "input",
+      "id": "question_cleanup_detail",
+      "title": "<h2>补充说明</h2>",
+      "description": "<p>这题默认隐藏，选择需要后显示；后续隐藏时必须清掉已填答案。</p>",
+      "attribute": {
+        "required": true,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_cleanup_detail_text",
+          "title": "<p>说明</p>",
+          "attribute": {
+            "dataType": "text",
+            "required": true,
+            "placeholder": "请输入说明",
+            "maxLength": 120
+          }
+        }
+      ]
+    }
+  ],
+  "finish": {
+    "type": "finish",
+    "id": "finish_logic_cache_hidden_cleanup",
+    "title": "<h2>完成</h2>",
+    "description": "<p>感谢填写。</p>",
+    "media": []
+  },
+  "logic": [
+    {
+      "id": "logic_cleanup_show_detail",
+      "when": {
+        "questionId": "question_cleanup_gate",
+        "operator": "selected",
+        "optionId": "option_cleanup_yes"
+      },
+      "action": {
+        "type": "show_question",
+        "targetQuestionId": "question_cleanup_detail"
+      }
+    }
+  ]
+}

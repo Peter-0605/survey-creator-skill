@@ -1,0 +1,35 @@
+{
+    "type": "input",
+    "id": "question-id",
+    "title": "输入题标题",
+    "description": "输入题描述",
+    "attribute": {
+        "required": true,
+        "media":[
+            {
+                "type": "image",
+                "url": "媒体链接"
+            },
+            {
+                "type": "video",
+                "url": "媒体链接"
+            },
+            {
+                "type": "audio",
+                "url": "媒体链接"
+            }
+        ]
+    },
+    "option": [
+        {
+            "title": "选项描述",
+            "id": "option-id",
+            "attribute": {
+                "dataType": "text",
+                "placeholder": "请输入内容",
+                "maxLength": "无值表示不限制",
+                "minLength": "小于 1 或者者不填表示不限制"
+            }
+        }
+    ]
+}

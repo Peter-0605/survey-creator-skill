@@ -1,0 +1,21 @@
+[
+    {
+        "type": "finish",
+        "title": "完成题标题",
+        "description": "完成题描述",
+        "media":[
+            {
+                "type": "image",
+                "url": "媒体链接"   
+            },
+            {
+                "type": "video",
+                "url": "媒体链接"   
+            },
+            {
+                "type": "audio",
+                "url": "媒体链接"   
+            }
+        ]
+    }
+]

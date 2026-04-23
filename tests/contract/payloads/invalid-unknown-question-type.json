@@ -1,0 +1,66 @@
+{
+  "surveyId": "survey_contract",
+  "submittedAt": "2026-04-22T00:00:00.000Z",
+  "answers": [
+    {
+      "questionId": "question_radio",
+      "questionType": "rating",
+      "value": {
+        "optionId": "option_radio_other",
+        "child": [
+          {
+            "childId": "child_radio_other",
+            "dataType": "text",
+            "value": "补充"
+          }
+        ]
+      }
+    },
+    {
+      "questionId": "question_checkbox",
+      "questionType": "checkbox",
+      "value": [
+        {
+          "optionId": "option_checkbox_a"
+        }
+      ]
+    },
+    {
+      "questionId": "question_input",
+      "questionType": "input",
+      "value": [
+        {
+          "optionId": "option_input_email",
+          "dataType": "email",
+          "value": "name@example.com"
+        },
+        {
+          "optionId": "option_input_range",
+          "dataType": "timeRange",
+          "value": {
+            "start": "09:00",
+            "end": "18:00"
+          }
+        }
+      ]
+    },
+    {
+      "questionId": "question_score",
+      "questionType": "score",
+      "value": [
+        {
+          "optionId": "option_score_a",
+          "score": 5
+        }
+      ]
+    },
+    {
+      "questionId": "question_nps",
+      "questionType": "nps",
+      "value": {
+        "optionId": "option_nps",
+        "score": 9
+      }
+    }
+  ]
+}

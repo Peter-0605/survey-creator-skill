@@ -1,0 +1,271 @@
+{
+  "survey": {
+    "type": "survey",
+    "id": "survey_logic_input_operators",
+    "title": "<h1>Logic Input Operators</h1>",
+    "description": "<p>验证 contains / not_contains / eq / neq / gt / lt 输入类操作符。</p>",
+    "attribute": {
+      "onePageOneQuestion": true,
+      "allowBack": true,
+      "media": []
+    }
+  },
+  "questions": [
+    {
+      "type": "input",
+      "id": "question_text_source",
+      "title": "<h2>文本源问题</h2>",
+      "description": "<p>E2E 会填入「示例填写内容」。</p>",
+      "attribute": {
+        "required": true,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_text_source",
+          "title": "<p>文本内容</p>",
+          "attribute": {
+            "dataType": "text",
+            "required": true,
+            "placeholder": "请输入文本",
+            "maxLength": 120
+          }
+        }
+      ]
+    },
+    {
+      "type": "input",
+      "id": "question_contains_target",
+      "title": "<h2>contains 目标题</h2>",
+      "description": "<p>文本包含「示例」时显示。</p>",
+      "attribute": {
+        "required": true,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_contains_target",
+          "title": "<p>contains 说明</p>",
+          "attribute": {
+            "dataType": "text",
+            "required": true,
+            "placeholder": "请输入",
+            "maxLength": 120
+          }
+        }
+      ]
+    },
+    {
+      "type": "input",
+      "id": "question_not_contains_target",
+      "title": "<h2>not_contains 目标题</h2>",
+      "description": "<p>文本不包含「不存在」时显示。</p>",
+      "attribute": {
+        "required": true,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_not_contains_target",
+          "title": "<p>not_contains 说明</p>",
+          "attribute": {
+            "dataType": "text",
+            "required": true,
+            "placeholder": "请输入",
+            "maxLength": 120
+          }
+        }
+      ]
+    },
+    {
+      "type": "input",
+      "id": "question_eq_target",
+      "title": "<h2>eq 目标题</h2>",
+      "description": "<p>文本等于「示例填写内容」时显示。</p>",
+      "attribute": {
+        "required": true,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_eq_target",
+          "title": "<p>eq 说明</p>",
+          "attribute": {
+            "dataType": "text",
+            "required": true,
+            "placeholder": "请输入",
+            "maxLength": 120
+          }
+        }
+      ]
+    },
+    {
+      "type": "input",
+      "id": "question_neq_target",
+      "title": "<h2>neq 目标题</h2>",
+      "description": "<p>文本不等于「其他内容」时显示。</p>",
+      "attribute": {
+        "required": true,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_neq_target",
+          "title": "<p>neq 说明</p>",
+          "attribute": {
+            "dataType": "text",
+            "required": true,
+            "placeholder": "请输入",
+            "maxLength": 120
+          }
+        }
+      ]
+    },
+    {
+      "type": "input",
+      "id": "question_number_source",
+      "title": "<h2>数字源问题</h2>",
+      "description": "<p>E2E 会填入 42。</p>",
+      "attribute": {
+        "required": true,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_number_source",
+          "title": "<p>数字</p>",
+          "attribute": {
+            "dataType": "number",
+            "required": true,
+            "placeholder": "请输入数字"
+          }
+        }
+      ]
+    },
+    {
+      "type": "input",
+      "id": "question_gt_target",
+      "title": "<h2>gt 目标题</h2>",
+      "description": "<p>数字大于 40 时显示。</p>",
+      "attribute": {
+        "required": true,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_gt_target",
+          "title": "<p>gt 说明</p>",
+          "attribute": {
+            "dataType": "text",
+            "required": true,
+            "placeholder": "请输入",
+            "maxLength": 120
+          }
+        }
+      ]
+    },
+    {
+      "type": "input",
+      "id": "question_lt_target",
+      "title": "<h2>lt 目标题</h2>",
+      "description": "<p>数字小于 100 时显示。</p>",
+      "attribute": {
+        "required": true,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_lt_target",
+          "title": "<p>lt 说明</p>",
+          "attribute": {
+            "dataType": "text",
+            "required": true,
+            "placeholder": "请输入",
+            "maxLength": 120
+          }
+        }
+      ]
+    }
+  ],
+  "finish": {
+    "type": "finish",
+    "id": "finish_logic_input_operators",
+    "title": "<h2>完成</h2>",
+    "description": "<p>感谢填写。</p>",
+    "media": []
+  },
+  "logic": [
+    {
+      "id": "logic_contains_show",
+      "when": {
+        "questionId": "question_text_source",
+        "operator": "contains",
+        "value": "示例"
+      },
+      "action": {
+        "type": "show_question",
+        "targetQuestionId": "question_contains_target"
+      }
+    },
+    {
+      "id": "logic_not_contains_show",
+      "when": {
+        "questionId": "question_text_source",
+        "operator": "not_contains",
+        "value": "不存在"
+      },
+      "action": {
+        "type": "show_question",
+        "targetQuestionId": "question_not_contains_target"
+      }
+    },
+    {
+      "id": "logic_eq_show",
+      "when": {
+        "questionId": "question_text_source",
+        "operator": "eq",
+        "value": "示例填写内容"
+      },
+      "action": {
+        "type": "show_question",
+        "targetQuestionId": "question_eq_target"
+      }
+    },
+    {
+      "id": "logic_neq_show",
+      "when": {
+        "questionId": "question_text_source",
+        "operator": "neq",
+        "value": "其他内容"
+      },
+      "action": {
+        "type": "show_question",
+        "targetQuestionId": "question_neq_target"
+      }
+    },
+    {
+      "id": "logic_gt_show",
+      "when": {
+        "questionId": "question_number_source",
+        "operator": "gt",
+        "value": 40
+      },
+      "action": {
+        "type": "show_question",
+        "targetQuestionId": "question_gt_target"
+      }
+    },
+    {
+      "id": "logic_lt_show",
+      "when": {
+        "questionId": "question_number_source",
+        "operator": "lt",
+        "value": 100
+      },
+      "action": {
+        "type": "show_question",
+        "targetQuestionId": "question_lt_target"
+      }
+    }
+  ]
+}

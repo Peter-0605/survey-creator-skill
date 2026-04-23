@@ -1,0 +1,78 @@
+{
+    "type": "checkbox",
+    "id": "question-id",
+    "title": "多选题标题",
+    "description": "多选题描述",
+    "attribute": {
+        "required": true,
+        "random": false,
+        "media":[
+            {
+                "type": "image",
+                "url": "媒体链接"
+            },
+            {
+                "type": "video",
+                "url": "媒体链接"
+            },
+            {
+                "type": "audio",
+                "url": "媒体链接"
+            }
+        ]
+    },
+    "option": [
+        {
+            "title": "选项描述",
+            "id": "option-id",
+            "child": [{
+                "title": "子选项描述",
+                "id": "option-id",
+                "type":"input"
+            }],
+            "attribute": {
+                "exclusive": false,
+                "media":[
+                    {
+                        "type": "image",
+                        "url": "媒体链接"
+                    },
+                    {
+                        "type": "video",
+                        "url": "媒体链接"
+                    },
+                    {
+                        "type": "audio",
+                        "url": "媒体链接"
+                    }
+                ]
+            }
+        },
+        {
+            "title": "选项描述",
+            "id": "option-id",
+            "child": [{
+                "title": "子选项描述",
+                "id": "option-id",
+                "type":"input"
+            }],
+            "attribute": {
+                "mutual-exclusion":false,
+                "media":[
+                    {
+                        "type": "image",
+                        "url": "媒体链接"
+                    },
+                    {
+                        "type": "video",
+                        "url": "媒体链接"
+                    },
+                    {
+                        "type": "audio",
+                        "url": "媒体链接"
+                    }
+                ]
+            }
+        }
+    ]
+}

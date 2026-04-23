@@ -1,0 +1,24 @@
+{
+    "type": "survey",
+    "id": "survey-id",
+    "title": "欢迎语标题",
+    "description": "欢迎语描述",
+    "attribute": {
+        "onePageOneQuestion": true,
+        "allowBack": false,
+        "media":[
+            {
+                "type": "image",
+                "url": "媒体链接"
+            },
+            {
+                "type": "video",
+                "url": "媒体链接"
+            },
+            {
+                "type": "audio",
+                "url": "媒体链接"   
+            }
+        ]
+    }
+}

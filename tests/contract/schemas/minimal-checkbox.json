@@ -1,0 +1,49 @@
+{
+  "survey": {
+    "type": "survey",
+    "id": "survey_checkbox_min",
+    "title": "<h1>测试问卷</h1>",
+    "description": "<p>contract</p>",
+    "attribute": {
+      "onePageOneQuestion": true,
+      "allowBack": true,
+      "media": []
+    }
+  },
+  "questions": [
+    {
+      "type": "checkbox",
+      "id": "question_checkbox_min",
+      "title": "<h2>多选</h2>",
+      "description": "<p>可多选</p>",
+      "attribute": {
+        "required": true,
+        "random": false,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_checkbox_1",
+          "title": "<p>A</p>",
+          "attribute": {
+            "media": []
+          }
+        },
+        {
+          "id": "option_checkbox_2",
+          "title": "<p>B</p>",
+          "attribute": {
+            "media": []
+          }
+        }
+      ]
+    }
+  ],
+  "finish": {
+    "type": "finish",
+    "id": "finish_checkbox_min",
+    "title": "<h2>完成</h2>",
+    "description": "<p>done</p>",
+    "media": []
+  }
+}

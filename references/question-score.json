@@ -1,0 +1,57 @@
+{
+    "type": "score",
+    "id": "question-id",
+    "title": "评分题标题",
+    "description": "评分题描述",
+    "attribute": {
+        "required": true,
+        "media": [
+            {
+                "type": "image",
+                "url": "媒体链接"
+            },
+            {
+                "type": "video",
+                "url": "媒体链接"
+            },
+            {
+                "type": "audio",
+                "url": "媒体链接"
+            }
+        ]
+    },
+    "option": [
+        {
+            "id": "option-id-1",
+            "title": "打分项目标题",
+            "attribute": {
+                "scope": [
+                    1,
+                    5
+                ],
+                "step": 1,
+                "scoreDesc": {
+                    "1": "非常不满意",
+                    "2": "不满意",
+                    "3": "一般",
+                    "4": "满意",
+                    "5": "非常满意"
+                },
+                "media": [
+                    {
+                        "type": "image",
+                        "url": "媒体链接"
+                    },
+                    {
+                        "type": "video",
+                        "url": "媒体链接"
+                    },
+                    {
+                        "type": "audio",
+                        "url": "媒体链接"
+                    }
+                ]
+            }
+        }
+    ]
+}

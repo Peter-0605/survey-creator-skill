@@ -1,0 +1,10 @@
+{
+  "questionTypes": [
+    "radio",
+    "checkbox",
+    "input",
+    "score",
+    "nps"
+  ],
+  "minQuestions": 5
+}

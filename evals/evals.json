@@ -1,0 +1,120 @@
+{
+  "skill_name": "survey-creator",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "用 survey-creator 生成一个 AI Native 风格的用户满意度调研问卷 HTML 页面。要求一页一题，支持上一页，包含欢迎页、3 道题、结束页；其中至少 1 道单选题带‘其他，请说明’的 child 输入；title 和 description 都按富文本内容渲染；提交时按默认协议组装 payload，未作答题不进入 answers，最终 console.log，并在提交成功后清空 localStorage。",
+      "expected_output": "输出单个自包含 HTML 文档；内部结构符合 survey/radio/checkbox/input/finish；支持 onePageOneQuestion + allowBack；child input 按 input 语义渲染；localStorage key 使用 survey_step_cache_${surveyId}；submit 后 console.log payload 并清空缓存。",
+      "files": [],
+      "assertions": [
+        "输出必须是单个自包含 HTML 文档，而不是 JSON 或解释性文本为主。",
+        "HTML 中必须存在真实 <form> 和可见 submit 按钮。",
+        "必须体现一页一题的 step 结构：welcome 独立、每题独立、finish 独立，且同一时刻只显示一个 step。",
+        "必须支持上一页行为，且能看出 allowBack=true 时存在 previous-step 控件。",
+        "至少有 1 道 radio 题带 child 输入，并且 child 输入只在对应选项选中后显示。",
+        "提交逻辑必须组装 surveyId、submittedAt、answers 三层 payload。",
+        "未作答题不得进入 answers。",
+        "必须使用 localStorage，并体现 key 规则 survey_step_cache_${surveyId}。",
+        "提交成功后必须清理当前 survey 的 localStorage 缓存。",
+        "title 和 description 必须按富文本承载方式渲染，而不是强制纯文本。"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "用 survey-creator 生成一个偏 toC、明亮轻盈风格的活动报名问卷 HTML 页面。要求不是一页一题，而是整页展示；包含欢迎页、1 道单选题、1 道多选题、2 道输入题、结束页；支持富文本标题和描述；多选题里有一个互斥选项；提交时遵循默认 submission contract。",
+      "expected_output": "输出单个自包含 HTML 文档；采用整页问卷布局；多选题支持 mutual-exclusion 或 exclusive 语义；输入题根据 option.attribute 渲染；提交 JS 能组装 surveyId/submittedAt/answers 的默认 payload。",
+      "files": [],
+      "assertions": [
+        "输出必须是单个 HTML 文档，整体为整页问卷，而不是 step-by-step 单题模式。",
+        "页面风格必须明显偏 toC、明亮、轻盈，不能是后台面板感。",
+        "必须包含 welcome、1 道 radio、1 道 checkbox、2 道 input、finish。",
+        "checkbox 中必须体现一个互斥选项语义，字段可为 exclusive 或 mutual-exclusion。",
+        "input 题必须根据 option.attribute 渲染输入控件，而不是跳过 option 层。",
+        "title / description 需要支持富文本渲染。",
+        "提交逻辑必须按默认协议组装 surveyId、submittedAt、answers。",
+        "未作答的非必填题不得进入 answers。"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "用 survey-creator 生成一个黑色高级感的新品试喝反馈问卷 HTML 页面。要求 welcome 和 finish 单独有强视觉区块；包含 1 道单选题、1 道多选题、1 道输入题；题目文案里包含正常 HTML 富文本元素（例如 strong、em、ul、li、a）；媒体字段如果未明确要求则不要强行渲染；所有 schema id 和 DOM 关键 id 都要随机且不重复。",
+      "expected_output": "输出单个自包含 HTML 文档；能承载正常 HTML 富文本；不滥用 media；保留 schema id 用于 data-* / name / value；整体视觉符合黑色高级感；id 随机且不重复。",
+      "files": [],
+      "assertions": [
+        "输出必须是黑色高级感视觉，而不是普通浅色表单。",
+        "welcome 和 finish 必须有显著独立视觉区块。",
+        "必须包含 1 道 radio、1 道 checkbox、1 道 input。",
+        "富文本示例内容必须能承载正常 HTML 元素，如 strong、em、ul、li、a。",
+        "如果 prompt 未明确要求媒体，不应强行渲染 image/audio/video 区块。",
+        "schema id 和 DOM 关键 id 必须随机且不重复，不能使用 question-id / option-id / q-1 之类占位符。",
+        "schema id 需要体现在 data-*、name、value 或相关 DOM 映射中，以支持提交和分析。"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "用 survey-creator 生成一份字段全覆盖测试 HTML。要求根据 schema 字段描述覆盖 survey/radio/checkbox/input/finish 的所有字段：type、id、title、description、attribute.required、attribute.random、attribute.media、survey.attribute.onePageOneQuestion、survey.attribute.allowBack、option、option.id、option.title、option.attribute.media、checkbox option.attribute.exclusive、checkbox option.attribute.mutual-exclusion、option.child、child.attribute、input.option.attribute.dataType/placeholder/maxLength/minLength、finish.media、score.attribute.media、score.option.attribute.media。HTML 必须由 schema 渲染，一页一题，支持上一页，localStorage 缓存，submit console.log payload 并清空缓存。",
+      "expected_output": "输出一个 schema-driven 自包含 HTML 文件；内部 schema 覆盖所有字段语义；HTML 根据 schema 渲染富文本、媒体、随机选项、child input、分页、allowBack、本地缓存、提交 payload。 同时覆盖 option.attribute.random=false 固定选项位置规则。 覆盖 multiple child 渲染与提交。 覆盖 child/dataType 驱动的控件类型与校验。 覆盖 score 题目媒体和打分项媒体。",
+      "files": [],
+      "assertions": [
+        "HTML 内必须包含完整 schema 对象或等价结构，并由该 schema 渲染页面。",
+        "必须覆盖 survey/radio/checkbox/input/finish 五种 type。",
+        "所有 id 必须随机且单份问卷内不重复。",
+        "title 和 description 必须包含并按富文本渲染。",
+        "必须渲染 image/audio/video 三类 media，且至少包含链接或 base64 形式。",
+        "必须体现 required 校验。",
+        "radio 和 checkbox 必须体现 random=true 的选项随机展示。",
+        "checkbox 必须同时覆盖 exclusive 和 mutual-exclusion 字段。",
+        "必须包含 option.child，且 child.attribute 被用于渲染和校验。",
+        "input 必须根据 option.attribute 的 dataType、placeholder、maxLength、minLength 渲染和校验。",
+        "必须启用 onePageOneQuestion，一次只展示 intro/单题/finish 中的一个 screen。",
+        "allowBack=true 时必须支持上一页。",
+        "必须使用 localStorage，key 为 survey_step_cache_${surveyId}。",
+        "submit 必须 console.log payload，并在成功后清空当前 survey 缓存。",
+        "当题目级 attribute.random === true 时，若某个选项设置 option.attribute.random === false，该选项必须固定在原位置，不参与随机。",
+        "随机逻辑必须只打乱可随机选项，不能改变 fixed option 的位置。",
+        "单选题和多选题都必须至少示范一个 option.attribute.random === false 的用例。",
+        "如果某个 option 带有多个 child，HTML 必须按顺序渲染全部 child，而不是只渲染一个。",
+        "child 渲染必须根据各自 attribute.dataType 选择控件类型。",
+        "child 提交格式必须支持数组形式，并保留 childId、dataType、value。",
+        "input 题型必须根据 option.attribute.dataType 选择控件类型，并执行对应的格式校验。",
+        "至少示范 text、email、tel、number、date、time、dateTime、dateRange、timeRange、dateTimeRange 这些 dataType 的多个实际渲染案例。",
+        "input 题型提交格式必须按 option[] 输出 value 数组项，而不是单个 text 字段。",
+        "当 dataType 为 dateRange、timeRange、dateTimeRange 时，提交的 value 必须是 {start, end} 对象。",
+        "score 题目 attribute.media 和每个打分项 option.attribute.media 都必须支持 image/audio/video 媒体资源。"
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "用 survey-creator 生成一份保温杯购买用户满意度调查问卷 HTML 页面，投放在美团环境内，UI 风格贴近美团。要求包含 welcome、1 道评分题、1 道单选题、1 道多选题、1 道输入题、finish；评分题需覆盖外观、实用性、容积大小、保温时长四个维度，使用 1-5 分整数评分，并显示每档评分文案；支持必填校验、localStorage 缓存、submit console.log payload 并清空缓存。",
+      "expected_output": "输出单个自包含 HTML 文档；包含 score/radio/checkbox/input/welcome/finish；score 按 option 行渲染，scope+step 生成评分按钮，scoreDesc 跟随选中项显示；提交流程遵循默认 submission contract，并通过 schema/html/e2e/payload 校验。",
+      "files": [],
+      "assertions": [
+        "输出必须是单个自包含 HTML 文档，而不是 schema 说明。",
+        "页面视觉必须明显贴近美团风格，适合移动端与 PC 微信内嵌浏览。",
+        "必须包含 1 道 score 题，并且至少有外观、实用性、容积大小、保温时长四个评分维度。",
+        "score 题必须根据 option.attribute.scope 与 step 动态生成可点击评分值。",
+        "scoreDesc 存在时，选中对应分值后必须展示匹配文案。",
+        "若 score.attribute.required=true，所有评分行都必须完成后才能提交。",
+        "提交 payload 中 score.value 必须为数组，数组项至少包含 optionId 与 score。",
+        "页面必须具备 localStorage 缓存、提交 console.log payload、提交成功后清空缓存。",
+        "最终产物必须通过 schema/runtime/e2e/payload 全链路校验，且 pipeline report 的 releaseDecision.shipReady === true。",
+        "score 题必须支持 question.attribute.media 和 option.attribute.media，并能在 HTML 中渲染对应媒体资源。"
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "用 survey-creator 生成一份品牌推荐意愿 NPS 问卷 HTML 页面。要求包含 welcome、1 道 nps 题、1 道输入题、finish；NPS 使用 0-10 分，scoreDesc 为 0-6 不推荐、7-8 中立、9-10 愿意推荐；题目和 NPS scale 都支持 image/video/audio 媒体；提交 console.log payload 并清空缓存。",
+      "expected_output": "输出单个自包含 HTML 文档；包含 nps 题型；nps.option.attribute.scope=[0,10]；scoreDesc 使用范围 key；HTML 能渲染题目媒体和 scale 媒体；payload 中 questionType=nps 且 value 为 {optionId, score}。",
+      "files": [],
+      "assertions": [
+        "必须包含 nps 题型。",
+        "NPS 题必须按 scope 生成 0 到 10 的整数评分按钮。",
+        "scoreDesc 必须支持 0-6、7-8、9-10 这样的范围 key，并在选中分值时展示匹配文案。",
+        "nps.attribute.media 和 nps.option[].attribute.media 都必须支持 image/audio/video。",
+        "required=true 时必须选择一个 NPS 分值才能提交。",
+        "提交 payload 的 NPS value 必须为对象，且包含 optionId 和 score。",
+        "最终产物必须通过 schema/runtime/e2e/payload 全链路校验，且 pipeline report 的 releaseDecision.shipReady === true。"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "survey": {
+    "type": "survey",
+    "id": "survey_invalid_logic_target",
+    "title": "<h1>Invalid Logic Target</h1>",
+    "description": "<p>invalid</p>",
+    "attribute": {
+      "onePageOneQuestion": true,
+      "allowBack": true,
+      "media": []
+    }
+  },
+  "questions": [
+    {
+      "type": "radio",
+      "id": "question_logic_source",
+      "title": "<h2>source</h2>",
+      "description": "<p>source</p>",
+      "attribute": { "required": true, "random": false, "media": [] },
+      "option": [
+        { "id": "option_logic_yes", "title": "<p>yes</p>", "attribute": { "media": [] } },
+        { "id": "option_logic_no", "title": "<p>no</p>", "attribute": { "media": [] } }
+      ]
+    },
+    {
+      "type": "input",
+      "id": "question_logic_input",
+      "title": "<h2>input</h2>",
+      "description": "<p>input</p>",
+      "attribute": { "required": false, "media": [] },
+      "option": [
+        {
+          "id": "option_logic_input_text",
+          "title": "<p>text</p>",
+          "attribute": { "dataType": "text", "placeholder": "text" }
+        }
+      ]
+    }
+  ],
+  "finish": { "type": "finish", "id": "finish_invalid_logic_target", "title": "<h2>done</h2>", "description": "<p>done</p>", "media": [] },
+  "logic": [
+    {
+      "id": "logic_invalid_target",
+      "when": {
+        "questionId": "question_logic_source",
+        "operator": "selected",
+        "optionId": "option_logic_yes"
+      },
+      "action": {
+        "type": "auto_select_option",
+        "targetQuestionId": "question_logic_input",
+        "targetOptionId": "option_logic_input_text"
+      }
+    }
+  ]
+}

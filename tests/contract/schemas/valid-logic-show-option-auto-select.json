@@ -1,0 +1,104 @@
+{
+  "survey": {
+    "type": "survey",
+    "id": "survey_logic_show_option",
+    "title": "<h1>Show Option Contract</h1>",
+    "description": "<p>验证 show_option 与 auto_select_option 联动。</p>",
+    "attribute": {
+      "onePageOneQuestion": true,
+      "allowBack": true,
+      "media": []
+    }
+  },
+  "questions": [
+    {
+      "type": "radio",
+      "id": "question_need_advanced",
+      "title": "<h2>是否需要高级版本？</h2>",
+      "description": "<p>选择需要后，应显示并自动选择隐藏选项。</p>",
+      "attribute": {
+        "required": true,
+        "random": false,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_need_yes",
+          "title": "<p>需要</p>",
+          "attribute": {
+            "media": []
+          }
+        },
+        {
+          "id": "option_need_no",
+          "title": "<p>不需要</p>",
+          "attribute": {
+            "media": []
+          }
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "question_package",
+      "title": "<h2>请选择方案</h2>",
+      "description": "<p>高级版选项默认隐藏，仅逻辑满足时展示并自动勾选。</p>",
+      "attribute": {
+        "required": true,
+        "random": false,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_package_advanced",
+          "title": "<p>高级 AI 方案</p>",
+          "attribute": {
+            "media": []
+          }
+        },
+        {
+          "id": "option_package_basic",
+          "title": "<p>基础方案</p>",
+          "attribute": {
+            "media": []
+          }
+        }
+      ]
+    }
+  ],
+  "finish": {
+    "type": "finish",
+    "id": "finish_logic_show_option",
+    "title": "<h2>完成</h2>",
+    "description": "<p>感谢填写。</p>",
+    "media": []
+  },
+  "logic": [
+    {
+      "id": "logic_show_advanced_package",
+      "when": {
+        "questionId": "question_need_advanced",
+        "operator": "selected",
+        "optionId": "option_need_yes"
+      },
+      "action": {
+        "type": "show_option",
+        "targetQuestionId": "question_package",
+        "targetOptionId": "option_package_advanced"
+      }
+    },
+    {
+      "id": "logic_auto_select_advanced_package",
+      "when": {
+        "questionId": "question_need_advanced",
+        "operator": "selected",
+        "optionId": "option_need_yes"
+      },
+      "action": {
+        "type": "auto_select_option",
+        "targetQuestionId": "question_package",
+        "targetOptionId": "option_package_advanced"
+      }
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "name": "validators",
+  "version": "1.0.0",
+  "description": "These validators are the hard guardrails for the global `survey-creator` skill.",
+  "main": "validate-survey-html-runtime.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "playwright": "^1.54.2"
+  }
+}

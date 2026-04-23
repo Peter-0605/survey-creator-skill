@@ -1,0 +1,116 @@
+{
+  "survey": {
+    "type": "survey",
+    "id": "survey_logic_hide_question",
+    "title": "<h1>Hide Question Contract</h1>",
+    "description": "<p>验证 hide_question 会让被隐藏必填题自动豁免。</p>",
+    "attribute": {
+      "onePageOneQuestion": true,
+      "allowBack": true,
+      "media": []
+    }
+  },
+  "questions": [
+    {
+      "type": "radio",
+      "id": "question_path",
+      "title": "<h2>请选择路径</h2>",
+      "description": "<p>选择快速路径会隐藏中间必填题。</p>",
+      "attribute": {
+        "required": true,
+        "random": false,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_fast_path",
+          "title": "<p>快速路径</p>",
+          "attribute": { "media": [] }
+        },
+        {
+          "id": "option_full_path",
+          "title": "<p>完整路径</p>",
+          "attribute": { "media": [] }
+        }
+      ]
+    },
+    {
+      "type": "input",
+      "id": "question_hidden_required",
+      "title": "<h2>隐藏的必填题</h2>",
+      "description": "<p>当触发 hide_question 后，这题不应阻塞提交，也不应进 payload。</p>",
+      "attribute": {
+        "required": true,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_hidden_text",
+          "title": "<p>补充说明</p>",
+          "attribute": {
+            "dataType": "text",
+            "required": true,
+            "placeholder": "请输入补充说明"
+          }
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "question_target_choice",
+      "title": "<h2>请选择你想要的模式</h2>",
+      "description": "<p>快速路径下将自动勾选 AI 模式。</p>",
+      "attribute": {
+        "required": true,
+        "random": false,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_target_ai",
+          "title": "<p>AI 模式</p>",
+          "attribute": { "media": [] }
+        },
+        {
+          "id": "option_target_manual",
+          "title": "<p>手工模式</p>",
+          "attribute": { "media": [] }
+        }
+      ]
+    }
+  ],
+  "finish": {
+    "type": "finish",
+    "id": "finish_logic_hide_question",
+    "title": "<h2>完成</h2>",
+    "description": "<p>感谢填写。</p>",
+    "media": []
+  },
+  "logic": [
+    {
+      "id": "logic_hide_required_question",
+      "when": {
+        "questionId": "question_path",
+        "operator": "selected",
+        "optionId": "option_fast_path"
+      },
+      "action": {
+        "type": "hide_question",
+        "targetQuestionId": "question_hidden_required"
+      }
+    },
+    {
+      "id": "logic_auto_select_target_ai",
+      "when": {
+        "questionId": "question_path",
+        "operator": "selected",
+        "optionId": "option_fast_path"
+      },
+      "action": {
+        "type": "auto_select_option",
+        "targetQuestionId": "question_target_choice",
+        "targetOptionId": "option_target_ai"
+      }
+    }
+  ]
+}

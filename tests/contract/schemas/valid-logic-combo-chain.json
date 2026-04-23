@@ -1,0 +1,149 @@
+{
+  "survey": {
+    "type": "survey",
+    "id": "survey_logic_combo_chain",
+    "title": "<h1>Logic Combo Chain</h1>",
+    "description": "<p>验证 jump_to_page + hide_question + hide_option + auto_select_option 组合链路。</p>",
+    "attribute": {
+      "onePageOneQuestion": false,
+      "allowBack": true,
+      "media": []
+    }
+  },
+  "questions": [
+    {
+      "type": "radio",
+      "id": "question_route",
+      "title": "<h2>请选择流程路径</h2>",
+      "description": "<p>快速路径会跳过中间页并直达目标页。</p>",
+      "attribute": {
+        "required": true,
+        "random": false,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_route_fast",
+          "title": "<p>快速路径</p>",
+          "attribute": { "media": [] }
+        },
+        {
+          "id": "option_route_full",
+          "title": "<p>完整路径</p>",
+          "attribute": { "media": [] }
+        }
+      ]
+    },
+    {
+      "type": "Pagination",
+      "id": "page_sep_middle_combo"
+    },
+    {
+      "type": "input",
+      "id": "question_middle_required_combo",
+      "title": "<h2>中间页必填说明</h2>",
+      "description": "<p>快速路径下，这道题应被跳过并自动豁免。</p>",
+      "attribute": {
+        "required": true,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_middle_required_combo",
+          "title": "<p>请填写说明</p>",
+          "attribute": {
+            "dataType": "text",
+            "required": true,
+            "placeholder": "请输入说明"
+          }
+        }
+      ]
+    },
+    {
+      "type": "Pagination",
+      "id": "page_sep_target_combo"
+    },
+    {
+      "type": "checkbox",
+      "id": "question_target_combo",
+      "title": "<h2>目标页能力选择</h2>",
+      "description": "<p>快速路径下应隐藏手工模式并自动选择 AI 模式。</p>",
+      "attribute": {
+        "required": true,
+        "random": false,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_target_ai_combo",
+          "title": "<p>AI 模式</p>",
+          "attribute": { "media": [] }
+        },
+        {
+          "id": "option_target_manual_combo",
+          "title": "<p>手工模式</p>",
+          "attribute": { "media": [] }
+        }
+      ]
+    }
+  ],
+  "finish": {
+    "type": "finish",
+    "id": "finish_logic_combo_chain",
+    "title": "<h2>完成</h2>",
+    "description": "<p>感谢填写。</p>",
+    "media": []
+  },
+  "logic": [
+    {
+      "id": "logic_combo_jump_to_target_page",
+      "when": {
+        "questionId": "question_route",
+        "operator": "selected",
+        "optionId": "option_route_fast"
+      },
+      "action": {
+        "type": "jump_to_page",
+        "targetQuestionId": "question_target_combo"
+      }
+    },
+    {
+      "id": "logic_combo_hide_middle_question",
+      "when": {
+        "questionId": "question_route",
+        "operator": "selected",
+        "optionId": "option_route_fast"
+      },
+      "action": {
+        "type": "hide_question",
+        "targetQuestionId": "question_middle_required_combo"
+      }
+    },
+    {
+      "id": "logic_combo_hide_manual_option",
+      "when": {
+        "questionId": "question_route",
+        "operator": "selected",
+        "optionId": "option_route_fast"
+      },
+      "action": {
+        "type": "hide_option",
+        "targetQuestionId": "question_target_combo",
+        "targetOptionId": "option_target_manual_combo"
+      }
+    },
+    {
+      "id": "logic_combo_auto_select_ai_option",
+      "when": {
+        "questionId": "question_route",
+        "operator": "selected",
+        "optionId": "option_route_fast"
+      },
+      "action": {
+        "type": "auto_select_option",
+        "targetQuestionId": "question_target_combo",
+        "targetOptionId": "option_target_ai_combo"
+      }
+    }
+  ]
+}

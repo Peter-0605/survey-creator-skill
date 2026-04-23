@@ -1,0 +1,124 @@
+{
+  "survey": {
+    "type": "survey",
+    "id": "survey_logic_jump_page",
+    "title": "<h1>Logic Jump Page Contract</h1>",
+    "description": "<p>验证 jump_to_page 在手动分页中的行为。</p>",
+    "attribute": {
+      "onePageOneQuestion": false,
+      "allowBack": true,
+      "media": []
+    }
+  },
+  "questions": [
+    {
+      "type": "radio",
+      "id": "question_entry",
+      "title": "<h2>是否直接跳到目标页？</h2>",
+      "description": "<p>选择 yes 会跳过中间页。</p>",
+      "attribute": {
+        "required": true,
+        "random": false,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_entry_yes",
+          "title": "<p>是，直接跳转</p>",
+          "attribute": { "media": [] }
+        },
+        {
+          "id": "option_entry_no",
+          "title": "<p>否，正常浏览</p>",
+          "attribute": { "media": [] }
+        }
+      ]
+    },
+    {
+      "type": "Pagination",
+      "id": "page_sep_middle"
+    },
+    {
+      "type": "input",
+      "id": "question_middle_optional",
+      "title": "<h2>中间页说明</h2>",
+      "description": "<p>这个问题是必填的，用于验证被跳过时 required 自动豁免且不进入 payload。</p>",
+      "attribute": {
+        "required": true,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_middle_text",
+          "title": "<p>补充说明</p>",
+          "attribute": {
+            "dataType": "text",
+            "required": true,
+            "placeholder": "必填说明"
+          }
+        }
+      ]
+    },
+    {
+      "type": "Pagination",
+      "id": "page_sep_target"
+    },
+    {
+      "type": "checkbox",
+      "id": "question_target_modes",
+      "title": "<h2>目标页模式选择</h2>",
+      "description": "<p>跳页后应到达这里。</p>",
+      "attribute": {
+        "required": true,
+        "random": false,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_mode_ai",
+          "title": "<p>AI 模式</p>",
+          "attribute": { "media": [] }
+        },
+        {
+          "id": "option_mode_manual",
+          "title": "<p>手工模式</p>",
+          "attribute": { "media": [] }
+        }
+      ]
+    }
+  ],
+  "finish": {
+    "type": "finish",
+    "id": "finish_logic_jump_page",
+    "title": "<h2>完成</h2>",
+    "description": "<p>感谢填写。</p>",
+    "media": []
+  },
+  "logic": [
+    {
+      "id": "logic_jump_to_target_page",
+      "when": {
+        "questionId": "question_entry",
+        "operator": "selected",
+        "optionId": "option_entry_yes"
+      },
+      "action": {
+        "type": "jump_to_page",
+        "targetQuestionId": "question_target_modes"
+      }
+    },
+    {
+      "id": "logic_auto_select_ai_on_jump",
+      "when": {
+        "questionId": "question_entry",
+        "operator": "selected",
+        "optionId": "option_entry_yes"
+      },
+      "action": {
+        "type": "auto_select_option",
+        "targetQuestionId": "question_target_modes",
+        "targetOptionId": "option_mode_ai"
+      }
+    }
+  ]
+}

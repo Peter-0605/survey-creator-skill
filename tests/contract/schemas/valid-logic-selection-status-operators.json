@@ -1,0 +1,250 @@
+{
+  "survey": {
+    "type": "survey",
+    "id": "survey_logic_selection_status_operators",
+    "title": "<h1>Logic Selection Status Operators</h1>",
+    "description": "<p>验证 selected / not_selected / exists / not_exists / answered / not_answered。</p>",
+    "attribute": {
+      "onePageOneQuestion": true,
+      "allowBack": true,
+      "media": []
+    }
+  },
+  "questions": [
+    {
+      "type": "radio",
+      "id": "question_selection_source",
+      "title": "<h2>请选择一个选项</h2>",
+      "description": "<p>E2E 会选择第一个选项。</p>",
+      "attribute": {
+        "required": true,
+        "random": false,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_selection_yes",
+          "title": "<p>选中项</p>",
+          "attribute": { "media": [] }
+        },
+        {
+          "id": "option_selection_no",
+          "title": "<p>未选中项</p>",
+          "attribute": { "media": [] }
+        }
+      ]
+    },
+    {
+      "type": "input",
+      "id": "question_selected_target",
+      "title": "<h2>selected 目标题</h2>",
+      "description": "<p>选中 option_selection_yes 后显示。</p>",
+      "attribute": { "required": true, "media": [] },
+      "option": [
+        {
+          "id": "option_selected_target",
+          "title": "<p>selected 说明</p>",
+          "attribute": {
+            "dataType": "text",
+            "required": true,
+            "placeholder": "请输入",
+            "maxLength": 120
+          }
+        }
+      ]
+    },
+    {
+      "type": "input",
+      "id": "question_not_selected_target",
+      "title": "<h2>not_selected 目标题</h2>",
+      "description": "<p>未选中 option_selection_no 时显示。</p>",
+      "attribute": { "required": true, "media": [] },
+      "option": [
+        {
+          "id": "option_not_selected_target",
+          "title": "<p>not_selected 说明</p>",
+          "attribute": {
+            "dataType": "text",
+            "required": true,
+            "placeholder": "请输入",
+            "maxLength": 120
+          }
+        }
+      ]
+    },
+    {
+      "type": "input",
+      "id": "question_exists_target",
+      "title": "<h2>exists 目标题</h2>",
+      "description": "<p>所选集合存在于 optionIds 时显示。</p>",
+      "attribute": { "required": true, "media": [] },
+      "option": [
+        {
+          "id": "option_exists_target",
+          "title": "<p>exists 说明</p>",
+          "attribute": {
+            "dataType": "text",
+            "required": true,
+            "placeholder": "请输入",
+            "maxLength": 120
+          }
+        }
+      ]
+    },
+    {
+      "type": "input",
+      "id": "question_not_exists_target",
+      "title": "<h2>not_exists 目标题</h2>",
+      "description": "<p>所选集合不存在于指定 optionIds 时显示。</p>",
+      "attribute": { "required": true, "media": [] },
+      "option": [
+        {
+          "id": "option_not_exists_target",
+          "title": "<p>not_exists 说明</p>",
+          "attribute": {
+            "dataType": "text",
+            "required": true,
+            "placeholder": "请输入",
+            "maxLength": 120
+          }
+        }
+      ]
+    },
+    {
+      "type": "input",
+      "id": "question_answered_target",
+      "title": "<h2>answered 目标题</h2>",
+      "description": "<p>源问题已作答时显示。</p>",
+      "attribute": { "required": true, "media": [] },
+      "option": [
+        {
+          "id": "option_answered_target",
+          "title": "<p>answered 说明</p>",
+          "attribute": {
+            "dataType": "text",
+            "required": true,
+            "placeholder": "请输入",
+            "maxLength": 120
+          }
+        }
+      ]
+    },
+    {
+      "type": "input",
+      "id": "question_future_source",
+      "title": "<h2>未来源问题</h2>",
+      "description": "<p>用于 not_answered 浏览器专项测试。</p>",
+      "attribute": { "required": false, "media": [] },
+      "option": [
+        {
+          "id": "option_future_source_text",
+          "title": "<p>未来源输入</p>",
+          "attribute": {
+            "dataType": "text",
+            "required": false,
+            "placeholder": "可不填",
+            "maxLength": 120
+          }
+        }
+      ]
+    },
+    {
+      "type": "input",
+      "id": "question_not_answered_target",
+      "title": "<h2>not_answered 目标题</h2>",
+      "description": "<p>当未来源问题未作答时显示；专项浏览器测试会验证初始可见。</p>",
+      "attribute": { "required": false, "media": [] },
+      "option": [
+        {
+          "id": "option_not_answered_target",
+          "title": "<p>not_answered 说明</p>",
+          "attribute": {
+            "dataType": "text",
+            "required": false,
+            "placeholder": "可不填",
+            "maxLength": 120
+          }
+        }
+      ]
+    }
+  ],
+  "finish": {
+    "type": "finish",
+    "id": "finish_logic_selection_status_operators",
+    "title": "<h2>完成</h2>",
+    "description": "<p>感谢填写。</p>",
+    "media": []
+  },
+  "logic": [
+    {
+      "id": "logic_selected_show",
+      "when": {
+        "questionId": "question_selection_source",
+        "operator": "selected",
+        "optionId": "option_selection_yes"
+      },
+      "action": {
+        "type": "show_question",
+        "targetQuestionId": "question_selected_target"
+      }
+    },
+    {
+      "id": "logic_not_selected_show",
+      "when": {
+        "questionId": "question_selection_source",
+        "operator": "not_selected",
+        "optionId": "option_selection_no"
+      },
+      "action": {
+        "type": "show_question",
+        "targetQuestionId": "question_not_selected_target"
+      }
+    },
+    {
+      "id": "logic_exists_show",
+      "when": {
+        "questionId": "question_selection_source",
+        "operator": "exists",
+        "optionIds": ["option_selection_yes"]
+      },
+      "action": {
+        "type": "show_question",
+        "targetQuestionId": "question_exists_target"
+      }
+    },
+    {
+      "id": "logic_not_exists_show",
+      "when": {
+        "questionId": "question_selection_source",
+        "operator": "not_exists",
+        "optionIds": ["option_selection_no"]
+      },
+      "action": {
+        "type": "show_question",
+        "targetQuestionId": "question_not_exists_target"
+      }
+    },
+    {
+      "id": "logic_answered_show",
+      "when": {
+        "questionId": "question_selection_source",
+        "operator": "answered"
+      },
+      "action": {
+        "type": "show_question",
+        "targetQuestionId": "question_answered_target"
+      }
+    },
+    {
+      "id": "logic_not_answered_show",
+      "when": {
+        "questionId": "question_future_source",
+        "operator": "not_answered"
+      },
+      "action": {
+        "type": "show_question",
+        "targetQuestionId": "question_not_answered_target"
+      }
+    }
+  ]
+}

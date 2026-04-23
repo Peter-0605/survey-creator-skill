@@ -1,0 +1,93 @@
+{
+  "survey": {
+    "type": "survey",
+    "id": "survey_logic_conflict_question_last_show",
+    "title": "<h1>Logic Conflict Question Last Show</h1>",
+    "description": "<p>验证同一题目的 hide/show 冲突以最后命中的逻辑为准。</p>",
+    "attribute": {
+      "onePageOneQuestion": true,
+      "allowBack": true,
+      "media": []
+    }
+  },
+  "questions": [
+    {
+      "type": "radio",
+      "id": "question_conflict_gate",
+      "title": "<h2>是否触发冲突逻辑？</h2>",
+      "description": "<p>选择触发后，同一目标题先 hide 后 show，最终应可见。</p>",
+      "attribute": {
+        "required": true,
+        "random": false,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_conflict_yes",
+          "title": "<p>触发</p>",
+          "attribute": { "media": [] }
+        },
+        {
+          "id": "option_conflict_no",
+          "title": "<p>不触发</p>",
+          "attribute": { "media": [] }
+        }
+      ]
+    },
+    {
+      "type": "input",
+      "id": "question_conflict_detail",
+      "title": "<h2>冲突后的可见必填题</h2>",
+      "description": "<p>如果最后一条 show_question 生效，这题应被填写并进入 payload。</p>",
+      "attribute": {
+        "required": true,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_conflict_detail_text",
+          "title": "<p>说明</p>",
+          "attribute": {
+            "dataType": "text",
+            "required": true,
+            "placeholder": "请输入说明",
+            "maxLength": 120
+          }
+        }
+      ]
+    }
+  ],
+  "finish": {
+    "type": "finish",
+    "id": "finish_logic_conflict_question_last_show",
+    "title": "<h2>完成</h2>",
+    "description": "<p>感谢填写。</p>",
+    "media": []
+  },
+  "logic": [
+    {
+      "id": "logic_conflict_hide_question_first",
+      "when": {
+        "questionId": "question_conflict_gate",
+        "operator": "selected",
+        "optionId": "option_conflict_yes"
+      },
+      "action": {
+        "type": "hide_question",
+        "targetQuestionId": "question_conflict_detail"
+      }
+    },
+    {
+      "id": "logic_conflict_show_question_last",
+      "when": {
+        "questionId": "question_conflict_gate",
+        "operator": "selected",
+        "optionId": "option_conflict_yes"
+      },
+      "action": {
+        "type": "show_question",
+        "targetQuestionId": "question_conflict_detail"
+      }
+    }
+  ]
+}

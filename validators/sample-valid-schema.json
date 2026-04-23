@@ -1,0 +1,235 @@
+{
+  "survey": {
+    "type": "survey",
+    "id": "survey_n4w8k2qp",
+    "title": "<h1>问卷欢迎页</h1>",
+    "description": "<p>这是一个包含评分题的验证器样例。</p>",
+    "attribute": {
+      "onePageOneQuestion": true,
+      "allowBack": true,
+      "media": []
+    }
+  },
+  "questions": [
+    {
+      "type": "radio",
+      "id": "question_t9m2x1qp",
+      "title": "<h2>请选择一个场景</h2>",
+      "description": "<p>单选题样例</p>",
+      "attribute": {
+        "required": true,
+        "random": true,
+        "media": []
+      },
+      "option": [
+        {
+          "title": "<p>满意度调研</p>",
+          "id": "option_a1m9x2qp",
+          "attribute": {
+            "random": false,
+            "media": []
+          }
+        },
+        {
+          "title": "<p>其他，请说明</p>",
+          "id": "option_b2m9x3qp",
+          "child": [
+            {
+              "type": "input",
+              "id": "child_c3m9x4qp",
+              "title": "<p>补充说明</p>",
+              "attribute": {
+                "dataType": "text",
+                "required": true,
+                "placeholder": "请输入说明",
+                "minLength": 2,
+                "maxLength": 100
+              }
+            }
+          ],
+          "attribute": {
+            "media": []
+          }
+        }
+      ]
+    },
+    {
+      "type": "score",
+      "id": "question_score_k5m1p2rt",
+      "title": "<h2>请为以下维度评分</h2>",
+      "description": "<p>1 分最低，5 分最高。</p>",
+      "attribute": {
+        "required": true,
+        "media": [
+          {
+            "type": "image",
+            "url": "https://example.com/score-image.png"
+          },
+          {
+            "type": "video",
+            "url": "https://example.com/score-video.mp4"
+          },
+          {
+            "type": "audio",
+            "url": "https://example.com/score-audio.mp3"
+          }
+        ]
+      },
+      "option": [
+        {
+          "id": "option_score_appearance",
+          "title": "<p>外观</p>",
+          "attribute": {
+            "scope": [
+              1,
+              5
+            ],
+            "step": 1,
+            "scoreDesc": {
+              "1": "非常不满意",
+              "2": "不满意",
+              "3": "一般",
+              "4": "满意",
+              "5": "非常满意"
+            },
+            "media": [
+              {
+                "type": "image",
+                "url": "https://example.com/score-image.png"
+              },
+              {
+                "type": "video",
+                "url": "https://example.com/score-video.mp4"
+              },
+              {
+                "type": "audio",
+                "url": "https://example.com/score-audio.mp3"
+              }
+            ]
+          }
+        },
+        {
+          "id": "option_score_warm",
+          "title": "<p>保温时长</p>",
+          "attribute": {
+            "scope": [
+              1,
+              5
+            ],
+            "step": 1,
+            "scoreDesc": {
+              "1": "很差",
+              "2": "偏弱",
+              "3": "达标",
+              "4": "不错",
+              "5": "超预期"
+            },
+            "media": [
+              {
+                "type": "image",
+                "url": "https://example.com/score-image.png"
+              },
+              {
+                "type": "video",
+                "url": "https://example.com/score-video.mp4"
+              },
+              {
+                "type": "audio",
+                "url": "https://example.com/score-audio.mp3"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "type": "input",
+      "id": "question_i6m9x7qp",
+      "title": "<h2>请输入联系信息</h2>",
+      "description": "<p>输入题样例</p>",
+      "attribute": {
+        "required": false,
+        "media": []
+      },
+      "option": [
+        {
+          "title": "<p>邮箱</p>",
+          "id": "option_j7m9x8qp",
+          "attribute": {
+            "dataType": "email",
+            "placeholder": "name@example.com",
+            "minLength": 0,
+            "maxLength": 120
+          }
+        },
+        {
+          "title": "<p>使用时间范围</p>",
+          "id": "option_range_demo",
+          "attribute": {
+            "dataType": "dateRange",
+            "placeholder": "请选择开始与结束日期"
+          }
+        }
+      ]
+    },
+    {
+      "type": "nps",
+      "id": "question_nps_z8m2k4qp",
+      "title": "<h2>你愿意向朋友推荐这款产品吗？</h2>",
+      "description": "<p>0 表示完全不愿意，10 表示非常愿意。</p>",
+      "attribute": {
+        "required": true,
+        "media": [
+          {
+            "type": "image",
+            "url": "https://example.com/nps-image.png"
+          },
+          {
+            "type": "video",
+            "url": "https://example.com/nps-video.mp4"
+          },
+          {
+            "type": "audio",
+            "url": "https://example.com/nps-audio.mp3"
+          }
+        ]
+      },
+      "option": [
+        {
+          "id": "option_nps_scale_1",
+          "attribute": {
+            "scope": [
+              0,
+              10
+            ],
+            "media": [
+              {
+                "type": "image",
+                "url": "https://example.com/nps-image.png"
+              },
+              {
+                "type": "video",
+                "url": "https://example.com/nps-video.mp4"
+              },
+              {
+                "type": "audio",
+                "url": "https://example.com/nps-audio.mp3"
+              }
+            ],
+            "scoreDesc": {
+              "0-6": "非常不满意",
+              "7-8": "一般",
+              "9-10": "非常满意"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "finish": {
+    "type": "finish",
+    "title": "<h2>感谢填写</h2>",
+    "description": "<p>可以提交了。</p>",
+    "media": []
+  }
+}
