@@ -1,5 +1,7 @@
 # survey-creator-skill
 
+[English](./README.md) | [简体中文](./README.zh-CN.md)
+
 **Schema-safe survey generator and legality pipeline for AI-driven questionnaire creation.**
 
 `survey-creator-skill` is an open-source skill + toolchain for building production-safe survey experiences from structured schema.
@@ -305,9 +307,15 @@ Example:
 
 > Use `survey-creator-skill` to generate a survey HTML page, validate the schema, render the HTML, and verify payload correctness before returning the result.
 
-For more integration notes, see:
+### Use with Claude-style local workflows
 
-- `docs/SKILL_INSTALLATION.md`
+You can also use this repository as a standalone skill/toolchain in Claude-style or custom agent systems:
+
+- keep `SKILL.md` as the main skill prompt
+- keep `references/` as retrieval material
+- use `validators/run_survey_creator_pipeline.py` as the main executable entrypoint
+- only treat output as deliverable when the pipeline returns `shipReady = true`
+
 
 ---
 
@@ -316,9 +324,6 @@ For more integration notes, see:
 ### Product / project overview
 - `docs/GITHUB_OVERVIEW.md`
 - `docs/GIT_RELEASE_CHECKLIST.md`
-
-### Skill integration
-- `docs/SKILL_INSTALLATION.md`
 
 ### Core references
 - `references/schema-notes.md`
