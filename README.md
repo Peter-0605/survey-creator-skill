@@ -228,6 +228,27 @@ This produces:
 - generated payload sample
 - pipeline report
 
+### Example files
+
+The repository currently includes two example inputs in `examples/`:
+
+- `minimal-survey.json` — the smallest valid survey example
+- `ai-design-tool-demand-demo.json` — a richer demo covering logic, Pagination, multi-question pages, child input, score, and nps
+
+The integrated demo also has a generated HTML artifact:
+
+- `examples/ai-design-tool-demand-demo.html`
+
+You can regenerate the demo HTML at any time with:
+
+```bash
+python3 validators/run_survey_creator_pipeline.py \
+  --schema examples/ai-design-tool-demand-demo.json \
+  --output-dir ./out \
+  --auto-repair \
+  --fail-on-high-warning
+```
+
 ---
 
 ## Run all checks

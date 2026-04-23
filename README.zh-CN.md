@@ -189,6 +189,27 @@ python3 validators/run_survey_creator_pipeline.py \
 - sample payload
 - pipeline report
 
+### examples 目录说明
+
+当前仓库里有两份示例输入：
+
+- `examples/minimal-survey.json`：最小可运行问卷示例
+- `examples/ai-design-tool-demand-demo.json`：更完整的综合示例，覆盖 logic、Pagination、手动分页、一页多题、child input、score、nps
+
+同时仓库也附带了一份已生成的 HTML：
+
+- `examples/ai-design-tool-demand-demo.html`
+
+如果你想重新生成这份 demo 的 HTML，可直接运行：
+
+```bash
+python3 validators/run_survey_creator_pipeline.py \
+  --schema examples/ai-design-tool-demand-demo.json \
+  --output-dir ./out \
+  --auto-repair \
+  --fail-on-high-warning
+```
+
 ### 依赖要求
 
 - Python 3.10+
