@@ -8,6 +8,7 @@ __pycache__/
 node_modules/
 
 evals/**/outputs/
+out-smoke/
 tmp/
 out/
 dist/
@@ -15,4 +16,3 @@ dist/
 *.pipeline-report.json
 *.repaired.schema.json
 *.payload.json
-
