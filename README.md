@@ -1,8 +1,8 @@
-# survey-creator
+# survey-creator-skill
 
 **Schema-safe survey generator and legality pipeline for AI-driven questionnaire creation.**
 
-`survey-creator` is an open-source skill + toolchain for building production-safe survey experiences from structured schema.
+`survey-creator-skill` is an open-source skill + toolchain for building production-safe survey experiences from structured schema.
 
 It does more than render HTML:
 
@@ -39,7 +39,7 @@ Survey and questionnaire systems have stricter needs:
 - rendered form should be browser-testable
 - submit payload must match the concrete survey definition
 
-`survey-creator` is designed around that full chain.
+`survey-creator-skill` is designed around that full chain.
 
 ---
 
@@ -159,7 +159,7 @@ This project already enforces these runtime rules:
 ## Repository structure
 
 ```text
-survey-creator/
+survey-creator-skill/
   SKILL.md
   README.md
   LICENSE
@@ -192,7 +192,7 @@ survey-creator/
 
 ```bash
 git clone <your-repo-url>
-cd survey-creator
+cd survey-creator-skill
 ```
 
 ### 2. Install validator-side dependencies
@@ -296,8 +296,8 @@ python3 validators/validate_survey_html_accessibility.py /absolute/path/to/file.
 
 Copy or symlink this repository into your local skills directory:
 
-- `~/.codex/skills/survey-creator`
-- `~/.agents/skills/survey-creator`
+- `~/.codex/skills/survey-creator-skill`
+- `~/.agents/skills/survey-creator-skill`
 
 Then invoke it by name in your prompt.
 

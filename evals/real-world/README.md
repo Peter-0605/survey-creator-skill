@@ -1,6 +1,6 @@
-# survey-creator real-world evals
+# survey-creator-skill real-world evals
 
-真实业务回归集，用来验证 `survey-creator` 能否把常见业务 prompt 稳定落成可投放 HTML。
+真实业务回归集，用来验证 `survey-creator-skill` 能否把常见业务 prompt 稳定落成可投放 HTML。
 
 每个 case 包含：
 

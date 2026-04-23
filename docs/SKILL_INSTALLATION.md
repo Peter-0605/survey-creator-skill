@@ -27,16 +27,16 @@ You can use it either:
 
 Place the repository at one of these locations:
 
-- `~/.codex/skills/survey-creator`
-- `~/.agents/skills/survey-creator`
+- `~/.codex/skills/survey-creator-skill`
+- `~/.agents/skills/survey-creator-skill`
 
 Then keep the repository structure unchanged.
 
 ### Suggested setup
 
 ```bash
-git clone <your-repo-url> ~/.codex/skills/survey-creator
-cd ~/.codex/skills/survey-creator/validators
+git clone <your-repo-url> ~/.codex/skills/survey-creator-skill
+cd ~/.codex/skills/survey-creator-skill/validators
 npm install
 npx playwright install
 ```

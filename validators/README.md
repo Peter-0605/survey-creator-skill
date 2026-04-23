@@ -1,6 +1,6 @@
 # Survey validators (Python)
 
-These validators are the hard guardrails for the global `survey-creator` skill.
+These validators are the hard guardrails for the global `survey-creator-skill` skill.
 
 ## Files
 - `<repo-root>/validators/validate_survey_schema.py`

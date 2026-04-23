@@ -1,6 +1,6 @@
 # Git release checklist
 
-Use this checklist before pushing `survey-creator` to GitHub.
+Use this checklist before pushing `survey-creator-skill` to GitHub.
 
 ---
 
@@ -98,7 +98,7 @@ Suggested topics:
 ```bash
 git init
 git add .
-git commit -m "feat: open source survey-creator"
+git commit -m "feat: open source survey-creator-skill"
 git branch -M main
 git remote add origin <your-repo-url>
 git push -u origin main

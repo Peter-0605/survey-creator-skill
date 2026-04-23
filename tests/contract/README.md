@@ -1,6 +1,6 @@
-# survey-creator contract tests
+# survey-creator-skill contract tests
 
-These tests protect the legality boundary of `survey-creator`.
+These tests protect the legality boundary of `survey-creator-skill`.
 
 They intentionally focus on protocol legality rather than business quality.
 
