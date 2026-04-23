@@ -218,7 +218,6 @@ npx playwright install
 ## 文档入口
 
 - 英文 README：[README.md](./README.md)
-- GitHub 项目简介：[docs/GITHUB_OVERVIEW.md](./docs/GITHUB_OVERVIEW.md)
 - 合法性保证：[LEGALITY_GUARANTEE.md](./LEGALITY_GUARANTEE.md)
 - 合法性矩阵：[LEGALITY_MATRIX.md](./LEGALITY_MATRIX.md)
 

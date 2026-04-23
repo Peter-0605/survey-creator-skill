@@ -171,7 +171,6 @@ survey-creator-skill/
   validators/
   tests/
   evals/
-  docs/
   run_all_legality_checks.sh
 ```
 
@@ -320,10 +319,6 @@ You can also use this repository as a standalone skill/toolchain in Claude-style
 ---
 
 ## Documentation map
-
-### Product / project overview
-- `docs/GITHUB_OVERVIEW.md`
-- `docs/GIT_RELEASE_CHECKLIST.md`
 
 ### Core references
 - `references/schema-notes.md`
