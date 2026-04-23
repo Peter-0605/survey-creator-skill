@@ -47,7 +47,7 @@ def warning_counts_by_severity(warnings):
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Schema -> HTML -> payload fully automated release pipeline for survey-creator.')
+    parser = argparse.ArgumentParser(description='Schema -> HTML -> payload fully automated release pipeline for survey-creator-skill.')
     parser.add_argument('--schema', required=True, help='Path to frozen schema JSON')
     parser.add_argument('--out-html', required=True, help='Output HTML path')
     parser.add_argument('--out-payload', help='Optional generated sample payload output path')

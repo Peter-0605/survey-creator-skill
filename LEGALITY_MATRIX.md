@@ -1,6 +1,6 @@
 # Survey Creator Legality Matrix
 
-This matrix summarizes what `survey-creator` currently guarantees at the legality layer.
+This matrix summarizes what `survey-creator-skill` currently guarantees at the legality layer.
 
 | Layer | Guarantee | Enforced by |
 |---|---|---|

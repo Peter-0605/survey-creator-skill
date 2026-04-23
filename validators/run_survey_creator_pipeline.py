@@ -335,7 +335,7 @@ def run_pipeline(schema, template_text, auto_repair=False, fail_on_high_warning=
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Unified schema -> repair -> html -> payload pipeline for survey-creator.")
+    parser = argparse.ArgumentParser(description="Unified schema -> repair -> html -> payload pipeline for survey-creator-skill.")
     parser.add_argument("--schema", required=True, help="Path to source schema JSON")
     parser.add_argument("--output-dir", required=True, help="Directory for repaired schema, html, payload, and report")
     parser.add_argument("--prefix", help="Optional output file prefix; defaults to source schema filename stem")

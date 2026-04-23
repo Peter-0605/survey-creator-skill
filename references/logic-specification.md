@@ -1,6 +1,6 @@
 # Final logic specification
 
-This document is the consolidated runtime specification for `survey-creator` logic behavior.
+This document is the consolidated runtime specification for `survey-creator-skill` logic behavior.
 
 Use this as the final source of truth when designing, validating, repairing, or reviewing logic-enabled surveys.
 

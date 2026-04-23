@@ -1,6 +1,6 @@
-# survey-creator 上线前验收 checklist
+# survey-creator-skill 上线前验收 checklist
 
-用于确认一份由 `survey-creator` 生成的问卷，是否适合真正交付给用户填写。
+用于确认一份由 `survey-creator-skill` 生成的问卷，是否适合真正交付给用户填写。
 
 ---
 

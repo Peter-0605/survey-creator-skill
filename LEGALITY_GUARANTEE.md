@@ -1,6 +1,6 @@
 # Survey Creator Legality Guarantee
 
-`survey-creator` is a schema legality engine plus fixed HTML renderer for survey pages.
+`survey-creator-skill` is a schema legality engine plus fixed HTML renderer for survey pages.
 
 Its goal is not to guarantee that a questionnaire is the best possible business questionnaire. Business intent, wording, conversion strategy, and product judgment should still be refined through user + AI iteration.
 
@@ -18,7 +18,7 @@ They decide and iterate:
 - whether score / nps is appropriate
 - whether the final questionnaire matches the target campaign
 
-### `survey-creator` owns legality
+### `survey-creator-skill` owns legality
 It must enforce:
 - only supported top-level shape: `survey`, `questions`, `finish`
 - only supported question types: `radio`, `checkbox`, `input`, `score`, `nps`

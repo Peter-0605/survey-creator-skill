@@ -303,7 +303,7 @@ Then invoke it by name in your prompt.
 
 Example:
 
-> Use `survey-creator` to generate a survey HTML page, validate the schema, render the HTML, and verify payload correctness before returning the result.
+> Use `survey-creator-skill` to generate a survey HTML page, validate the schema, render the HTML, and verify payload correctness before returning the result.
 
 For more integration notes, see:
 

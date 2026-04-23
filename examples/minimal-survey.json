@@ -3,7 +3,7 @@
     "type": "survey",
     "id": "example_survey_minimal",
     "title": "<h1>Minimal Survey Example</h1>",
-    "description": "<p>This is a minimal example for the survey-creator pipeline.</p>",
+    "description": "<p>This is a minimal example for the survey-creator-skill pipeline.</p>",
     "attribute": {
       "onePageOneQuestion": true,
       "allowBack": true,

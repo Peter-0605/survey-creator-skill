@@ -839,7 +839,7 @@ def main():
     test_full_pipeline()
     test_interaction_e2e_rejects_bad_runtime_payload()
     test_accessibility_rejects_unlabeled_control()
-    print('\n✅ survey-creator contract tests passed')
+    print('\n✅ survey-creator-skill contract tests passed')
 
 
 if __name__ == '__main__':

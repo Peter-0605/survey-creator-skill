@@ -1,6 +1,6 @@
 # Local cache rules
 
-This document defines the default local caching strategy for `survey-creator` when `survey.attribute.onePageOneQuestion === true`.
+This document defines the default local caching strategy for `survey-creator-skill` when `survey.attribute.onePageOneQuestion === true`.
 
 ## Cache purpose
 Local cache exists to:

@@ -1,9 +1,9 @@
 {
-  "skill_name": "survey-creator",
+  "skill_name": "survey-creator-skill",
   "evals": [
     {
       "id": 1,
-      "prompt": "用 survey-creator 生成一个 AI Native 风格的用户满意度调研问卷 HTML 页面。要求一页一题，支持上一页，包含欢迎页、3 道题、结束页；其中至少 1 道单选题带‘其他，请说明’的 child 输入；title 和 description 都按富文本内容渲染；提交时按默认协议组装 payload，未作答题不进入 answers，最终 console.log，并在提交成功后清空 localStorage。",
+      "prompt": "用 survey-creator-skill 生成一个 AI Native 风格的用户满意度调研问卷 HTML 页面。要求一页一题，支持上一页，包含欢迎页、3 道题、结束页；其中至少 1 道单选题带‘其他，请说明’的 child 输入；title 和 description 都按富文本内容渲染；提交时按默认协议组装 payload，未作答题不进入 answers，最终 console.log，并在提交成功后清空 localStorage。",
       "expected_output": "输出单个自包含 HTML 文档；内部结构符合 survey/radio/checkbox/input/finish；支持 onePageOneQuestion + allowBack；child input 按 input 语义渲染；localStorage key 使用 survey_step_cache_${surveyId}；submit 后 console.log payload 并清空缓存。",
       "files": [],
       "assertions": [
@@ -21,7 +21,7 @@
     },
     {
       "id": 2,
-      "prompt": "用 survey-creator 生成一个偏 toC、明亮轻盈风格的活动报名问卷 HTML 页面。要求不是一页一题，而是整页展示；包含欢迎页、1 道单选题、1 道多选题、2 道输入题、结束页；支持富文本标题和描述；多选题里有一个互斥选项；提交时遵循默认 submission contract。",
+      "prompt": "用 survey-creator-skill 生成一个偏 toC、明亮轻盈风格的活动报名问卷 HTML 页面。要求不是一页一题，而是整页展示；包含欢迎页、1 道单选题、1 道多选题、2 道输入题、结束页；支持富文本标题和描述；多选题里有一个互斥选项；提交时遵循默认 submission contract。",
       "expected_output": "输出单个自包含 HTML 文档；采用整页问卷布局；多选题支持 mutual-exclusion 或 exclusive 语义；输入题根据 option.attribute 渲染；提交 JS 能组装 surveyId/submittedAt/answers 的默认 payload。",
       "files": [],
       "assertions": [
@@ -37,7 +37,7 @@
     },
     {
       "id": 3,
-      "prompt": "用 survey-creator 生成一个黑色高级感的新品试喝反馈问卷 HTML 页面。要求 welcome 和 finish 单独有强视觉区块；包含 1 道单选题、1 道多选题、1 道输入题；题目文案里包含正常 HTML 富文本元素（例如 strong、em、ul、li、a）；媒体字段如果未明确要求则不要强行渲染；所有 schema id 和 DOM 关键 id 都要随机且不重复。",
+      "prompt": "用 survey-creator-skill 生成一个黑色高级感的新品试喝反馈问卷 HTML 页面。要求 welcome 和 finish 单独有强视觉区块；包含 1 道单选题、1 道多选题、1 道输入题；题目文案里包含正常 HTML 富文本元素（例如 strong、em、ul、li、a）；媒体字段如果未明确要求则不要强行渲染；所有 schema id 和 DOM 关键 id 都要随机且不重复。",
       "expected_output": "输出单个自包含 HTML 文档；能承载正常 HTML 富文本；不滥用 media；保留 schema id 用于 data-* / name / value；整体视觉符合黑色高级感；id 随机且不重复。",
       "files": [],
       "assertions": [
@@ -52,7 +52,7 @@
     },
     {
       "id": 4,
-      "prompt": "用 survey-creator 生成一份字段全覆盖测试 HTML。要求根据 schema 字段描述覆盖 survey/radio/checkbox/input/finish 的所有字段：type、id、title、description、attribute.required、attribute.random、attribute.media、survey.attribute.onePageOneQuestion、survey.attribute.allowBack、option、option.id、option.title、option.attribute.media、checkbox option.attribute.exclusive、checkbox option.attribute.mutual-exclusion、option.child、child.attribute、input.option.attribute.dataType/placeholder/maxLength/minLength、finish.media、score.attribute.media、score.option.attribute.media。HTML 必须由 schema 渲染，一页一题，支持上一页，localStorage 缓存，submit console.log payload 并清空缓存。",
+      "prompt": "用 survey-creator-skill 生成一份字段全覆盖测试 HTML。要求根据 schema 字段描述覆盖 survey/radio/checkbox/input/finish 的所有字段：type、id、title、description、attribute.required、attribute.random、attribute.media、survey.attribute.onePageOneQuestion、survey.attribute.allowBack、option、option.id、option.title、option.attribute.media、checkbox option.attribute.exclusive、checkbox option.attribute.mutual-exclusion、option.child、child.attribute、input.option.attribute.dataType/placeholder/maxLength/minLength、finish.media、score.attribute.media、score.option.attribute.media。HTML 必须由 schema 渲染，一页一题，支持上一页，localStorage 缓存，submit console.log payload 并清空缓存。",
       "expected_output": "输出一个 schema-driven 自包含 HTML 文件；内部 schema 覆盖所有字段语义；HTML 根据 schema 渲染富文本、媒体、随机选项、child input、分页、allowBack、本地缓存、提交 payload。 同时覆盖 option.attribute.random=false 固定选项位置规则。 覆盖 multiple child 渲染与提交。 覆盖 child/dataType 驱动的控件类型与校验。 覆盖 score 题目媒体和打分项媒体。",
       "files": [],
       "assertions": [
@@ -85,7 +85,7 @@
     },
     {
       "id": 5,
-      "prompt": "用 survey-creator 生成一份保温杯购买用户满意度调查问卷 HTML 页面，投放在美团环境内，UI 风格贴近美团。要求包含 welcome、1 道评分题、1 道单选题、1 道多选题、1 道输入题、finish；评分题需覆盖外观、实用性、容积大小、保温时长四个维度，使用 1-5 分整数评分，并显示每档评分文案；支持必填校验、localStorage 缓存、submit console.log payload 并清空缓存。",
+      "prompt": "用 survey-creator-skill 生成一份保温杯购买用户满意度调查问卷 HTML 页面，投放在美团环境内，UI 风格贴近美团。要求包含 welcome、1 道评分题、1 道单选题、1 道多选题、1 道输入题、finish；评分题需覆盖外观、实用性、容积大小、保温时长四个维度，使用 1-5 分整数评分，并显示每档评分文案；支持必填校验、localStorage 缓存、submit console.log payload 并清空缓存。",
       "expected_output": "输出单个自包含 HTML 文档；包含 score/radio/checkbox/input/welcome/finish；score 按 option 行渲染，scope+step 生成评分按钮，scoreDesc 跟随选中项显示；提交流程遵循默认 submission contract，并通过 schema/html/e2e/payload 校验。",
       "files": [],
       "assertions": [
@@ -103,7 +103,7 @@
     },
     {
       "id": 6,
-      "prompt": "用 survey-creator 生成一份品牌推荐意愿 NPS 问卷 HTML 页面。要求包含 welcome、1 道 nps 题、1 道输入题、finish；NPS 使用 0-10 分，scoreDesc 为 0-6 不推荐、7-8 中立、9-10 愿意推荐；题目和 NPS scale 都支持 image/video/audio 媒体；提交 console.log payload 并清空缓存。",
+      "prompt": "用 survey-creator-skill 生成一份品牌推荐意愿 NPS 问卷 HTML 页面。要求包含 welcome、1 道 nps 题、1 道输入题、finish；NPS 使用 0-10 分，scoreDesc 为 0-6 不推荐、7-8 中立、9-10 愿意推荐；题目和 NPS scale 都支持 image/video/audio 媒体；提交 console.log payload 并清空缓存。",
       "expected_output": "输出单个自包含 HTML 文档；包含 nps 题型；nps.option.attribute.scope=[0,10]；scoreDesc 使用范围 key；HTML 能渲染题目媒体和 scale 媒体；payload 中 questionType=nps 且 value 为 {optionId, score}。",
       "files": [],
       "assertions": [

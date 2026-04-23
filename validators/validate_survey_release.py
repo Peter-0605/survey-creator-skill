@@ -52,7 +52,7 @@ def warning_counts_by_severity(warnings):
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Unified pre-release validator for survey-creator outputs.')
+    parser = argparse.ArgumentParser(description='Unified pre-release validator for survey-creator-skill outputs.')
     parser.add_argument('--schema', help='Path to schema JSON')
     parser.add_argument('--html', help='Path to generated HTML file')
     parser.add_argument('--payload', help='Path to payload JSON')

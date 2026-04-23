@@ -1,6 +1,6 @@
 # Logic rules
 
-`survey-creator` now supports a top-level `logic` array for conditional questionnaire behavior.
+`survey-creator-skill` now supports a top-level `logic` array for conditional questionnaire behavior.
 
 ## Top-level shape
 

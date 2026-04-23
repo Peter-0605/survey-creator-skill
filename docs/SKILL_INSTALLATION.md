@@ -1,6 +1,6 @@
 # Skill installation guide
 
-This document explains how to use `survey-creator` with agent products such as Codex and Claude-style local skill systems.
+This document explains how to use `survey-creator-skill` with agent products such as Codex and Claude-style local skill systems.
 
 ---
 
@@ -45,7 +45,7 @@ npx playwright install
 
 In Codex, reference the skill by name:
 
-> Use `survey-creator` to generate a survey HTML page, validate the schema, render HTML, and verify payload correctness.
+> Use `survey-creator-skill` to generate a survey HTML page, validate the schema, render HTML, and verify payload correctness.
 
 ---
 

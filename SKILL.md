@@ -1,5 +1,5 @@
 ---
-name: survey-creator
+name: survey-creator-skill
 description: Create schema-validated HTML survey pages from natural-language requirements using the admin designer references. Use this skill whenever the user asks to create, design, prototype, render, or generate a survey/questionnaire HTML page, especially when they want free-form UI style but need the question structure constrained by a reference schema. Be proactive about using it for survey creation, registration forms, feedback forms, AI Native questionnaire pages, and similar structured form UIs.
 ---
 

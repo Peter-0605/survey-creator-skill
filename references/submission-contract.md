@@ -1,6 +1,6 @@
 # Submission contract
 
-This document defines the default submission data protocol for `survey-creator`.
+This document defines the default submission data protocol for `survey-creator-skill`.
 
 This contract is the default until the user provides a more specific backend format.
 
