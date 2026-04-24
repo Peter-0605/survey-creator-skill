@@ -2,11 +2,11 @@
 
 [English](./README.md) | [简体中文](./README.zh-CN.md)
 
-**Schema-safe survey generator and legality pipeline for AI-driven questionnaire creation.**
+**A production-oriented survey skill for Codex, Claude, Trae, Cursor, and other AI agent workflows.**
 
-`survey-creator-skill` is an open-source skill + toolchain for building production-safe survey experiences from structured schema.
+`survey-creator-skill` is an open-source **agent skill repository** for generating schema-constrained, legality-checked survey HTML.
 
-It does more than render HTML:
+Its primary purpose is not just to render pages, but to help AI agents:
 
 - validates survey schema legality
 - repairs safe schema issues
@@ -21,9 +21,9 @@ If you want AI to generate questionnaires **without silently producing invalid f
 
 ---
 
-## Why this project exists
+## Why this skill exists
 
-Most “AI form generators” stop at:
+Most AI agents or AI form generators stop at:
 
 - generate some JSON
 - render some HTML
@@ -41,11 +41,13 @@ Survey and questionnaire systems have stricter needs:
 - rendered form should be browser-testable
 - submit payload must match the concrete survey definition
 
-`survey-creator-skill` is designed around that full chain.
+`survey-creator-skill` is designed to give agents that full chain as a reusable skill package.
 
 ---
 
-## What it includes
+## What this skill repository includes
+
+Think of this repo as a packaged survey capability that an agent can read, retrieve from, and execute against.
 
 ### Skill layer
 - `SKILL.md`
@@ -158,77 +160,120 @@ This project already enforces these runtime rules:
 
 ---
 
-## Repository structure
+## Skill repository structure
 
 ```text
 survey-creator-skill/
-  SKILL.md
-  README.md
+  SKILL.md                    # main skill definition for agents
+  README.md                   # English usage guide
+  README.zh-CN.md             # Chinese usage guide
+  docs/                       # human-facing documentation
+  references/                 # model-facing schema / logic constraints
+  templates/                  # HTML template assets
+  validators/                 # validation and rendering support
+  examples/                   # bundled schema + HTML examples
+  tests/                      # contract tests
+  evals/                      # evaluation inputs
   LICENSE
-  examples/
-  references/
-  templates/
-  validators/
-  tests/
-  evals/
-  run_all_legality_checks.sh
 ```
 
 ---
 
-## Requirements
+## Use with AI coding/design agents
 
-### Runtime
-- Python 3.10+
-- Node.js 18+
+This repository is primarily meant to be used as a **skill** inside agent products, not as a standalone script-first toolkit.
 
-### Browser automation
-- Playwright
+Recommended environments:
 
----
-
-## Install
-
-### 1. Clone the repository
-
-```bash
-git clone <your-repo-url>
-cd survey-creator-skill
-```
-
-### 2. Install validator-side dependencies
-
-```bash
-cd validators
-npm install
-npx playwright install
-cd ..
-```
-
-Python validators currently rely on the standard library, so no separate Python package install is required.
+- Codex
+- Claude / Claude Code style local skills
+- Trae
+- Cursor
 
 ---
 
-## Quick start
+## Codex
 
-Run the full legality pipeline on the bundled example:
+Recommended setup:
 
-```bash
-python3 validators/run_survey_creator_pipeline.py \
-  --schema examples/minimal-survey.json \
-  --output-dir ./out \
-  --auto-repair \
-  --fail-on-high-warning
-```
+1. place the repository in a local skills directory
+   - `~/.codex/skills/survey-creator-skill`
+   - or `~/.agents/skills/survey-creator-skill`
+2. keep the repository structure unchanged
+3. let Codex load `SKILL.md` and retrieve from `references/`
 
-This produces:
+Typical prompt:
 
-- repaired schema
-- rendered HTML
-- generated payload sample
-- pipeline report
+> Use `survey-creator-skill` to generate a survey HTML page, validate the schema, render the HTML, and verify payload correctness before returning the result.
 
-### Example files
+Best practice:
+- describe the survey goal in plain language
+- describe respondent type, delivery channel, UI style, and question families
+- let the skill build an internal schema first, then validate before returning HTML
+
+---
+
+## Claude / Claude Code style usage
+
+If your workflow supports local prompt toolkits or markdown-based skills:
+
+1. keep this repository as a standalone repo or local dependency
+2. use `SKILL.md` as the skill/system instruction body
+3. use `references/` as retrieval material
+4. use `templates/` and `validators/` as implementation support
+
+Recommended prompt pattern:
+
+> Read `SKILL.md`, generate an internal survey schema from my request, validate legality, render HTML, and only return the result if the survey is safe to deliver.
+
+---
+
+## Trae
+
+For Trae-style agent workflows, the recommended approach is:
+
+1. keep this repo as a local knowledge/skill package
+2. point the agent to `SKILL.md`
+3. allow retrieval from `references/`
+4. tell the agent to follow the legality-first workflow instead of directly generating HTML from raw prompt text
+
+Recommended usage:
+
+> Use the local skill in `SKILL.md`. Build the survey from references, validate the schema and logic, then generate the final HTML only after checks pass.
+
+---
+
+## Cursor
+
+Cursor does not use a universal built-in skill standard in the same way as Codex, but this repository still works well as an agent companion package.
+
+Recommended usage:
+
+1. open the repository alongside your working project
+2. reference `SKILL.md` in your chat context
+3. tell Cursor to treat `references/` as the source of truth for schema and logic constraints
+4. ask Cursor to generate survey HTML through the skill workflow, not directly from UI description alone
+
+Recommended prompt:
+
+> Follow `SKILL.md` in this repository. Use the reference files to construct a legal survey schema, validate logic and payload constraints, then output the final HTML.
+
+---
+
+## Example prompts
+
+### Product feedback survey
+> Use `survey-creator-skill` to create a mobile-friendly product feedback survey for AI design tool users. Include welcome, radio, checkbox, input, score, nps, and finish. Keep the UI lightweight and validate everything before returning HTML.
+
+### Registration questionnaire
+> Use `survey-creator-skill` to create a registration survey for kindergarten enrollment. The result should be a submittable HTML page, with schema legality and payload correctness checked before return.
+
+### Logic-heavy research flow
+> Use `survey-creator-skill` to build a survey with conditional follow-up questions, manual pagination, and jump-to-page behavior. Make sure hidden/skipped questions do not enter payload.
+
+---
+
+## Example files
 
 The repository currently includes two example inputs in `examples/`:
 
@@ -239,15 +284,21 @@ The integrated demo also has a generated HTML artifact:
 
 - `examples/ai-design-tool-demand-demo.html`
 
-You can regenerate the demo HTML at any time with:
+---
 
-```bash
-python3 validators/run_survey_creator_pipeline.py \
-  --schema examples/ai-design-tool-demand-demo.json \
-  --output-dir ./out \
-  --auto-repair \
-  --fail-on-high-warning
-```
+## What users should provide in prompts
+
+To get the best result, users should describe:
+
+- survey goal
+- respondent type
+- delivery channel
+- UI style
+- expected question types
+- whether logic / pagination / jump behavior is needed
+- whether one-page-one-question is needed
+
+The skill is strongest when the prompt defines intent clearly and the repo enforces legality.
 
 ---
 

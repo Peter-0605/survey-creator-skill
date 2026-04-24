@@ -2,11 +2,11 @@
 
 [English](./README.md) | 简体中文
 
-**一个面向 AI 问卷生成场景的 schema 安全约束与合法性交付管线。**
+**一个面向 Codex、Claude、Trae、Cursor 等 AI Agent 工作流的生产级问卷 skill。**
 
-`survey-creator-skill` 是一个开源的 skill + 工具链，用来把结构化问卷 schema 生成成可提交的 HTML 问卷页面，并在交付前完成整套合法性校验。
+`survey-creator-skill` 是一个开源的 **agent skill 仓库**，用来约束 AI 生成问卷 schema，并输出经过合法性校验的 HTML 问卷页面。
 
-它不只是“生成 HTML”，还包括：
+它的目标不只是“生成 HTML”，而是帮助 Agent：
 
 - 校验问卷 schema 的结构与字段合法性
 - 修复安全范围内可自动修复的问题
@@ -20,9 +20,9 @@
 
 ---
 
-## 为什么要做这个项目
+## 为什么要做这个 skill
 
-很多“AI 表单 / AI 问卷生成器”只做到：
+很多 AI Agent 或“AI 表单 / AI 问卷生成器”只做到：
 
 - 生成一份 JSON
 - 渲染一份 HTML
@@ -40,11 +40,13 @@
 - 交互可在浏览器里真实跑通
 - 提交 payload 必须和当前问卷 schema 严格一致
 
-`survey-creator-skill` 解决的就是这整条链路。
+`survey-creator-skill` 的作用，就是把这整条链路沉淀成一个可复用的 skill。
 
 ---
 
-## 项目包含什么
+## 这个 skill 仓库包含什么
+
+你可以把它理解成一个“可被 Agent 读取、检索、执行”的问卷能力包，而不是普通前端模板仓库。
 
 ### 1. Skill 层
 - `SKILL.md`
@@ -134,62 +136,120 @@
 
 ---
 
-## 仓库结构
+## skill 仓库结构
 
 ```text
 survey-creator-skill/
-├── SKILL.md
-├── README.md
-├── README.zh-CN.md
-├── references/
-├── templates/
-├── validators/
-├── tests/
-├── evals/
+├── SKILL.md                  # Agent 读取的主 skill 定义
+├── README.md                 # 英文使用说明
+├── README.zh-CN.md           # 中文使用说明
+├── docs/                     # 给人看的辅助文档
+├── references/               # 给模型读取的 schema / logic 约束
+├── templates/                # HTML 模板资源
+├── validators/               # 校验与渲染辅助层
+├── examples/                 # 示例 schema 与 HTML
+├── tests/                    # contract tests
+├── evals/                    # 评估样例
+└── LICENSE
 ```
 
 ---
 
-## 如何安装
+## 在 AI Agent / IDE 中使用
 
-### 方式 1：作为本地 skill 使用
+这个仓库的主定位是：**作为 skill 给 Codex、Claude、Trae、Cursor 等 Agent 使用**，而不是优先面向“手工执行脚本”的独立工具。
 
-把仓库放到你的 skill 目录，例如：
+推荐环境：
 
-- `~/.codex/skills/survey-creator-skill`
-- `~/.agents/skills/survey-creator-skill`
+- Codex
+- Claude / Claude Code 类本地 skill 工作流
+- Trae
+- Cursor
 
-建议安装方式：
+---
 
-```bash
-git clone <your-repo-url> ~/.codex/skills/survey-creator-skill
-cd ~/.codex/skills/survey-creator-skill/validators
-npm install
-npx playwright install
-```
+## Codex
 
-当前 Python 校验脚本主要依赖标准库，不需要额外安装 Python 包。
+推荐方式：
 
-### 方式 2：作为独立工具链使用
+1. 把仓库放到本地 skills 目录
+   - `~/.codex/skills/survey-creator-skill`
+   - 或 `~/.agents/skills/survey-creator-skill`
+2. 保持目录结构不变
+3. 让 Codex 读取 `SKILL.md`，并从 `references/` 中取约束
 
-即使你的 Agent 系统不支持 skill 机制，也可以直接把它当成一个结构化问卷生成 / 校验管线来用。主入口命令：
+推荐 prompt：
 
-```bash
-python3 validators/run_survey_creator_pipeline.py \
-  --schema /absolute/path/to/schema.json \
-  --output-dir /absolute/path/to/out \
-  --auto-repair \
-  --fail-on-high-warning
-```
+> Use `survey-creator-skill` to generate a survey HTML page, validate the schema, render the HTML, and verify payload correctness before returning the result.
 
-这会输出：
+最佳实践：
+- 用自然语言描述问卷目标
+- 明确用户是谁、投放渠道、UI 风格、题型范围
+- 让 skill 先构建内部 schema，再完成合法性校验，最后输出 HTML
 
-- repaired schema
-- HTML 页面
-- sample payload
-- pipeline report
+---
 
-### examples 目录说明
+## Claude / Claude Code 类工作流
+
+如果你的工作流支持本地 markdown skill / prompt toolkit：
+
+1. 保留这个仓库作为独立 repo 或本地依赖
+2. 把 `SKILL.md` 当作 skill / system instruction 主体
+3. 把 `references/` 当作检索材料
+4. 把 `templates/` 与 `validators/` 当作辅助实现层
+
+推荐 prompt：
+
+> Read `SKILL.md`, generate an internal survey schema from my request, validate legality, render HTML, and only return the result if the survey is safe to deliver.
+
+---
+
+## Trae
+
+对于 Trae 这类 Agent 工作流，推荐方式是：
+
+1. 把仓库作为本地 skill / knowledge package
+2. 明确让 Agent 读取 `SKILL.md`
+3. 明确让 Agent 从 `references/` 获取 schema 与 logic 约束
+4. 要求 Agent 先走 legality-first 流程，而不是直接根据 UI 描述吐 HTML
+
+推荐 prompt：
+
+> Use the local skill in `SKILL.md`. Build the survey from references, validate the schema and logic, then generate the final HTML only after checks pass.
+
+---
+
+## Cursor
+
+Cursor 没有和 Codex 一样统一的 skill 规范，但这个仓库依然适合作为 Agent 辅助包使用。
+
+推荐方式：
+
+1. 把这个仓库和你的项目一起打开
+2. 在对话里明确引用 `SKILL.md`
+3. 告诉 Cursor：`references/` 是 schema / logic 的唯一约束来源
+4. 不要让 Cursor 只根据 UI 描述直接出 HTML，而是先走 skill 定义的 schema → validate → render 流程
+
+推荐 prompt：
+
+> Follow `SKILL.md` in this repository. Use the reference files to construct a legal survey schema, validate logic and payload constraints, then output the final HTML.
+
+---
+
+## 示例 prompts
+
+### 产品反馈问卷
+> Use `survey-creator-skill` to create a mobile-friendly product feedback survey for AI design tool users. Include welcome, radio, checkbox, input, score, nps, and finish. Keep the UI lightweight and validate everything before returning HTML.
+
+### 报名问卷
+> Use `survey-creator-skill` to create a registration survey for kindergarten enrollment. The result should be a submittable HTML page, with schema legality and payload correctness checked before return.
+
+### 逻辑较重的研究问卷
+> Use `survey-creator-skill` to build a survey with conditional follow-up questions, manual pagination, and jump-to-page behavior. Make sure hidden/skipped questions do not enter payload.
+
+---
+
+## examples 目录说明
 
 当前仓库里有两份示例输入：
 
@@ -200,29 +260,21 @@ python3 validators/run_survey_creator_pipeline.py \
 
 - `examples/ai-design-tool-demand-demo.html`
 
-如果你想重新生成这份 demo 的 HTML，可直接运行：
+---
 
-```bash
-python3 validators/run_survey_creator_pipeline.py \
-  --schema examples/ai-design-tool-demand-demo.json \
-  --output-dir ./out \
-  --auto-repair \
-  --fail-on-high-warning
-```
+## 用户在 prompt 中最好说明什么
 
-### 依赖要求
+为了让 skill 更稳定地产出结果，用户最好在 prompt 里明确：
 
-- Python 3.10+
-- Node.js 18+
-- Playwright 浏览器
+- 问卷目标
+- 目标答题人群
+- 投放渠道
+- UI 风格
+- 需要哪些题型
+- 是否需要逻辑 / 分页 / 跳页
+- 是否需要一页一题
 
-安装浏览器自动化依赖：
-
-```bash
-cd validators
-npm install
-npx playwright install
-```
+这个 skill 最擅长的是：用户描述业务意图，仓库负责合法性约束。
 
 ---
 
