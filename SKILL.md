@@ -58,8 +58,8 @@ Before generating output, read only the files you need from:
 - `validators/render_survey_html.py`
 - `validators/build_validated_survey.py`
 - `validators/generate_sample_payload.py`
-- `LEGALITY_GUARANTEE.md`
-- `LEGALITY_MATRIX.md`
+- `docs/LEGALITY_GUARANTEE.md`
+- `docs/LEGALITY_MATRIX.md`
 - `tests/contract/README.md`
 - `run_all_legality_checks.sh`
 
@@ -70,7 +70,7 @@ Always read `references/schema-notes.md` first, then `references/field-guide-ove
 
 Treat this skill as a **schema legality engine** plus fixed HTML renderer. The user and AI may iterate on business semantics, but the skill must enforce protocol legality before delivery.
 
-Read `LEGALITY_GUARANTEE.md` when changing the skill, adding fields, adding question types, or assessing whether generated artifacts are safe to deliver.
+Read `docs/LEGALITY_GUARANTEE.md` when changing the skill, adding fields, adding question types, or assessing whether generated artifacts are safe to deliver.
 
 When modifying references, validators, payload format, or templates, run:
 

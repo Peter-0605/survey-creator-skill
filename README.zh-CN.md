@@ -230,7 +230,7 @@ npx playwright install
 
 当前生成 HTML 运行时的性能基准结果已归档在：
 
-- `benchmarks/README.md`
+- `docs/PERFORMANCE_BENCHMARK.md`
 
 简要结论：
 
@@ -252,9 +252,11 @@ npx playwright install
 
 ## 文档入口
 
+- 逻辑条件与结果说明：[references/logic-condition-action-guide.md](./references/logic-condition-action-guide.md)
+
 - 英文 README：[README.md](./README.md)
-- 合法性保证：[LEGALITY_GUARANTEE.md](./LEGALITY_GUARANTEE.md)
-- 合法性矩阵：[LEGALITY_MATRIX.md](./LEGALITY_MATRIX.md)
+- 合法性保证：[docs/LEGALITY_GUARANTEE.md](./docs/LEGALITY_GUARANTEE.md)
+- 合法性矩阵：[docs/LEGALITY_MATRIX.md](./docs/LEGALITY_MATRIX.md)
 
 ---
 

@@ -255,7 +255,7 @@ python3 validators/run_survey_creator_pipeline.py \
 
 A benchmark summary for the current generated HTML runtime is archived at:
 
-- `benchmarks/README.md`
+- `docs/PERFORMANCE_BENCHMARK.md`
 
 Short conclusion:
 
@@ -355,6 +355,9 @@ You can also use this repository as a standalone skill/toolchain in Claude-style
 
 ## Documentation map
 
+### Logic guide
+- `references/logic-condition-action-guide.md`
+
 ### Core references
 - `references/schema-notes.md`
 - `references/field-guide-overview.md`
@@ -365,7 +368,7 @@ You can also use this repository as a standalone skill/toolchain in Claude-style
 
 ### Validators
 - `validators/README.md`
-- `validators/pre-release-checklist.md`
+- `docs/PRE_RELEASE_CHECKLIST.md`
 
 ### Tests
 - `tests/contract/README.md`
