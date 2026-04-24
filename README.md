@@ -251,6 +251,20 @@ python3 validators/run_survey_creator_pipeline.py \
 
 ---
 
+## Performance benchmark
+
+A benchmark summary for the current generated HTML runtime is archived at:
+
+- `benchmarks/README.md`
+
+Short conclusion:
+
+- comfortable zone: ~100 questions / ~150 logic rules
+- still usable: ~200 questions / ~300 logic rules
+- optimization recommended: 300+ questions / 400+ logic rules
+
+---
+
 ## Run all checks
 
 ```bash

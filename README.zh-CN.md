@@ -226,6 +226,20 @@ npx playwright install
 
 ---
 
+## 性能 benchmark
+
+当前生成 HTML 运行时的性能基准结果已归档在：
+
+- `benchmarks/README.md`
+
+简要结论：
+
+- 舒适区：约 100 题 / 150 条逻辑以内
+- 可用区：约 200 题 / 300 条逻辑以内
+- 建议优化：300 题以上 / 400 条逻辑以上
+
+---
+
 ## 如何使用
 
 在支持 skill 的 Agent 环境里，直接在 prompt 中调用：
