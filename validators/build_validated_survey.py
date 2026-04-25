@@ -53,6 +53,7 @@ def main():
     parser.add_argument('--out-payload', help='Optional generated sample payload output path')
     parser.add_argument('--out-schema', help='Optional output path for the schema actually used to render HTML')
     parser.add_argument('--template', default=str(DEFAULT_TEMPLATE), help='Optional HTML template path')
+    parser.add_argument('--style-pack', default='consumer-minimal', help='Optional UI style pack name')
     parser.add_argument('--auto-repair', action='store_true', help='Attempt safe semantic auto-repairs before rendering')
     parser.add_argument('--fail-on-high-warning', action='store_true', help='Fail the build if schema still has high severity warnings after optional auto-repair')
     parser.add_argument('--json', action='store_true', help='Print machine-readable JSON report')
@@ -89,7 +90,7 @@ def main():
 
     if schema_report.get('valid') and not block_on_warning:
         template_text = Path(args.template).read_text(encoding='utf-8')
-        html = render_html_from_schema(schema, template_text)
+        html = render_html_from_schema(schema, template_text, style_pack=args.style_pack)
         Path(args.out_html).write_text(html, encoding='utf-8')
         html_report = validate_html_runtime(html)
         full_report['html'] = html_report

@@ -5,6 +5,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_TEMPLATE = ROOT / 'templates' / 'base-survey-template.html'
 SCHEMA_MARKER = 'const surveySchema ='
+STYLE_PACK_MARKER = 'const surveyStylePack ='
 FORM_MARKER = 'const form = document.getElementById'
 
 
@@ -12,14 +13,19 @@ def load_json(path_str):
     return json.loads(Path(path_str).read_text(encoding='utf-8'))
 
 
-def render_html_from_schema(schema, template_text):
+def render_html_from_schema(schema, template_text, style_pack='consumer-minimal'):
     start = template_text.find(SCHEMA_MARKER)
     if start == -1:
         raise ValueError('Template missing surveySchema marker.')
     end = template_text.find(FORM_MARKER, start)
     if end == -1:
         raise ValueError('Template missing form marker after surveySchema.')
-    schema_js = 'const surveySchema = ' + json.dumps(schema, ensure_ascii=False, indent=2) + ';\n\n    '
+    if STYLE_PACK_MARKER not in template_text:
+        raise ValueError('Template missing surveyStylePack marker.')
+    schema_js = (
+        'const surveySchema = ' + json.dumps(schema, ensure_ascii=False, indent=2) + ';\n\n    ' +
+        f'const surveyStylePack = {json.dumps(style_pack, ensure_ascii=False)};\n\n    '
+    )
     return template_text[:start] + schema_js + template_text[end:]
 
 
@@ -28,12 +34,13 @@ def main():
     parser.add_argument('--schema', required=True, help='Path to schema JSON')
     parser.add_argument('--out', required=True, help='Output HTML path')
     parser.add_argument('--template', default=str(DEFAULT_TEMPLATE), help='Optional HTML template path')
+    parser.add_argument('--style-pack', default='consumer-minimal', help='Optional UI style pack name')
     args = parser.parse_args()
 
     try:
         schema = load_json(args.schema)
         template_text = Path(args.template).read_text(encoding='utf-8')
-        html = render_html_from_schema(schema, template_text)
+        html = render_html_from_schema(schema, template_text, style_pack=args.style_pack)
         Path(args.out).write_text(html, encoding='utf-8')
         print(args.out)
     except FileNotFoundError as e:

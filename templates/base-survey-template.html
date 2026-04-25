@@ -3,45 +3,115 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Survey Creator HTML Template</title>
+  <title>问卷填写</title>
   <style>
     :root {
-      --bg: #0b1220;
-      --bg-soft: #111a2f;
-      --panel: rgba(255,255,255,0.96);
-      --panel-dark: rgba(15,23,42,0.88);
-      --text: #132033;
-      --text-soft: rgba(19, 32, 51, 0.68);
-      --text-light: #f7faff;
-      --text-light-soft: rgba(247, 250, 255, 0.68);
-      --line: rgba(20, 42, 84, 0.12);
-      --line-dark: rgba(255,255,255,0.1);
-      --brand: #5b7cff;
-      --brand-2: #25c2a0;
+      --bg: #f5f6f8;
+      --bg-soft: #ffffff;
+      --panel: #ffffff;
+      --panel-dark: #ffffff;
+      --text: #1f2329;
+      --text-soft: #646a73;
+      --text-light: #1f2329;
+      --text-light-soft: #646a73;
+      --line: #e5e6eb;
+      --line-dark: #e5e6eb;
+      --brand: #2f6bff;
+      --brand-2: #2f6bff;
       --danger: #e25270;
-      --radius-xl: 28px;
-      --radius-lg: 18px;
-      --radius-md: 14px;
-      --shadow: 0 24px 80px rgba(8, 20, 52, 0.18);
+      --radius-xl: 16px;
+      --radius-lg: 14px;
+      --radius-md: 12px;
+      --shadow: 0 8px 24px rgba(31, 35, 41, 0.06);
       --font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+      --app-max-width: 760px;
     }
     * { box-sizing: border-box; }
     html, body { margin: 0; min-height: 100%; font-family: var(--font); }
     body {
-      background:
-        radial-gradient(circle at 0% 0%, rgba(91,124,255,.24), transparent 24%),
-        radial-gradient(circle at 100% 0%, rgba(37,194,160,.18), transparent 28%),
-        linear-gradient(180deg, #eff4ff 0%, #f7faff 48%, #edf3ff 100%);
+      background: var(--bg);
       color: var(--text);
       padding: 24px 16px 48px;
     }
-    .app { width: 100%; max-width: 1100px; margin: 0 auto; }
+    body[data-style-pack="consumer-polished"] {
+      --bg: #f6f7fb;
+      --bg-soft: #ffffff;
+      --panel: #ffffff;
+      --text: #181c25;
+      --text-soft: #5f6778;
+      --text-light: #181c25;
+      --text-light-soft: #5f6778;
+      --line: #e7eaf1;
+      --line-dark: #e7eaf1;
+      --brand: #4b6bff;
+      --brand-2: #7a8fff;
+      --radius-xl: 18px;
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --shadow: 0 12px 30px rgba(20, 28, 45, 0.08);
+      --app-max-width: 820px;
+    }
+    body[data-style-pack="consumer-trust"] {
+      --bg: #f5f7fa;
+      --bg-soft: #f9fbfe;
+      --panel: #ffffff;
+      --text: #1d2433;
+      --text-soft: #667085;
+      --text-light: #1d2433;
+      --text-light-soft: #667085;
+      --line: #e7ecf3;
+      --line-dark: #e7ecf3;
+      --brand: #2f6bff;
+      --brand-2: #4f8bff;
+      --radius-xl: 16px;
+      --radius-lg: 14px;
+      --radius-md: 12px;
+      --shadow: 0 8px 24px rgba(16, 24, 40, 0.06);
+      --app-max-width: 820px;
+    }
+    body[data-style-pack="consumer-editorial"] {
+      --bg: #f8f7f5;
+      --bg-soft: #fffdfa;
+      --panel: #ffffff;
+      --text: #22201d;
+      --text-soft: #6f675f;
+      --text-light: #22201d;
+      --text-light-soft: #6f675f;
+      --line: #eee8df;
+      --line-dark: #eee8df;
+      --brand: #eb5b6a;
+      --brand-2: #f08b76;
+      --radius-xl: 20px;
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --shadow: 0 8px 24px rgba(54, 38, 24, 0.06);
+      --app-max-width: 760px;
+    }
+    body[data-style-pack="consumer-utility"] {
+      --bg: #f9f9f9;
+      --bg-soft: #ffffff;
+      --panel: #ffffff;
+      --text: #0f0f0f;
+      --text-soft: #606060;
+      --text-light: #0f0f0f;
+      --text-light-soft: #606060;
+      --line: #e5e5e5;
+      --line-dark: #e5e5e5;
+      --brand: #111111;
+      --brand-2: #2d2d2d;
+      --radius-xl: 14px;
+      --radius-lg: 12px;
+      --radius-md: 10px;
+      --shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+      --app-max-width: 780px;
+    }
+    .app { width: 100%; max-width: var(--app-max-width); margin: 0 auto; }
     .topbar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 18px;
+      gap: 10px;
+      margin-bottom: 14px;
     }
     .badge {
       display: inline-flex;
@@ -50,23 +120,23 @@
       border: 1px solid var(--line);
       border-radius: 999px;
       padding: 8px 12px;
-      background: rgba(255,255,255,.76);
+      background: #fff;
       color: var(--text-soft);
       font-size: 12px;
-      letter-spacing: .04em;
+      letter-spacing: 0;
     }
     .progress {
       flex: 1;
       min-width: 120px;
       height: 8px;
       border-radius: 999px;
-      background: rgba(91,124,255,.12);
+      background: rgba(47,107,255,.10);
       overflow: hidden;
     }
     .progress-bar {
       width: 0%;
       height: 100%;
-      background: linear-gradient(90deg, var(--brand), var(--brand-2));
+      background: var(--brand);
       transition: width .24s ease;
     }
     .screen { display: none; }
@@ -80,17 +150,17 @@
       overflow: hidden;
     }
     .card.dark {
-      background: linear-gradient(180deg, rgba(16,24,39,.95), rgba(8,15,26,.98));
-      color: var(--text-light);
-      border-color: var(--line-dark);
+      background: var(--panel);
+      color: var(--text);
+      border-color: var(--line);
     }
     .card-body {
-      padding: 32px;
+      padding: 24px 20px;
       display: grid;
-      gap: 20px;
+      gap: 16px;
     }
     .hero-grid, .finish-grid {
-      grid-template-columns: minmax(0, 1.2fr) minmax(280px, .8fr);
+      grid-template-columns: 1fr;
       align-items: start;
     }
     .question-head {
@@ -108,10 +178,10 @@
       color: var(--brand);
     }
     .rich h1, .rich h2, .rich h3, .rich h4, .rich p, .rich ul, .rich ol, .rich blockquote { margin-top: 0; }
-    .rich h1 { font-size: 42px; line-height: 1.06; letter-spacing: -.04em; margin-bottom: 14px; }
-    .rich h2 { font-size: 30px; line-height: 1.14; letter-spacing: -.03em; margin-bottom: 12px; }
+    .rich h1 { font-size: 28px; line-height: 1.25; letter-spacing: -.02em; margin-bottom: 10px; }
+    .rich h2 { font-size: 22px; line-height: 1.35; letter-spacing: -.01em; margin-bottom: 10px; }
     .rich h3 { font-size: 22px; line-height: 1.24; margin-bottom: 10px; }
-    .rich p, .rich li, .rich blockquote { font-size: 15px; line-height: 1.8; color: var(--text-soft); }
+    .rich p, .rich li, .rich blockquote { font-size: 14px; line-height: 1.75; color: var(--text-soft); }
     .dark .rich p, .dark .rich li, .dark .rich blockquote { color: var(--text-light-soft); }
     .rich a { color: var(--brand); text-decoration: none; border-bottom: 1px solid rgba(91,124,255,.35); }
     .rich code {
@@ -122,11 +192,11 @@
       color: inherit;
       font-size: 13px;
     }
-    .meta-grid { display: grid; gap: 12px; }
+    .meta-grid { display: grid; gap: 10px; }
     .meta {
       border-radius: var(--radius-lg);
       border: 1px solid var(--line);
-      background: rgba(255,255,255,.6);
+      background: #fafbfc;
       padding: 16px;
     }
     .dark .meta {
@@ -144,8 +214,8 @@
     .chip {
       border-radius: 999px;
       border: 1px solid var(--line);
-      background: rgba(91,124,255,.08);
-      color: var(--brand);
+      background: #f2f3f5;
+      color: var(--text-soft);
       font-size: 12px;
       padding: 8px 10px;
     }
@@ -163,7 +233,7 @@
       min-width: 0;
       border-radius: 14px;
       border: 1px solid var(--line);
-      background: rgba(255,255,255,.58);
+      background: #fafbfc;
       padding: 10px;
     }
     .dark .media-item {
@@ -175,30 +245,53 @@
       margin-bottom: 8px;
       font-size: 12px;
       color: var(--text-soft);
+      font-weight: 600;
     }
     .dark .media-item small { color: var(--text-light-soft); }
     .media-item img {
       width: 100%;
-      height: 80px;
+      height: 120px;
       object-fit: cover;
       border-radius: 10px;
       display: block;
     }
     .media-item audio, .media-item video {
       width: 100%;
-      max-height: 90px;
+      display: block;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #000;
+    }
+    .media-item video {
+      max-height: 220px;
+      object-fit: cover;
+    }
+    .media-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 10px;
+      min-height: 36px;
+      padding: 0 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--text);
+      font-size: 12px;
+      font-weight: 600;
+      text-decoration: none;
     }
     .media-fallback {
       font-size: 12px;
-      line-height: 1.6;
-      word-break: break-all;
+      line-height: 1.7;
       color: var(--text-soft);
+      margin-top: 8px;
     }
     .options, .fields, .score-list { display: grid; gap: 12px; }
     .score-item {
       border: 1px solid var(--line);
       border-radius: 18px;
-      background: rgba(255,255,255,.62);
+      background: #fafbfc;
       padding: 16px;
       display: grid;
       gap: 12px;
@@ -221,7 +314,7 @@
       transition: .18s ease;
     }
     .score-pill.is-active {
-      background: linear-gradient(90deg, var(--brand), var(--brand-2));
+      background: var(--brand);
       color: #fff;
       border-color: transparent;
       box-shadow: 0 10px 24px rgba(91,124,255,.22);
@@ -235,10 +328,10 @@
       border: 1px solid var(--line);
       border-radius: 18px;
       overflow: hidden;
-      background: rgba(255,255,255,.62);
+      background: #fafbfc;
       transition: border-color .18s ease, transform .18s ease;
     }
-    .option:hover { border-color: rgba(91,124,255,.3); transform: translateY(-1px); }
+    .option:hover { border-color: rgba(47,107,255,.22); transform: none; }
     .option-label {
       display: flex;
       align-items: flex-start;
@@ -285,11 +378,6 @@
       border-color: rgba(91,124,255,.45);
       box-shadow: 0 0 0 4px rgba(91,124,255,.12);
     }
-    .coverage {
-      font-size: 12px;
-      line-height: 1.65;
-      color: var(--text-soft);
-    }
     .error {
       display: none;
       font-size: 13px;
@@ -322,13 +410,13 @@
       font-size: 14px;
       font-weight: 700;
       color: #fff;
-      background: linear-gradient(90deg, var(--brand), var(--brand-2));
+      background: var(--brand);
       box-shadow: 0 12px 32px rgba(91,124,255,.26);
       cursor: pointer;
     }
     .btn.secondary {
-      background: rgba(91,124,255,.08);
-      color: var(--brand);
+      background: #f2f3f5;
+      color: var(--text-soft);
       box-shadow: none;
       border: 1px solid rgba(91,124,255,.12);
     }
@@ -344,8 +432,8 @@
     @media (max-width: 640px) {
       body { padding: 16px 12px 32px; }
       .card-body { padding: 22px 18px; }
-      .rich h1 { font-size: 34px; }
-      .rich h2 { font-size: 26px; }
+      .rich h1 { font-size: 24px; }
+      .rich h2 { font-size: 20px; }
       .field-row { grid-template-columns: 1fr; }
       .actions, .actions-right { width: 100%; }
       .actions-right > * { flex: 1; }
@@ -355,7 +443,7 @@
 <body>
   <div class="app">
     <div class="topbar">
-      <div class="badge">survey-creator-skill · HTML Template</div>
+      <div class="badge">问卷填写</div>
       <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
       <div class="badge" id="stepCounter">1 / 1</div>
     </div>
@@ -372,8 +460,8 @@
       survey: {
         type: 'survey',
         id: 'survey_tpl_k8m4x2qp',
-        title: '<h1>把你的问卷需求，变成 <strong>可提交 HTML</strong></h1>',
-        description: '<p>这是 <code>survey-creator-skill</code> 的通用模板。你可以替换 schema 内容来生成任意风格问卷，并保留富文本、分页、缓存、child 输入、datatype 校验和提交协议。</p><ul><li>支持 <strong>survey / radio / checkbox / input / finish</strong></li><li>支持 <strong>onePageOneQuestion</strong> 与 <strong>allowBack</strong></li><li>支持 <strong>localStorage</strong> 步进缓存</li></ul>',
+        title: '<h1>问卷填写示例</h1>',
+        description: '<p>感谢你参与本次调研，整份问卷预计耗时 2~3 分钟。你的回答仅用于产品优化与体验改进。</p>',
         attribute: {
           onePageOneQuestion: true,
           allowBack: true,
@@ -386,8 +474,8 @@
         {
           type: 'radio',
           id: 'question_tpl_r7m4x3qp',
-          title: '<h2>你想优先生成哪种问卷？<span class="required">*</span></h2>',
-          description: '<p>单选题示例，覆盖 <strong>required</strong>、<strong>random</strong>、选项 child 输入和富文本。</p>',
+          title: '<h2>你通常会使用哪类问卷？<span class="required">*</span></h2>',
+          description: '<p>请选择最符合你当前场景的一项。</p>',
           attribute: { required: true, random: true, media: [] },
           option: [
             { title: '<p><strong>用户满意度调研</strong></p>', id: 'option_tpl_r7a1x4qp', attribute: { random: false, media: [] } },
@@ -410,8 +498,8 @@
         {
           type: 'checkbox',
           id: 'question_tpl_c8m4x8qp',
-          title: '<h2>你希望模板默认支持哪些能力？<span class="required">*</span></h2>',
-          description: '<p>多选题示例，覆盖 <strong>exclusive</strong> 与 <strong>mutual-exclusion</strong>。</p>',
+          title: '<h2>你最关注哪些填写体验？<span class="required">*</span></h2>',
+          description: '<p>可多选，我们会据此优化问卷体验。</p>',
           attribute: { required: true, random: true, media: [] },
           option: [
             { title: '<p>富文本标题/描述</p>', id: 'option_tpl_c8a1x9qp', attribute: { random: false } },
@@ -425,8 +513,8 @@
         {
           type: 'input',
           id: 'question_tpl_i9m4y6qp',
-          title: '<h2>补充你的问卷需求</h2>',
-          description: '<p>输入题示例，覆盖多个 option 输入字段，以及 <strong>email / dateRange / text</strong> 等 datatype。</p>',
+          title: '<h2>补充说明</h2>',
+          description: '<p>如果你愿意，可以补充你的联系方式与更多建议。</p>',
           attribute: { required: false, media: [] },
           option: [
             {
@@ -450,11 +538,13 @@
       finish: {
         type: 'finish',
         id: 'finish_tpl_f2m5z1qp',
-        title: '<h2>模板已准备好，可以直接提交测试</h2>',
-        description: '<p>点击提交后，会按照默认 submission contract 组装 payload，并执行 <code>console.log(payload)</code>。提交成功后自动清空当前问卷缓存。</p>',
+        title: '<h2>提交前请确认信息无误</h2>',
+        description: '<p>提交后我们会记录你的答案，用于后续分析与体验优化。</p>',
         media: []
       }
     };
+
+    const surveyStylePack = "consumer-minimal";
 
     const form = document.getElementById('surveyForm');
     const progressBar = document.getElementById('progressBar');
@@ -464,6 +554,7 @@
     const logicRules = Array.isArray(surveySchema.logic) ? surveySchema.logic : [];
     const rawQuestions = Array.isArray(surveySchema.questions) ? surveySchema.questions : [];
     const answerableQuestions = rawQuestions.filter((question) => question?.type !== 'Pagination');
+    document.body.dataset.stylePack = surveyStylePack || 'consumer-minimal';
     const hasManualPagination = rawQuestions.some((question) => question?.type === 'Pagination');
     const manualPages = buildManualPagesFromSeparators(rawQuestions);
     const questionOrder = new Map(answerableQuestions.map((question, index) => [question.id, index]));
@@ -827,14 +918,38 @@
       return `<div class="rich">${sanitizeRichText(html || '')}</div>`;
     }
 
+    function isDataUrl(value) {
+      return typeof value === 'string' && value.startsWith('data:');
+    }
+
+    function mediaTitle(type) {
+      const map = {
+        image: '图片素材',
+        audio: '音频素材',
+        video: '视频素材',
+      };
+      return map[type] || '媒体素材';
+    }
+
+    function renderMediaLink(url, text = '查看原始资源') {
+      if (!url || isDataUrl(url)) return '';
+      return `<a class="media-link" href="${url}" target="_blank" rel="noopener noreferrer">${text}</a>`;
+    }
+
     function renderMedia(media = []) {
       if (!media.length) return '';
       return `<div class="media-grid">${media.map((m) => {
-        const label = `<small>${m.type} · ${String(m.url || '').startsWith('data:') ? 'base64' : 'link'}</small>`;
-        if (m.type === 'image') return `<div class="media-item">${label}<img src="${m.url}" alt="问卷媒体资源" /></div>`;
-        if (m.type === 'audio') return `<div class="media-item">${label}<audio controls src="${m.url}"></audio><div class="media-fallback">audio resource</div></div>`;
-        if (m.type === 'video') return `<div class="media-item">${label}<video controls src="${m.url}"></video><div class="media-fallback">video resource</div></div>`;
-        return `<div class="media-item">${label}<div class="media-fallback">${m.url}</div></div>`;
+        const label = `<small>${mediaTitle(m.type)}</small>`;
+        if (m.type === 'image') {
+          return `<div class="media-item">${label}<img src="${m.url}" alt="问卷图片资源" />${renderMediaLink(m.url, '打开原图')}</div>`;
+        }
+        if (m.type === 'audio') {
+          return `<div class="media-item">${label}<audio controls preload="metadata" src="${m.url}"></audio><div class="media-fallback">可直接播放音频内容。</div>${renderMediaLink(m.url)}</div>`;
+        }
+        if (m.type === 'video') {
+          return `<div class="media-item">${label}<video controls preload="metadata" playsinline src="${m.url}"></video><div class="media-fallback">可直接播放视频内容。</div>${renderMediaLink(m.url)}</div>`;
+        }
+        return `<div class="media-item">${label}<div class="media-fallback">当前资源类型暂不支持内嵌预览，请打开原始资源查看。</div>${renderMediaLink(m.url)}</div>`;
       }).join('')}</div>`;
     }
 
@@ -873,7 +988,6 @@
     function formatScoreValue(value) {
       return Number(value) % 1 === 0 ? String(Number(value).toFixed(0)) : String(Number(value).toFixed(1));
     }
-
     function renderScoreQuestion(question) {
       return `<div class="score-list">${(question.option || []).map((opt) => {
         const descMap = opt.attribute?.scoreDesc || {};
@@ -881,7 +995,7 @@
         return `<div class="score-item" data-score-option="${opt.id}" data-option-field="${opt.id}"><div class="field-label">${renderRich(opt.title)}</div>${renderMedia(opt.attribute?.media || [])}<div class="score-scale">${values.map((value) => {
           const display = formatScoreValue(value);
           return `<button class="score-pill" type="button" aria-pressed="false" aria-label="评分 ${display}" data-score-option-id="${opt.id}" data-score-value="${display}">${display}</button>`;
-        }).join('')}</div><div class="score-desc" data-score-desc-for="${opt.id}"></div><div class="coverage">score.attribute: ${escapeHtml(JSON.stringify(opt.attribute || {}))}</div></div>`;
+        }).join('')}</div><div class="score-desc" data-score-desc-for="${opt.id}"></div></div>`;
       }).join('')}</div><div class="error" role="alert" data-error>请完成当前评分题。</div>`;
     }
 
@@ -901,18 +1015,14 @@
       return `<div class="score-list nps-list"><div class="score-item nps-item" data-nps-option="${opt.id}" data-option-field="${opt.id}">${renderMedia(opt.attribute?.media || [])}<div class="score-scale nps-scale">${values.map((value) => {
         const display = formatScoreValue(value);
         return `<button class="score-pill nps-pill" type="button" aria-pressed="false" aria-label="NPS ${display} 分" data-score-option-id="${opt.id}" data-score-value="${display}">${display}</button>`;
-      }).join('')}</div><div class="score-desc" data-score-desc-for="${opt.id}"></div><div class="coverage">nps.attribute: ${escapeHtml(JSON.stringify(opt.attribute || {}))}</div></div></div><div class="error" role="alert" data-error>请选择一个 NPS 分值。</div>`;
+      }).join('')}</div><div class="score-desc" data-score-desc-for="${opt.id}"></div></div></div><div class="error" role="alert" data-error>请选择一个 NPS 分值。</div>`;
     }
 
-    function renderSurvey() {
-      const s = surveySchema.survey;
-      return screenShell(s.id, 'survey', `<div>${renderRich(s.title)}${renderRich(s.description)}</div><div class="meta-grid"><div class="meta"><strong>survey.attribute</strong><span>onePageOneQuestion: ${s.attribute.onePageOneQuestion}<br />allowBack: ${s.attribute.allowBack}</span></div>${renderMedia(s.attribute.media || [])}</div><div class="actions" style="grid-column:1 / -1;"><span></span><div class="actions-right"><button class="btn" type="button" data-next>开始问卷</button></div></div>`, true);
-    }
 
     function renderOption(question, option) {
       const children = option.child || [];
       const childHtml = children.length
-        ? `<div class="child-list" data-child-wrap="${option.id}">${children.map((child) => `<div class="field"><div class="field-label">${renderRich(child.title)}</div>${createInputControl(child.attribute?.dataType || 'text', child.attribute || {}, `${question.id}__${option.id}__${child.id}`, '', child.id)}<div class="coverage">child.attribute: ${escapeHtml(JSON.stringify(child.attribute || {}))}</div><div class="error" role="alert" data-child-error="${child.id}">请按 child.attribute 正确填写。</div></div>`).join('')}</div>`
+        ? `<div class="child-list" data-child-wrap="${option.id}">${children.map((child) => `<div class="field"><div class="field-label">${renderRich(child.title)}</div>${createInputControl(child.attribute?.dataType || 'text', child.attribute || {}, `${question.id}__${option.id}__${child.id}`, '', child.id)}<div class="error" role="alert" data-child-error="${child.id}">请完善该补充内容。</div></div>`).join('')}</div>`
         : '';
       const exclusive = option.attribute?.exclusive === true;
       const mutual = option.attribute?.['mutual-exclusion'] === true;
@@ -922,15 +1032,33 @@
     function renderQuestion(question) {
       const options = question.option ? shuffleIfNeeded(question.option, question.attribute?.random === true) : [];
       const content = question.type === 'input'
-        ? `<div class="fields">${question.option.map((opt) => `<div class="field" data-option-field="${opt.id}"><div class="field-label">${renderRich(opt.title)}</div>${createInputControl(opt.attribute?.dataType || 'text', opt.attribute || {}, question.id, opt.id, '')}<div class="coverage">input.option.attribute: ${escapeHtml(JSON.stringify(opt.attribute || {}))}</div></div>`).join('')}<div class="error" role="alert" data-error>请按输入题规则完成填写。</div></div>`
+        ? `<div class="fields">${question.option.map((opt) => `<div class="field" data-option-field="${opt.id}"><div class="field-label">${renderRich(opt.title)}</div>${createInputControl(opt.attribute?.dataType || 'text', opt.attribute || {}, question.id, opt.id, '')}</div>`).join('')}<div class="error" role="alert" data-error>请按输入题规则完成填写。</div></div>`
         : question.type === 'score'
         ? renderScoreQuestion(question)
         : question.type === 'nps'
         ? renderNpsQuestion(question)
         : `<div class="options">${options.map((opt) => renderOption(question, opt)).join('')}</div><div class="error" role="alert" data-error>请完成当前题目。</div>`;
       const allowBack = surveySchema.survey.attribute?.allowBack === true;
-      return screenShell(question.id, question.type, `<div class="question-head" style="grid-column:1 / -1;"><div><div class="question-index">Question ${String(questionNumber(question.id)).padStart(2, '0')}</div>${renderRich(question.title)}${renderRich(question.description)}</div><div class="chip-row"><span class="chip">${question.type}</span><span class="chip ${question.attribute?.required ? 'warn' : ''}">${question.attribute?.required ? 'required=true' : 'required=false'}</span><span class="chip">random=${question.attribute?.random ?? false}</span></div></div><div style="grid-column:1 / -1;">${renderMedia(question.attribute?.media || [])}${content}</div><div class="actions" style="grid-column:1 / -1;">${allowBack ? '<button class="btn secondary" type="button" data-prev>上一页</button>' : '<span></span>'}<div class="actions-right"><button class="btn" type="button" data-next>下一页</button></div></div>`);
+      return screenShell(question.id, question.type, `<div class="question-head" style="grid-column:1 / -1;"><div><div class="question-index">第 ${String(questionNumber(question.id)).padStart(2, '0')} 题</div>${renderRich(question.title)}${renderRich(question.description)}</div>${question.attribute?.required ? '<div class="chip-row"><span class="chip warn">必填</span></div>' : ''}</div><div style="grid-column:1 / -1;">${renderMedia(question.attribute?.media || [])}${content}</div><div class="actions" style="grid-column:1 / -1;">${allowBack ? '<button class="btn secondary" type="button" data-prev>上一页</button>' : '<span></span>'}<div class="actions-right"><button class="btn" type="button" data-next>下一页</button></div></div>`);
     }
+
+
+    function renderQuestionBlock(question) {
+      const options = question.option ? shuffleIfNeeded(question.option, question.attribute?.random === true) : [];
+      const content = question.type === 'input'
+        ? `<div class="fields">${question.option.map((opt) => `<div class="field" data-option-field="${opt.id}"><div class="field-label">${renderRich(opt.title)}</div>${createInputControl(opt.attribute?.dataType || 'text', opt.attribute || {}, question.id, opt.id, '')}</div>`).join('')}<div class="error" role="alert" data-error>请按输入题规则完成填写。</div></div>`
+        : question.type === 'score'
+        ? renderScoreQuestion(question)
+        : question.type === 'nps'
+        ? renderNpsQuestion(question)
+        : `<div class="options">${options.map((opt) => renderOption(question, opt)).join('')}</div><div class="error" role="alert" data-error>请完成当前题目。</div>`;
+      return `<section class="field" data-screen-id="${question.id}" data-schema-type="${question.type}"><div class="question-head"><div><div class="question-index">第 ${String(questionNumber(question.id)).padStart(2, '0')} 题</div>${renderRich(question.title)}${renderRich(question.description)}</div>${question.attribute?.required ? '<div class="chip-row"><span class="chip warn">必填</span></div>' : ''}</div>${renderMedia(question.attribute?.media || [])}${content}</section>`;
+    }
+    function renderSurvey() {
+      const s = surveySchema.survey;
+      return screenShell(s.id, 'survey', `<div>${renderRich(s.title)}${renderRich(s.description)}</div><div class="meta-grid"><div class="meta"><strong>填写说明</strong><span>请根据你的真实想法完成填写，提交前可返回上一页修改内容。</span></div>${renderMedia(s.attribute.media || [])}</div><div class="actions" style="grid-column:1 / -1;"><span></span><div class="actions-right"><button class="btn" type="button" data-next>开始问卷</button></div></div>`, true);
+    }
+
 
     function renderManualPage(group, pageIndex) {
       const allowBack = surveySchema.survey.attribute?.allowBack === true;
@@ -941,13 +1069,29 @@
     function renderFinish() {
       const f = surveySchema.finish;
       const allowBack = surveySchema.survey.attribute?.allowBack === true;
-      return screenShell(f.id, 'finish', `<div>${renderRich(f.title)}${renderRich(f.description)}</div><div class="meta-grid">${renderMedia(f.media || [])}</div><div class="actions" style="grid-column:1 / -1;">${allowBack ? '<button class="btn secondary" type="button" data-prev>上一页</button>' : '<span></span>'}<div class="actions-right"><button class="btn secondary" type="button" id="previewPayloadBtn">预览 payload</button><button class="btn" type="submit">提交问卷</button></div></div>`, true);
+      return screenShell(f.id, 'finish', `<div>${renderRich(f.title)}${renderRich(f.description)}</div><div class="meta-grid">${renderMedia(f.media || [])}</div><div class="actions" style="grid-column:1 / -1;">${allowBack ? '<button class="btn secondary" type="button" data-prev>上一页</button>' : '<span></span>'}<div class="actions-right"><button class="btn" type="submit">提交问卷</button></div></div>`, true);
     }
 
     function screenShell(id, type, inner, dark = false) {
       return `<section class="screen" data-screen-id="${id}" data-schema-type="${type}"><article class="card ${dark ? 'dark' : ''}"><div class="card-body ${type === 'survey' ? 'hero-grid' : type === 'finish' ? 'finish-grid' : ''}">${inner}</div></article></section>`;
     }
 
+
+    function render() {
+      const onePageOneQuestion = surveySchema.survey.attribute?.onePageOneQuestion === true;
+      if (hasManualPagination && !onePageOneQuestion) {
+        form.innerHTML = [renderSurvey(), ...manualPages.map((group, index) => renderManualPage(group, index)), renderFinish()].join('');
+      } else if (onePageOneQuestion) {
+        form.innerHTML = [renderSurvey(), ...answerableQuestions.map(renderQuestion), renderFinish()].join('');
+      } else {
+        form.innerHTML = screenShell('all_in_one', 'survey-all', `<div style="grid-column:1 / -1;">${renderRich(surveySchema.survey.title)}${renderRich(surveySchema.survey.description)}</div>${answerableQuestions.map((q) => renderQuestionBlock(q)).join('')}<div style="grid-column:1 / -1;">${renderRich(surveySchema.finish.title)}${renderRich(surveySchema.finish.description)}</div><div class="actions" style="grid-column:1 / -1;"><span></span><div class="actions-right"><button class="btn" type="submit">提交问卷</button></div></div>`);
+      }
+      rebuildQuestionScreenMap();
+      bindEvents();
+      hydrateAll();
+      applyLogicRuntime({ preserveActiveId: surveySchema.survey.id });
+      if (!document.querySelector('.screen.is-active')) show(0);
+    }
     function screens() {
       return Array.from(document.querySelectorAll('.screen'));
     }
@@ -1006,35 +1150,6 @@
       const index = list.findIndex((screen) => screen.dataset.screenId === resolvedId);
       show(index >= 0 ? index : 0, save);
     }
-
-    function render() {
-      const onePageOneQuestion = surveySchema.survey.attribute?.onePageOneQuestion === true;
-      if (hasManualPagination && !onePageOneQuestion) {
-        form.innerHTML = [renderSurvey(), ...manualPages.map((group, index) => renderManualPage(group, index)), renderFinish()].join('');
-      } else if (onePageOneQuestion) {
-        form.innerHTML = [renderSurvey(), ...answerableQuestions.map(renderQuestion), renderFinish()].join('');
-      } else {
-        form.innerHTML = screenShell('all_in_one', 'survey-all', `<div style="grid-column:1 / -1;">${renderRich(surveySchema.survey.title)}${renderRich(surveySchema.survey.description)}</div>${answerableQuestions.map((q) => renderQuestionBlock(q)).join('')}<div style="grid-column:1 / -1;">${renderRich(surveySchema.finish.title)}${renderRich(surveySchema.finish.description)}</div><div class="actions" style="grid-column:1 / -1;"><span></span><div class="actions-right"><button class="btn secondary" type="button" id="previewPayloadBtn">预览 payload</button><button class="btn" type="submit">提交问卷</button></div></div>`);
-      }
-      rebuildQuestionScreenMap();
-      bindEvents();
-      hydrateAll();
-      applyLogicRuntime({ preserveActiveId: surveySchema.survey.id });
-      if (!document.querySelector('.screen.is-active')) show(0);
-    }
-
-    function renderQuestionBlock(question) {
-      const options = question.option ? shuffleIfNeeded(question.option, question.attribute?.random === true) : [];
-      const content = question.type === 'input'
-        ? `<div class="fields">${question.option.map((opt) => `<div class="field" data-option-field="${opt.id}"><div class="field-label">${renderRich(opt.title)}</div>${createInputControl(opt.attribute?.dataType || 'text', opt.attribute || {}, question.id, opt.id, '')}</div>`).join('')}<div class="error" role="alert" data-error>请按输入题规则完成填写。</div></div>`
-        : question.type === 'score'
-        ? renderScoreQuestion(question)
-        : question.type === 'nps'
-        ? renderNpsQuestion(question)
-        : `<div class="options">${options.map((opt) => renderOption(question, opt)).join('')}</div><div class="error" role="alert" data-error>请完成当前题目。</div>`;
-      return `<section class="field" data-screen-id="${question.id}" data-schema-type="${question.type}"><div class="question-head"><div><div class="question-index">Question ${String(questionNumber(question.id)).padStart(2, '0')}</div>${renderRich(question.title)}${renderRich(question.description)}</div><div class="chip-row"><span class="chip">${question.type}</span></div></div>${renderMedia(question.attribute?.media || [])}${content}</section>`;
-    }
-
     function visibleChildWrapForInput(input) {
       return input.closest('.option')?.querySelector(`[data-child-wrap="${input.value}"]`);
     }
@@ -1073,7 +1188,6 @@
       const descEl = screen.querySelector(`[data-score-desc-for="${optionId}"]`);
       if (descEl) descEl.textContent = desc;
     }
-
     function extractFieldValue(field) {
       if (!field) return null;
       if (field.matches('[data-range-type]')) {
@@ -1367,10 +1481,6 @@
           applyLogicRuntime({ preserveActiveId: currentScreenId() });
           show(current - 1);
         }
-        if (e.target.id === 'previewPayloadBtn') {
-          console.log(assemblePayload());
-          alert('payload 已输出到 console');
-        }
         const scoreBtn = e.target.closest('.score-pill');
         if (scoreBtn) {
           updateScoreDisplay(scoreBtn);
@@ -1430,7 +1540,7 @@
         form.reset();
         updateChildVisibility();
         show(0, false);
-        alert('提交成功：payload 已输出到 console，缓存已清空。');
+        alert('提交成功，感谢你的填写。');
       });
     }
 
@@ -1442,7 +1552,6 @@
         .replaceAll('"', '&quot;')
         .replaceAll("'", '&#39;');
     }
-
     render();
   </script>
 </body>

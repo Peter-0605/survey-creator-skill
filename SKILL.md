@@ -47,6 +47,8 @@ Before generating output, read only the files you need from:
 - `references/logic-rules.md`
 - `references/logic-specification.md`
 - `references/logic-example-library.md`
+- `references/toc-survey-ui-rules.md`
+- `references/toc-style-system.md`
 - `validators/README.md`
 - `validators/validate_reference_consistency.py`
 - `validators/validate_survey_schema.py`
@@ -63,7 +65,7 @@ Before generating output, read only the files you need from:
 - `tests/contract/README.md`
 - `run_all_legality_checks.sh`
 
-Always read `references/schema-notes.md` first, then `references/field-guide-overview.md`, then `references/rich-text-rules.md`, `references/pagination-rules.md`, `references/submission-contract.md`, `references/child-input-rules.md`, `references/local-cache-rules.md`, `references/logic-rules.md`, `references/logic-specification.md`, and `references/logic-example-library.md`, then the specific `*-fields.md` files for every node type you plan to generate or validate. When schema safety matters, also use `validators/validate_survey_schema.py` as the executable guardrail before rendering HTML.
+Always read `references/schema-notes.md` first, then `references/field-guide-overview.md`, then `references/rich-text-rules.md`, `references/pagination-rules.md`, `references/submission-contract.md`, `references/child-input-rules.md`, `references/local-cache-rules.md`, `references/logic-rules.md`, `references/logic-specification.md`, and `references/logic-example-library.md`, then the specific `*-fields.md` files for every node type you plan to generate or validate. If the user requests a stronger toC visual direction, also read `references/toc-style-system.md` and `references/toc-survey-ui-rules.md`. When schema safety matters, also use `validators/validate_survey_schema.py` as the executable guardrail before rendering HTML.
 
 
 ## Legality engine boundary
@@ -112,8 +114,45 @@ Read the prompt carefully and identify:
 - whether the user implies optional conditional inputs such as “其他，请说明”
 - whether one-page-one-question flow is implied or should be enabled
 - whether previous-page navigation should be available
+- whether the UI style implies a known `stylePack`
 
 If the prompt is underspecified, make sensible product decisions instead of stopping.
+
+### Step 1.5: Infer `stylePack`
+When the user gives visual direction, infer a renderer `stylePack` before generating HTML.
+
+Use only the generic toC packs:
+- `consumer-minimal`
+- `consumer-polished`
+- `consumer-trust`
+- `consumer-editorial`
+- `consumer-utility`
+
+#### Explicit mapping
+- mentions WeChat / 微信 / 小程序 / 表单感 / 轻量填写  
+  → `consumer-minimal`
+- mentions 更产品化 / 更高级 / 更精致 / 更有设计感  
+  → `consumer-polished`
+- mentions 满意度 / 购买后反馈 / 产品可信赖 / 售后体验  
+  → `consumer-trust`
+- mentions 年轻 / 内容感 / 社区感 / lifestyle / 更有氛围  
+  → `consumer-editorial`
+- mentions 克制 / 干净 / 工具型 / 平台感 / 高效率  
+  → `consumer-utility`
+
+#### Implicit mapping
+- generic toC without a strong aesthetic signal  
+  → default to `consumer-minimal`
+- product or purchase feedback  
+  → default to `consumer-trust`
+- more branded but still general consumer UI  
+  → default to `consumer-polished`
+- content or lifestyle tone  
+  → default to `consumer-editorial`
+- platform/tool-like tone  
+  → default to `consumer-utility`
+
+Always record this decision mentally and pass it into the renderer or pipeline command via `--style-pack`.
 
 ### Step 2: Infer an internal schema draft
 Create an internal questionnaire object using both the reference JSON examples and the field-guide markdown files.
@@ -214,8 +253,15 @@ python3 <repo-root>/validators/build_validated_survey.py --schema /absolute/path
 For skill execution, prefer the single unified entry:
 
 ```bash
-python3 <repo-root>/validators/run_survey_creator_pipeline.py --schema /absolute/path/to/schema.json --output-dir /absolute/path/to/output-dir --auto-repair --fail-on-high-warning
+python3 <repo-root>/validators/run_survey_creator_pipeline.py --schema /absolute/path/to/schema.json --output-dir /absolute/path/to/output-dir --style-pack consumer-trust --auto-repair --fail-on-high-warning
 ```
+
+Supported `--style-pack` values currently include:
+- `consumer-minimal`
+- `consumer-polished`
+- `consumer-trust`
+- `consumer-editorial`
+- `consumer-utility`
 
 Only return the final HTML to the user after this automated chain succeeds, desktop/mobile E2E viewports pass, `htmlAccessibility.valid === true`, `payloadAgainstSchema.valid === true`, and the pipeline report says `releaseDecision.shipReady === true`.
 If the generated HTML fails runtime or E2E checks, run the HTML auto-repair pass before giving up.

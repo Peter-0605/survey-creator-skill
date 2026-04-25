@@ -179,6 +179,65 @@ survey-creator-skill/
 
 ---
 
+## Runtime dependencies
+
+This skill is portable, but it is **not dependency-free**.
+
+To run the full legality / rendering / browser-validation pipeline, the target machine should have:
+
+- Python **3.10+**
+- Node.js **18+**
+- npm
+
+### Why both Python and Node are needed
+
+- `validators/*.py` handles schema validation, rendering, payload validation, and pipeline orchestration
+- `validators/package.json` provides the browser automation dependency used by Playwright-based checks
+
+### One-time setup
+
+From the repository root:
+
+```bash
+cd validators
+npm install
+npx playwright install
+```
+
+### Build the frozen single-file template
+
+The repository now keeps the editable template source in:
+
+- `template-src/partials/`
+
+And builds the release artifact here:
+
+- `templates/base-survey-template.html`
+
+Rebuild it with:
+
+```bash
+python3 tools/build_template.py
+```
+
+### Recommended environment notes
+
+- macOS / Linux is the recommended environment
+- Windows users should prefer **WSL**
+- if Playwright browsers are missing, HTML E2E / interaction checks will fail even though schema validation may still work
+
+### Minimal dependency expectation for downstream users
+
+If someone only wants the skill instructions and reference files for agent retrieval, they can read:
+
+- `SKILL.md`
+- `references/`
+- `templates/`
+
+But if they want the skill to actually perform validation and release-grade checks, they should install the dependencies above first.
+
+---
+
 ## Use with AI coding/design agents
 
 This repository is primarily meant to be used as a **skill** inside agent products, not as a standalone script-first toolkit.
@@ -408,6 +467,7 @@ You can also use this repository as a standalone skill/toolchain in Claude-style
 
 ### Logic guide
 - `references/logic-condition-action-guide.md`
+- `docs/TOC_SURVEY_UI_SPEC.md`
 
 ### Core references
 - `references/schema-notes.md`
@@ -451,4 +511,3 @@ That is more accurate than calling it only an “HTML form generator”, because
 ## License
 
 MIT
-

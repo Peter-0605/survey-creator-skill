@@ -1,0 +1,137 @@
+    function shuffleIfNeeded(items, shouldRandom) {
+      const list = [...items];
+      if (!shouldRandom || list.length <= 1) return list;
+      const fixed = [];
+      const movable = [];
+      list.forEach((item, index) => {
+        if (item.attribute?.random === false) fixed.push({ index, item });
+        else movable.push(item);
+      });
+      for (let i = movable.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [movable[i], movable[j]] = [movable[j], movable[i]];
+      }
+      const next = new Array(list.length);
+      fixed.forEach(({ index, item }) => { next[index] = item; });
+      let cursor = 0;
+      for (let i = 0; i < next.length; i++) if (!next[i]) next[i] = movable[cursor++];
+      return next;
+    }
+
+    function sanitizeRichText(html) {
+      const input = typeof html === 'string' ? html : '';
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(`<div>${input}</div>`, 'text/html');
+      const root = doc.body.firstElementChild;
+      const allowedTags = new Set(['DIV', 'P', 'SPAN', 'STRONG', 'B', 'EM', 'I', 'U', 'BR', 'UL', 'OL', 'LI', 'BLOCKQUOTE', 'CODE', 'PRE', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'A']);
+      const allowedAttrs = { A: new Set(['href', 'target', 'rel']) };
+      const isSafeHref = (value) => /^(https?:|mailto:|tel:|#|\/)/i.test(value);
+
+      function clean(node) {
+        const children = Array.from(node.childNodes);
+        for (const child of children) {
+          if (child.nodeType === Node.TEXT_NODE) continue;
+          if (child.nodeType !== Node.ELEMENT_NODE) {
+            child.remove();
+            continue;
+          }
+          const tag = child.tagName.toUpperCase();
+          if (!allowedTags.has(tag)) {
+            const fragment = doc.createDocumentFragment();
+            while (child.firstChild) fragment.appendChild(child.firstChild);
+            child.replaceWith(fragment);
+            clean(node);
+            continue;
+          }
+          Array.from(child.attributes).forEach((attr) => {
+            const attrName = attr.name.toLowerCase();
+            const allowSet = allowedAttrs[tag] || new Set();
+            if (!allowSet.has(attr.name) && !allowSet.has(attrName)) child.removeAttribute(attr.name);
+          });
+          if (tag === 'A') {
+            const href = child.getAttribute('href') || '';
+            if (!isSafeHref(href)) child.removeAttribute('href');
+            if (child.getAttribute('target') === '_blank') child.setAttribute('rel', 'noopener noreferrer');
+          }
+          clean(child);
+        }
+      }
+
+      clean(root);
+      return root.innerHTML;
+    }
+
+    function renderRich(html) {
+      return `<div class="rich">${sanitizeRichText(html || '')}</div>`;
+    }
+
+    function isDataUrl(value) {
+      return typeof value === 'string' && value.startsWith('data:');
+    }
+
+    function mediaTitle(type) {
+      const map = {
+        image: '图片素材',
+        audio: '音频素材',
+        video: '视频素材',
+      };
+      return map[type] || '媒体素材';
+    }
+
+    function renderMediaLink(url, text = '查看原始资源') {
+      if (!url || isDataUrl(url)) return '';
+      return `<a class="media-link" href="${url}" target="_blank" rel="noopener noreferrer">${text}</a>`;
+    }
+
+    function renderMedia(media = []) {
+      if (!media.length) return '';
+      return `<div class="media-grid">${media.map((m) => {
+        const label = `<small>${mediaTitle(m.type)}</small>`;
+        if (m.type === 'image') {
+          return `<div class="media-item">${label}<img src="${m.url}" alt="问卷图片资源" />${renderMediaLink(m.url, '打开原图')}</div>`;
+        }
+        if (m.type === 'audio') {
+          return `<div class="media-item">${label}<audio controls preload="metadata" src="${m.url}"></audio><div class="media-fallback">可直接播放音频内容。</div>${renderMediaLink(m.url)}</div>`;
+        }
+        if (m.type === 'video') {
+          return `<div class="media-item">${label}<video controls preload="metadata" playsinline src="${m.url}"></video><div class="media-fallback">可直接播放视频内容。</div>${renderMediaLink(m.url)}</div>`;
+        }
+        return `<div class="media-item">${label}<div class="media-fallback">当前资源类型暂不支持内嵌预览，请打开原始资源查看。</div>${renderMediaLink(m.url)}</div>`;
+      }).join('')}</div>`;
+    }
+
+    function createInputControl(dataType, attrs, name = '', dataOptionId = '', dataChildId = '') {
+      const placeholder = attrs?.placeholder || '';
+      const maxLength = attrs?.maxLength ?? '';
+      const dt = dataType || 'text';
+      if (dt === 'text' && Number(attrs?.maxLength || 0) > 100) {
+        return `<textarea class="textarea" ${name ? `name="${name}"` : ''} ${dataOptionId ? `data-option-id="${dataOptionId}"` : ''} ${dataChildId ? `data-child-id="${dataChildId}"` : ''} data-input-attribute='${JSON.stringify(attrs || {})}' placeholder="${placeholder}" maxlength="${maxLength}"></textarea>`;
+      }
+      if (dt === 'dateRange' || dt === 'timeRange' || dt === 'dateTimeRange') {
+        const type = dt === 'dateRange' ? 'date' : dt === 'timeRange' ? 'time' : 'datetime-local';
+        const startName = name ? `${name}__start` : '';
+        const endName = name ? `${name}__end` : '';
+        return `<div class="field-row" data-range-type="${dt}" ${dataOptionId ? `data-option-id="${dataOptionId}"` : ''} ${dataChildId ? `data-child-id="${dataChildId}"` : ''} data-input-attribute='${JSON.stringify(attrs || {})}'><input class="input" type="${type}" ${startName ? `name="${startName}"` : ''} data-range-role="start" /><input class="input" type="${type}" ${endName ? `name="${endName}"` : ''} data-range-role="end" /></div>`;
+      }
+      const typeMap = { text: 'text', email: 'email', tel: 'tel', number: 'number', date: 'date', time: 'time', dateTime: 'datetime-local' };
+      const htmlType = typeMap[dt] || 'text';
+      return `<input class="input" type="${htmlType}" ${name ? `name="${name}"` : ''} ${dataOptionId ? `data-option-id="${dataOptionId}"` : ''} ${dataChildId ? `data-child-id="${dataChildId}"` : ''} data-input-attribute='${JSON.stringify(attrs || {})}' placeholder="${placeholder}" maxlength="${maxLength}" />`;
+    }
+
+    function scoreValues(option) {
+      const attr = option.attribute || {};
+      const scope = Array.isArray(attr.scope) && attr.scope.length === 2 ? attr.scope : [1, 5];
+      const step = attr.step === 0.5 ? 0.5 : 1;
+      const values = [];
+      let cur = Number(scope[0]);
+      const max = Number(scope[1]);
+      while (cur <= max + 1e-9) {
+        values.push(Number(cur.toFixed(1)));
+        cur += step;
+      }
+      return values;
+    }
+
+    function formatScoreValue(value) {
+      return Number(value) % 1 === 0 ? String(Number(value).toFixed(0)) : String(Number(value).toFixed(1));
+    }

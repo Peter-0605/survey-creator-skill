@@ -1,0 +1,364 @@
+    function extractFieldValue(field) {
+      if (!field) return null;
+      if (field.matches('[data-range-type]')) {
+        const start = field.querySelector('[data-range-role="start"]')?.value || '';
+        const end = field.querySelector('[data-range-role="end"]')?.value || '';
+        return start || end ? { start, end } : null;
+      }
+      const value = (field.value || '').trim();
+      return value || null;
+    }
+
+    function validateByDataType(field, attr = {}) {
+      const type = attr.dataType || 'text';
+      const value = extractFieldValue(field);
+      const empty = !value || (typeof value === 'object' && !value.start && !value.end);
+      if (attr.required && empty) return '该字段必填';
+      if (empty) return '';
+      const scalar = typeof value === 'object' ? `${value.start || ''}${value.end || ''}` : value;
+      if (attr.minLength && scalar.length < Number(attr.minLength)) return `至少 ${attr.minLength} 字`;
+      if (attr.maxLength && scalar.length > Number(attr.maxLength)) return `最多 ${attr.maxLength} 字`;
+      if (type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) return '邮箱格式不正确';
+      if (type === 'tel' && !/^[+()\-\s\d]{6,20}$/.test(value)) return '请输入有效电话';
+      if (type === 'number' && Number.isNaN(Number(value))) return '请输入有效数字';
+      if (type === 'date' && !/^\d{4}-\d{2}-\d{2}$/.test(value)) return '请输入有效日期';
+      if (type === 'time' && !/^\d{2}:\d{2}$/.test(value)) return '请输入有效时间';
+      if (type === 'dateTime' && !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/.test(value)) return '请输入有效日期时间';
+      if ((type === 'dateRange' || type === 'timeRange' || type === 'dateTimeRange') && (!value.start || !value.end)) return '请完整填写开始和结束';
+      return '';
+    }
+
+    function readChildAnswers(optionEl) {
+      const wrap = optionEl.querySelector('.child-list');
+      if (!wrap || !wrap.classList.contains('is-visible')) return [];
+      return Array.from(wrap.querySelectorAll('[data-child-id]')).map((field) => ({
+        childId: field.dataset.childId,
+        dataType: JSON.parse(field.dataset.inputAttribute || '{}').dataType || 'text',
+        value: extractFieldValue(field)
+      })).filter((item) => item.value);
+    }
+
+    function collectQuestion(question) {
+      const screen = document.querySelector(`[data-screen-id="${question.id}"]`);
+      if (!screen || isQuestionUnavailable(question.id)) return null;
+
+      if (question.type === 'radio') {
+        const checked = Array.from(screen.querySelectorAll(`input[name="${question.id}"]:checked`)).find((input) => !isOptionHidden(question.id, input.value));
+        if (!checked) return null;
+        const optionEl = checked.closest('.option');
+        const child = readChildAnswers(optionEl);
+        const value = { optionId: checked.value };
+        if (child.length) value.child = child;
+        return { questionType: question.type, value };
+      }
+
+      if (question.type === 'checkbox') {
+        const checked = Array.from(screen.querySelectorAll(`input[name="${question.id}"]:checked`)).filter((input) => !isOptionHidden(question.id, input.value));
+        if (!checked.length) return null;
+        return {
+          questionType: question.type,
+          value: checked.map((input) => {
+            const optionEl = input.closest('.option');
+            const item = { optionId: input.value };
+            const child = readChildAnswers(optionEl);
+            if (child.length) item.child = child;
+            return item;
+          })
+        };
+      }
+
+      if (question.type === 'input') {
+        const value = question.option.filter((opt) => !isOptionHidden(question.id, opt.id)).map((opt) => {
+          const field = screen.querySelector(`[data-option-id="${opt.id}"]`);
+          const extracted = extractFieldValue(field);
+          if (!extracted) return null;
+          return { optionId: opt.id, dataType: opt.attribute?.dataType || 'text', value: extracted };
+        }).filter(Boolean);
+        if (!value.length) return null;
+        return { questionType: question.type, value };
+      }
+
+      if (question.type === 'score') {
+        const value = Array.from(screen.querySelectorAll('[data-score-option]')).filter((row) => !row.classList.contains('is-hidden-by-logic')).map((row) => {
+          const optionId = row.dataset.scoreOption;
+          const active = row.querySelector('.score-pill.is-active');
+          if (!active) return null;
+          return { optionId, score: Number(active.dataset.scoreValue) };
+        }).filter(Boolean);
+        if (!value.length) return null;
+        return { questionType: question.type, value };
+      }
+
+      if (question.type === 'nps') {
+        const row = Array.from(screen.querySelectorAll('[data-nps-option]')).find((node) => !node.classList.contains('is-hidden-by-logic'));
+        const active = row?.querySelector('.score-pill.is-active');
+        if (!row || !active) return null;
+        return { questionType: question.type, value: { optionId: row.dataset.npsOption, score: Number(active.dataset.scoreValue) } };
+      }
+
+      return null;
+    }
+
+    function validateQuestion(question) {
+      if (!question || isQuestionUnavailable(question.id)) return true;
+      const screen = document.querySelector(`[data-screen-id="${question.id}"]`);
+      if (!screen) return true;
+      screen.querySelectorAll('.error').forEach((el) => el.classList.remove('is-visible'));
+      screen.querySelectorAll('.is-invalid').forEach((el) => el.classList.remove('is-invalid'));
+
+      const collected = collectQuestion(question);
+      if (question.attribute?.required && !collected) {
+        screen.querySelector('[data-error]')?.classList.add('is-visible');
+        return false;
+      }
+
+      if (question.type === 'input') {
+        for (const opt of question.option.filter((item) => !isOptionHidden(question.id, item.id))) {
+          const field = screen.querySelector(`[data-option-id="${opt.id}"]`);
+          const msg = validateByDataType(field, opt.attribute || {});
+          if (msg) {
+            field.classList.add('is-invalid');
+            const err = screen.querySelector('[data-error]');
+            if (err) {
+              err.textContent = msg;
+              err.classList.add('is-visible');
+            }
+            return false;
+          }
+        }
+      }
+
+      if (question.type === 'score' && question.attribute?.required) {
+        const rows = Array.from(screen.querySelectorAll('[data-score-option]')).filter((row) => !row.classList.contains('is-hidden-by-logic'));
+        const complete = rows.every((row) => row.querySelector('.score-pill.is-active'));
+        if (!complete) {
+          screen.querySelector('[data-error]')?.classList.add('is-visible');
+          return false;
+        }
+      }
+
+      if (question.type === 'nps' && question.attribute?.required) {
+        const row = Array.from(screen.querySelectorAll('[data-nps-option]')).find((node) => !node.classList.contains('is-hidden-by-logic'));
+        if (!row?.querySelector('.score-pill.is-active')) {
+          screen.querySelector('[data-error]')?.classList.add('is-visible');
+          return false;
+        }
+      }
+
+      for (const optionEl of screen.querySelectorAll('.option')) {
+        const checked = optionEl.querySelector('input:checked');
+        if (!checked) continue;
+        const childFields = optionEl.querySelectorAll('[data-child-id]');
+        for (const field of childFields) {
+          const attr = JSON.parse(field.dataset.inputAttribute || '{}');
+          const msg = validateByDataType(field, attr);
+          if (msg) {
+            field.classList.add('is-invalid');
+            const err = optionEl.querySelector(`[data-child-error="${field.dataset.childId}"]`);
+            if (err) {
+              err.textContent = msg;
+              err.classList.add('is-visible');
+            }
+            return false;
+          }
+        }
+      }
+      return true;
+    }
+
+    function persist(question, save = true) {
+      if (!question) return;
+      const collected = collectQuestion(question);
+      if (collected) cache.answers[question.id] = collected;
+      else delete cache.answers[question.id];
+      if (save) saveCache();
+    }
+
+    function hydrateRangeField(field, value) {
+      if (!field || !value || typeof value !== 'object') return;
+      const start = field.querySelector('[data-range-role="start"]');
+      const end = field.querySelector('[data-range-role="end"]');
+      if (start) start.value = value.start || '';
+      if (end) end.value = value.end || '';
+    }
+
+    function hydrateAll() {
+      Object.entries(cache.answers || {}).forEach(([questionId, answer]) => {
+        const screen = document.querySelector(`[data-screen-id="${questionId}"]`);
+        if (!screen) return;
+
+        if (answer.questionType === 'radio') {
+          const input = screen.querySelector(`input[value="${answer.value.optionId}"]`);
+          if (input) input.checked = true;
+          (answer.value.child || []).forEach((item) => {
+            const child = screen.querySelector(`[data-child-id="${item.childId}"]`);
+            if (!child) return;
+            if (child.matches('[data-range-type]')) hydrateRangeField(child, item.value);
+            else child.value = typeof item.value === 'object' ? '' : (item.value || '');
+          });
+        }
+
+        if (answer.questionType === 'checkbox') {
+          (answer.value || []).forEach((item) => {
+            const input = screen.querySelector(`input[value="${item.optionId}"]`);
+            if (input) input.checked = true;
+            (item.child || []).forEach((childItem) => {
+              const child = screen.querySelector(`[data-child-id="${childItem.childId}"]`);
+              if (!child) return;
+              if (child.matches('[data-range-type]')) hydrateRangeField(child, childItem.value);
+              else child.value = typeof childItem.value === 'object' ? '' : (childItem.value || '');
+            });
+          });
+        }
+
+        if (answer.questionType === 'input') {
+          (answer.value || []).forEach((item) => {
+            const field = screen.querySelector(`[data-option-id="${item.optionId}"]`);
+            if (!field) return;
+            if (field.matches('[data-range-type]')) hydrateRangeField(field, item.value);
+            else field.value = typeof item.value === 'object' ? '' : (item.value || '');
+          });
+        }
+
+        if (answer.questionType === 'score') {
+          (answer.value || []).forEach((item) => {
+            const button = screen.querySelector(`[data-score-option-id="${item.optionId}"][data-score-value="${formatScoreValue(item.score)}"]`);
+            if (button) updateScoreDisplay(button);
+          });
+        }
+
+
+        if (answer.questionType === 'nps') {
+          const button = screen.querySelector(`[data-score-option-id="${answer.value.optionId}"][data-score-value="${formatScoreValue(answer.value.score)}"]`);
+          if (button) updateScoreDisplay(button);
+        }
+      });
+      updateChildVisibility();
+    }
+
+    function assemblePayload() {
+      answerableQuestions.forEach((q) => persist(q));
+      return {
+        surveyId,
+        submittedAt: new Date().toISOString(),
+        answers: Object.entries(cache.answers).filter(([questionId]) => !isQuestionHidden(questionId)).map(([questionId, answer]) => ({
+          questionId,
+          questionType: answer.questionType,
+          value: answer.value
+        })).filter((item) => !isQuestionUnavailable(item.questionId))
+      };
+    }
+
+    function currentQuestion() {
+      return currentScreenQuestions()[0] || null;
+    }
+
+    function currentScreenQuestions() {
+      const screen = visibleScreens()[current] || screens()[current];
+      return questionsOnScreen(screen);
+    }
+
+    function currentScreenId() {
+      return (visibleScreens()[current] || screens()[current])?.dataset.screenId || document.querySelector('.screen.is-active')?.dataset.screenId || null;
+    }
+
+    function persistQuestions(questions, save = true) {
+      questions.forEach((question) => persist(question, false));
+      if (save) saveCache();
+    }
+
+    function validateQuestions(questions) {
+      for (const question of questions) {
+        if (!validateQuestion(question)) return false;
+      }
+      return true;
+    }
+
+    function bindEvents() {
+      form.addEventListener('click', (e) => {
+        if (e.target.matches('[data-next]')) {
+          const questions = currentScreenQuestions();
+          if (!validateQuestions(questions)) return;
+          persistQuestions(questions, false);
+          const preserveId = currentScreenId();
+          applyLogicRuntime({ preserveActiveId: preserveId });
+          const nextTarget = questions.map((question) => logicState.jumpTargets.get(question.id)).find(Boolean);
+          if (nextTarget) showById(nextTarget);
+          else show(current + 1);
+        }
+        if (e.target.matches('[data-prev]')) {
+          persistQuestions(currentScreenQuestions(), false);
+          applyLogicRuntime({ preserveActiveId: currentScreenId() });
+          show(current - 1);
+        }
+        const scoreBtn = e.target.closest('.score-pill');
+        if (scoreBtn) {
+          updateScoreDisplay(scoreBtn);
+          const questions = currentScreenQuestions();
+          if (questions.length) {
+            persistQuestions(questions, false);
+            applyLogicRuntime({ preserveActiveId: currentScreenId() });
+          }
+        }
+      });
+
+      form.addEventListener('change', (e) => {
+        if (e.target.matches('input[type="checkbox"]')) {
+          const option = e.target.closest('.option');
+          const all = Array.from(e.target.closest('.options').querySelectorAll('input[type="checkbox"]'));
+          const exclusive = option?.dataset.exclusive === 'true';
+          const mutual = option?.dataset.mutualExclusion === 'true';
+          if (e.target.checked && exclusive) {
+            all.forEach((item) => { if (item !== e.target) item.checked = false; });
+          } else if (e.target.checked) {
+            all.forEach((item) => { if (item.closest('.option')?.dataset.exclusive === 'true') item.checked = false; });
+          }
+          if (e.target.checked && mutual) {
+            all.forEach((item) => {
+              const otherMutual = item.closest('.option')?.dataset.mutualExclusion === 'true';
+              if (item !== e.target && otherMutual) item.checked = false;
+            });
+          }
+        }
+        updateChildVisibility();
+        persistQuestions(currentScreenQuestions(), false);
+        applyLogicRuntime({ preserveActiveId: currentScreenId() });
+      });
+
+      form.addEventListener('input', () => {
+        persistQuestions(currentScreenQuestions(), false);
+        applyLogicRuntime({ preserveActiveId: currentScreenId() });
+      });
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        applyLogicRuntime({ preserveActiveId: currentScreenId() });
+        for (let i = 0; i < answerableQuestions.length; i++) {
+          const question = answerableQuestions[i];
+          if (isQuestionUnavailable(question.id)) continue;
+          if (!validateQuestion(question)) {
+            if (surveySchema.survey.attribute?.onePageOneQuestion === true) showById(question.id);
+            return;
+          }
+          persist(question, false);
+        }
+        saveCache();
+        const payload = assemblePayload();
+        console.log(payload);
+        localStorage.removeItem(cacheKey);
+        cache = { surveyId, updatedAt: new Date().toISOString(), answers: {} };
+        form.reset();
+        updateChildVisibility();
+        show(0, false);
+        alert('提交成功，感谢你的填写。');
+      });
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+    }

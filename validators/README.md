@@ -2,7 +2,14 @@
 
 These validators are the hard guardrails for the global `survey-creator-skill` skill.
 
+If you edited the split template source under `template-src/partials/`, rebuild the frozen single-file template before running release-grade checks:
+
+```bash
+python3 <repo-root>/tools/build_template.py
+```
+
 ## Files
+- `<repo-root>/tools/build_template.py`
 - `<repo-root>/validators/validate_survey_schema.py`
 - `<repo-root>/validators/auto_repair_survey_schema.py`
 - `<repo-root>/validators/validate_survey_payload.py`

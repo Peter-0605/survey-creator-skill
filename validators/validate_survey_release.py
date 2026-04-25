@@ -7,6 +7,7 @@ from validate_survey_payload import validate_survey_payload
 from validate_payload_against_schema import validate_payload_against_schema
 from validate_survey_html_runtime import validate_html_runtime
 from validate_survey_html_accessibility import validate_html_accessibility
+from validate_user_visible_content import validate_user_visible_content
 from generate_sample_payload import generate_payload
 from auto_repair_survey_schema import auto_repair_schema
 
@@ -68,7 +69,7 @@ def main():
     if args.generate_sample_payload and not args.schema:
         parser.error('--generate-sample-payload requires --schema.')
 
-    full_report = {'valid': True, 'schema': None, 'html': None, 'htmlAccessibility': None, 'payload': None, 'payloadAgainstSchema': None, 'repair': None, 'summary': {}}
+    full_report = {'valid': True, 'schema': None, 'html': None, 'htmlAccessibility': None, 'userVisible': None, 'payload': None, 'payloadAgainstSchema': None, 'repair': None, 'summary': {}}
 
     try:
         schema_data = load_json(args.schema) if args.schema else None
@@ -93,6 +94,10 @@ def main():
             full_report['htmlAccessibility'] = accessibility_report
             full_report['summary']['htmlAccessibility'] = summarize(accessibility_report)
             full_report['valid'] = full_report['valid'] and accessibility_report.get('valid', False)
+            user_visible_report = validate_user_visible_content(Path(args.html))
+            full_report['userVisible'] = user_visible_report
+            full_report['summary']['userVisible'] = summarize(user_visible_report)
+            full_report['valid'] = full_report['valid'] and user_visible_report.get('valid', False)
         generated_payload = None
         if args.payload:
             generated_payload = load_json(args.payload)
@@ -137,6 +142,8 @@ def main():
             print_section('HTML', full_report['html'])
         if full_report.get('htmlAccessibility') is not None:
             print_section('HTML ACCESSIBILITY', full_report['htmlAccessibility'])
+        if full_report.get('userVisible') is not None:
+            print_section('USER VISIBLE CONTENT', full_report['userVisible'])
         if full_report['payload'] is not None:
             print_section('PAYLOAD', full_report['payload'])
         if full_report.get('payloadAgainstSchema') is not None:
