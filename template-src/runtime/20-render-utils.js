@@ -83,21 +83,31 @@
       return `<a class="media-link" href="${url}" target="_blank" rel="noopener noreferrer">${text}</a>`;
     }
 
-    function renderMedia(media = []) {
+    function renderMediaItem(m, context = 'question') {
+      const label = `<small>${mediaTitle(m.type)}</small>`;
+      const variantClass = context ? `media-card--${context}` : '';
+      if (m.type === 'image') {
+        return `<div class="media-card ${variantClass}">${label}<div class="media-frame media-frame--image"><img src="${m.url}" alt="问卷图片资源" /></div>${renderMediaLink(m.url, '打开原图')}</div>`;
+      }
+      if (m.type === 'audio') {
+        return `<div class="media-card ${variantClass}">${label}<div class="media-frame media-frame--audio"><audio controls preload="metadata" src="${m.url}"></audio></div><div class="media-fallback">可直接播放音频内容。</div>${renderMediaLink(m.url)}</div>`;
+      }
+      if (m.type === 'video') {
+        return `<div class="media-card ${variantClass}">${label}<div class="media-frame media-frame--video"><video controls preload="metadata" playsinline src="${m.url}"></video></div><div class="media-fallback">可直接播放视频内容。</div>${renderMediaLink(m.url)}</div>`;
+      }
+      return `<div class="media-card ${variantClass}">${label}<div class="media-fallback">当前资源类型暂不支持内嵌预览，请打开原始资源查看。</div>${renderMediaLink(m.url)}</div>`;
+    }
+
+    function renderMedia(media = [], context = 'question') {
       if (!media.length) return '';
-      return `<div class="media-grid">${media.map((m) => {
-        const label = `<small>${mediaTitle(m.type)}</small>`;
-        if (m.type === 'image') {
-          return `<div class="media-item">${label}<img src="${m.url}" alt="问卷图片资源" />${renderMediaLink(m.url, '打开原图')}</div>`;
-        }
-        if (m.type === 'audio') {
-          return `<div class="media-item">${label}<audio controls preload="metadata" src="${m.url}"></audio><div class="media-fallback">可直接播放音频内容。</div>${renderMediaLink(m.url)}</div>`;
-        }
-        if (m.type === 'video') {
-          return `<div class="media-item">${label}<video controls preload="metadata" playsinline src="${m.url}"></video><div class="media-fallback">可直接播放视频内容。</div>${renderMediaLink(m.url)}</div>`;
-        }
-        return `<div class="media-item">${label}<div class="media-fallback">当前资源类型暂不支持内嵌预览，请打开原始资源查看。</div>${renderMediaLink(m.url)}</div>`;
-      }).join('')}</div>`;
+      const containerClass = context === 'survey'
+        ? 'hero-media-wrap'
+        : context === 'finish'
+        ? 'finish-media-wrap'
+        : context === 'option'
+        ? 'option-media-wrap'
+        : 'question-media-wrap';
+      return `<div class="${containerClass}"><div class="media-stack media-stack--${context}">${media.map((m) => renderMediaItem(m, context)).join('')}</div></div>`;
     }
 
     function createInputControl(dataType, attrs, name = '', dataOptionId = '', dataChildId = '') {

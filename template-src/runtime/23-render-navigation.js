@@ -38,9 +38,15 @@
       if (!list.length) return;
       current = Math.max(0, Math.min(index, list.length - 1));
       const active = list[current];
+      const activeType = active?.dataset?.schemaType;
       screens().forEach((screen) => screen.classList.toggle('is-active', screen === active));
       progressBar.style.width = `${list.length <= 1 ? 100 : (current / (list.length - 1)) * 100}%`;
       stepCounter.textContent = `${current + 1} / ${list.length}`;
+      if (progressCaption) {
+        if (activeType === 'survey') progressCaption.textContent = '当前正在开始填写';
+        else if (activeType === 'finish') progressCaption.textContent = '最后一步，确认并提交';
+        else progressCaption.textContent = `还有 ${Math.max(list.length - current - 1, 0)} 步完成`;
+      }
       if (save) saveCache();
     }
 

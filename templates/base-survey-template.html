@@ -139,6 +139,12 @@
       background: var(--brand);
       transition: width .24s ease;
     }
+    .progress-caption {
+      margin: 6px 0 18px;
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--text-soft);
+    }
     .screen { display: none; }
     .screen.is-active { display: block; }
     .card {
@@ -159,11 +165,94 @@
       display: grid;
       gap: 16px;
     }
+    .survey-hero,
+    .finish-state {
+      display: grid;
+      gap: 18px;
+    }
+    .survey-kicker,
+    .finish-kicker {
+      display: inline-flex;
+      width: fit-content;
+      min-height: 28px;
+      align-items: center;
+      padding: 0 12px;
+      border-radius: 999px;
+      background: rgba(47,107,255,.10);
+      color: var(--brand);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .04em;
+    }
+    .finish-badge {
+      display: inline-flex;
+      width: fit-content;
+      min-height: 30px;
+      align-items: center;
+      padding: 0 12px;
+      border-radius: 999px;
+      background: rgba(46, 160, 67, 0.10);
+      color: #1c7c38;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .03em;
+    }
+    .survey-hero-copy,
+    .finish-copy,
+    .question-main {
+      display: grid;
+      gap: 8px;
+    }
+    .trust-meta-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .survey-reason-list {
+      display: grid;
+      gap: 10px;
+    }
+    .survey-reason-item {
+      position: relative;
+      padding-left: 18px;
+      font-size: 13px;
+      line-height: 1.7;
+      color: var(--text-soft);
+    }
+    .survey-reason-item::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 8px;
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--brand);
+    }
+    .trust-meta-item {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: var(--bg-soft);
+      padding: 14px 16px;
+      display: grid;
+      gap: 6px;
+    }
+    .trust-meta-item strong {
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .trust-meta-item span,
+    .finish-note {
+      font-size: 13px;
+      line-height: 1.7;
+      color: var(--text-soft);
+    }
     .hero-grid, .finish-grid {
       grid-template-columns: 1fr;
       align-items: start;
     }
-    .question-head {
+    .question-head,
+    .question-stage-meta {
       display: flex;
       justify-content: space-between;
       gap: 16px;
@@ -192,7 +281,8 @@
       color: inherit;
       font-size: 13px;
     }
-    .meta-grid { display: grid; gap: 10px; }
+    .meta-grid,
+    .question-content { display: grid; gap: 12px; }
     .meta {
       border-radius: var(--radius-lg);
       border: 1px solid var(--line);
@@ -224,45 +314,78 @@
       background: rgba(217,156,50,.1);
     }
     .required { color: var(--danger); margin-left: 4px; }
-    .media-grid {
+    .media-stack {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0,1fr));
       gap: 10px;
     }
-    .media-item {
+    .media-stack--survey,
+    .media-stack--finish {
+      grid-template-columns: 1fr;
+    }
+    .media-stack--question,
+    .media-stack--option {
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    }
+    .hero-media-wrap,
+    .question-media-wrap,
+    .finish-media-wrap,
+    .option-media-wrap {
+      display: grid;
+      gap: 10px;
+    }
+    .media-card {
       min-width: 0;
       border-radius: 14px;
       border: 1px solid var(--line);
       background: #fafbfc;
-      padding: 10px;
+      padding: 12px;
     }
-    .dark .media-item {
+    .media-card--survey {
+      padding: 14px;
+      background: linear-gradient(180deg, #ffffff 0%, #f7faff 100%);
+    }
+    .media-card--finish {
+      background: linear-gradient(180deg, #ffffff 0%, #f9fbfe 100%);
+    }
+    .dark .media-card {
       border-color: var(--line-dark);
       background: rgba(255,255,255,.04);
     }
-    .media-item small {
+    .media-card small {
       display: block;
       margin-bottom: 8px;
       font-size: 12px;
       color: var(--text-soft);
       font-weight: 600;
     }
-    .dark .media-item small { color: var(--text-light-soft); }
-    .media-item img {
+    .dark .media-card small { color: var(--text-light-soft); }
+    .media-frame {
+      overflow: hidden;
+      border-radius: 12px;
+      background: #eef3fb;
+      border: 1px solid rgba(47,107,255,.08);
+    }
+    .media-frame--image img {
       width: 100%;
-      height: 120px;
+      height: 160px;
       object-fit: cover;
       border-radius: 10px;
       display: block;
     }
-    .media-item audio, .media-item video {
+    .hero-media-wrap .media-frame--image img {
+      height: 240px;
+    }
+    .option-media-wrap .media-frame--image img {
+      height: 132px;
+    }
+    .media-card audio, .media-card video {
       width: 100%;
       display: block;
       border-radius: 10px;
       overflow: hidden;
       background: #000;
     }
-    .media-item video {
+    .media-card video {
       max-height: 220px;
       object-fit: cover;
     }
@@ -296,6 +419,9 @@
       display: grid;
       gap: 12px;
     }
+    .score-card {
+      background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+    }
     .score-scale {
       display: flex;
       flex-wrap: wrap;
@@ -313,6 +439,25 @@
       cursor: pointer;
       transition: .18s ease;
     }
+    .score-pill--card {
+      display: inline-grid;
+      place-items: center;
+      gap: 1px;
+      min-width: 52px;
+      height: 48px;
+      border-radius: 14px;
+    }
+    .score-pill-value {
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1;
+    }
+    .score-pill-hint {
+      font-size: 10px;
+      font-weight: 600;
+      line-height: 1;
+      opacity: .72;
+    }
     .score-pill.is-active {
       background: var(--brand);
       color: #fff;
@@ -329,21 +474,65 @@
       border-radius: 18px;
       overflow: hidden;
       background: #fafbfc;
-      transition: border-color .18s ease, transform .18s ease;
+      transition: border-color .18s ease, transform .18s ease, background-color .18s ease, box-shadow .18s ease;
     }
-    .option:hover { border-color: rgba(47,107,255,.22); transform: none; }
-    .option-label {
+    .option:hover {
+      border-color: rgba(47,107,255,.22);
+      background: #ffffff;
+      box-shadow: 0 8px 24px rgba(31, 35, 41, 0.05);
+    }
+    .option-card {
       display: flex;
       align-items: flex-start;
       gap: 14px;
       padding: 16px;
       cursor: pointer;
+      width: 100%;
     }
-    .option-label input {
+    .option-card input {
       width: 18px;
+      min-width: 18px;
       height: 18px;
       margin-top: 4px;
       accent-color: var(--brand);
+    }
+    .option-card-indicator {
+      display: none;
+    }
+    .option-card-body {
+      min-width: 0;
+      flex: 1;
+      display: grid;
+      gap: 12px;
+    }
+    .option-card-arrow {
+      align-self: center;
+      color: var(--text-soft);
+      font-size: 20px;
+      line-height: 1;
+      transition: transform .18s ease, color .18s ease;
+    }
+    .option-copy {
+      display: grid;
+      gap: 6px;
+    }
+    .option--media .option-card {
+      align-items: flex-start;
+    }
+    .option:has(input:checked) {
+      border-color: rgba(47,107,255,.38);
+      background: #f7faff;
+      box-shadow: 0 10px 28px rgba(47,107,255,.10);
+    }
+    .option:has(input:checked) .option-card-arrow {
+      color: var(--brand);
+      transform: translateX(2px);
+    }
+    .option--media .option-copy .rich p {
+      color: var(--text);
+    }
+    .option--media .option-media-wrap {
+      margin-top: 2px;
     }
     .child-list {
       display: none;
@@ -427,16 +616,120 @@
     }
     @media (max-width: 900px) {
       .hero-grid, .finish-grid { grid-template-columns: 1fr; }
-      .media-grid { grid-template-columns: 1fr; }
+      .media-stack--question,
+      .media-stack--option,
+      .trust-meta-list { grid-template-columns: 1fr; }
+      .hero-media-wrap .media-frame--image img {
+        height: 220px;
+      }
     }
     @media (max-width: 640px) {
       body { padding: 16px 12px 32px; }
-      .card-body { padding: 22px 18px; }
+      .topbar {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        gap: 10px;
+        align-items: center;
+      }
+      .progress-caption {
+        margin: 4px 2px 16px;
+        font-size: 12px;
+      }
+      .card-body { padding: 22px 16px; gap: 14px; }
       .rich h1 { font-size: 24px; }
       .rich h2 { font-size: 20px; }
+      .rich p, .rich li, .rich blockquote { font-size: 15px; line-height: 1.72; }
+      .survey-hero,
+      .finish-state,
+      .survey-hero-copy,
+      .finish-copy,
+      .question-main,
+      .question-content { gap: 14px; }
+      .trust-meta-item {
+        padding: 12px 14px;
+      }
+      .survey-reason-item {
+        font-size: 12px;
+      }
+      .question-stage-meta {
+        gap: 10px;
+      }
+      .question-index {
+        margin-bottom: 0;
+        font-size: 11px;
+        letter-spacing: .12em;
+      }
+      .media-card {
+        padding: 10px;
+      }
+      .media-frame--image img,
+      .option-media-wrap .media-frame--image img {
+        height: 168px;
+      }
+      .hero-media-wrap .media-frame--image img {
+        height: 196px;
+      }
+      .score-item {
+        padding: 14px;
+        gap: 10px;
+      }
+      .score-scale {
+        gap: 6px;
+      }
+      .score-pill {
+        min-width: 42px;
+        height: 38px;
+      }
+      .score-pill--card {
+        min-width: 46px;
+        height: 42px;
+      }
+      .option {
+        border-radius: 16px;
+      }
+      .option-card {
+        gap: 12px;
+        padding: 14px;
+      }
+      .option-card input {
+        width: 20px;
+        min-width: 20px;
+        height: 20px;
+      }
+      .option-card-body {
+        gap: 10px;
+      }
+      .option-card-arrow {
+        font-size: 18px;
+      }
+      .child-list {
+        padding: 0 14px 14px 46px;
+      }
       .field-row { grid-template-columns: 1fr; }
+      .input, .textarea {
+        font-size: 16px;
+        padding: 13px 14px;
+      }
+      .textarea {
+        min-height: 124px;
+      }
       .actions, .actions-right { width: 100%; }
-      .actions-right > * { flex: 1; }
+      .actions {
+        position: sticky;
+        bottom: 0;
+        z-index: 3;
+        padding-top: 8px;
+        background: linear-gradient(180deg, rgba(245,247,250,0) 0%, var(--bg) 32%);
+      }
+      .actions-right > *,
+      .actions > .btn.secondary {
+        flex: 1;
+      }
+      .btn {
+        min-height: 48px;
+        padding: 0 18px;
+        font-size: 15px;
+      }
     }
   </style>
 </head>
@@ -447,12 +740,12 @@
       <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
       <div class="badge" id="stepCounter">1 / 1</div>
     </div>
+    <div class="progress-caption" id="progressCaption">当前正在开始填写</div>
 
     <form id="surveyForm" action="#">
       <!-- screens rendered by schema -->
     </form>
   </div>
-
   <script>
     const richMediaImg = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzIwIiBoZWlnaHQ9IjQwMCIgdmlld0JveD0iMCAwIDcyMCA0MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjcyMCIgaGVpZ2h0PSI0MDAiIHJ4PSIzMiIgZmlsbD0idXJsKCNnKSIvPjxjaXJjbGUgY3g9IjEyNSIgY3k9IjExNSIgcj0iNjAiIGZpbGw9IndoaXRlIiBmaWxsLW9wYWNpdHk9Ii4xNSIvPjxwYXRoIGQ9Ik02MCAzMjBDMTQ1IDI1NSAyNTUgMjI1IDM2MCAyNDVDNDU1IDI2MyA1NTIgMzQwIDY2MCAyNzVWNDAwSDYwVjMyMFoiIGZpbGw9IndoaXRlIiBmaWxsLW9wYWNpdHk9Ii4xMiIvPjxkZWZzPjxsaW5lYXJHcmFkaWVudCBpZD0iZyIgeDE9IjAiIHkxPSIwIiB4Mj0iNzIwIiB5Mj0iNDAwIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHN0b3Agc3RvcC1jb2xvcj0iIzVCN0NGRiIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzI1QzJBMCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjwvc3ZnPg==';
 
@@ -549,6 +842,7 @@
     const form = document.getElementById('surveyForm');
     const progressBar = document.getElementById('progressBar');
     const stepCounter = document.getElementById('stepCounter');
+    const progressCaption = document.getElementById('progressCaption');
     const surveyId = surveySchema.survey.id;
     const cacheKey = `survey_step_cache_${surveyId}`;
     const logicRules = Array.isArray(surveySchema.logic) ? surveySchema.logic : [];
@@ -593,7 +887,6 @@
       if (!pages.length && answerableQuestions.length) pages.push([...answerableQuestions]);
       return pages;
     }
-
     function questionNumber(questionId) {
       return (questionOrder.get(questionId) ?? 0) + 1;
     }
@@ -936,21 +1229,31 @@
       return `<a class="media-link" href="${url}" target="_blank" rel="noopener noreferrer">${text}</a>`;
     }
 
-    function renderMedia(media = []) {
+    function renderMediaItem(m, context = 'question') {
+      const label = `<small>${mediaTitle(m.type)}</small>`;
+      const variantClass = context ? `media-card--${context}` : '';
+      if (m.type === 'image') {
+        return `<div class="media-card ${variantClass}">${label}<div class="media-frame media-frame--image"><img src="${m.url}" alt="问卷图片资源" /></div>${renderMediaLink(m.url, '打开原图')}</div>`;
+      }
+      if (m.type === 'audio') {
+        return `<div class="media-card ${variantClass}">${label}<div class="media-frame media-frame--audio"><audio controls preload="metadata" src="${m.url}"></audio></div><div class="media-fallback">可直接播放音频内容。</div>${renderMediaLink(m.url)}</div>`;
+      }
+      if (m.type === 'video') {
+        return `<div class="media-card ${variantClass}">${label}<div class="media-frame media-frame--video"><video controls preload="metadata" playsinline src="${m.url}"></video></div><div class="media-fallback">可直接播放视频内容。</div>${renderMediaLink(m.url)}</div>`;
+      }
+      return `<div class="media-card ${variantClass}">${label}<div class="media-fallback">当前资源类型暂不支持内嵌预览，请打开原始资源查看。</div>${renderMediaLink(m.url)}</div>`;
+    }
+
+    function renderMedia(media = [], context = 'question') {
       if (!media.length) return '';
-      return `<div class="media-grid">${media.map((m) => {
-        const label = `<small>${mediaTitle(m.type)}</small>`;
-        if (m.type === 'image') {
-          return `<div class="media-item">${label}<img src="${m.url}" alt="问卷图片资源" />${renderMediaLink(m.url, '打开原图')}</div>`;
-        }
-        if (m.type === 'audio') {
-          return `<div class="media-item">${label}<audio controls preload="metadata" src="${m.url}"></audio><div class="media-fallback">可直接播放音频内容。</div>${renderMediaLink(m.url)}</div>`;
-        }
-        if (m.type === 'video') {
-          return `<div class="media-item">${label}<video controls preload="metadata" playsinline src="${m.url}"></video><div class="media-fallback">可直接播放视频内容。</div>${renderMediaLink(m.url)}</div>`;
-        }
-        return `<div class="media-item">${label}<div class="media-fallback">当前资源类型暂不支持内嵌预览，请打开原始资源查看。</div>${renderMediaLink(m.url)}</div>`;
-      }).join('')}</div>`;
+      const containerClass = context === 'survey'
+        ? 'hero-media-wrap'
+        : context === 'finish'
+        ? 'finish-media-wrap'
+        : context === 'option'
+        ? 'option-media-wrap'
+        : 'question-media-wrap';
+      return `<div class="${containerClass}"><div class="media-stack media-stack--${context}">${media.map((m) => renderMediaItem(m, context)).join('')}</div></div>`;
     }
 
     function createInputControl(dataType, attrs, name = '', dataOptionId = '', dataChildId = '') {
@@ -992,9 +1295,9 @@
       return `<div class="score-list">${(question.option || []).map((opt) => {
         const descMap = opt.attribute?.scoreDesc || {};
         const values = scoreValues(opt);
-        return `<div class="score-item" data-score-option="${opt.id}" data-option-field="${opt.id}"><div class="field-label">${renderRich(opt.title)}</div>${renderMedia(opt.attribute?.media || [])}<div class="score-scale">${values.map((value) => {
+        return `<div class="score-item score-card" data-score-option="${opt.id}" data-option-field="${opt.id}"><div class="field-label">${renderRich(opt.title)}</div>${renderMedia(opt.attribute?.media || [], 'option')}<div class="score-scale">${values.map((value) => {
           const display = formatScoreValue(value);
-          return `<button class="score-pill" type="button" aria-pressed="false" aria-label="评分 ${display}" data-score-option-id="${opt.id}" data-score-value="${display}">${display}</button>`;
+          return `<button class="score-pill score-pill--card" type="button" aria-pressed="false" aria-label="评分 ${display}" data-score-option-id="${opt.id}" data-score-value="${display}"><span class="score-pill-value">${display}</span><span class="score-pill-hint">分</span></button>`;
         }).join('')}</div><div class="score-desc" data-score-desc-for="${opt.id}"></div></div>`;
       }).join('')}</div><div class="error" role="alert" data-error>请完成当前评分题。</div>`;
     }
@@ -1012,9 +1315,9 @@
     function renderNpsQuestion(question) {
       const opt = (question.option || [])[0] || { id: `${question.id}_nps`, attribute: { scope: [0, 10] } };
       const values = npsValues(opt);
-      return `<div class="score-list nps-list"><div class="score-item nps-item" data-nps-option="${opt.id}" data-option-field="${opt.id}">${renderMedia(opt.attribute?.media || [])}<div class="score-scale nps-scale">${values.map((value) => {
+      return `<div class="score-list nps-list"><div class="score-item nps-item score-card" data-nps-option="${opt.id}" data-option-field="${opt.id}">${renderMedia(opt.attribute?.media || [], 'option')}<div class="score-scale nps-scale">${values.map((value) => {
         const display = formatScoreValue(value);
-        return `<button class="score-pill nps-pill" type="button" aria-pressed="false" aria-label="NPS ${display} 分" data-score-option-id="${opt.id}" data-score-value="${display}">${display}</button>`;
+        return `<button class="score-pill nps-pill score-pill--card" type="button" aria-pressed="false" aria-label="NPS ${display} 分" data-score-option-id="${opt.id}" data-score-value="${display}"><span class="score-pill-value">${display}</span><span class="score-pill-hint">分</span></button>`;
       }).join('')}</div><div class="score-desc" data-score-desc-for="${opt.id}"></div></div></div><div class="error" role="alert" data-error>请选择一个 NPS 分值。</div>`;
     }
 
@@ -1026,7 +1329,8 @@
         : '';
       const exclusive = option.attribute?.exclusive === true;
       const mutual = option.attribute?.['mutual-exclusion'] === true;
-      return `<div class="option" data-option-id="${option.id}" data-exclusive="${exclusive}" data-mutual-exclusion="${mutual}"><label class="option-label"><input type="${question.type === 'radio' ? 'radio' : 'checkbox'}" name="${question.id}" value="${option.id}" data-option-id="${option.id}" ${children.length ? 'data-has-child="true"' : ''} /><div class="option-title">${renderRich(option.title)}${renderMedia(option.attribute?.media || [])}</div></label>${childHtml}</div>`;
+      const hasMedia = Array.isArray(option.attribute?.media) && option.attribute.media.length > 0;
+      return `<div class="option ${hasMedia ? 'option--media' : 'option--plain'}" data-option-id="${option.id}" data-exclusive="${exclusive}" data-mutual-exclusion="${mutual}"><label class="option-card"><input type="${question.type === 'radio' ? 'radio' : 'checkbox'}" name="${question.id}" value="${option.id}" data-option-id="${option.id}" ${children.length ? 'data-has-child="true"' : ''} /><span class="option-card-indicator" aria-hidden="true"></span><div class="option-card-body"><div class="option-copy">${renderRich(option.title)}</div>${hasMedia ? renderMedia(option.attribute?.media || [], 'option') : ''}</div><span class="option-card-arrow" aria-hidden="true">›</span></label>${childHtml}</div>`;
     }
 
     function renderQuestion(question) {
@@ -1039,7 +1343,7 @@
         ? renderNpsQuestion(question)
         : `<div class="options">${options.map((opt) => renderOption(question, opt)).join('')}</div><div class="error" role="alert" data-error>请完成当前题目。</div>`;
       const allowBack = surveySchema.survey.attribute?.allowBack === true;
-      return screenShell(question.id, question.type, `<div class="question-head" style="grid-column:1 / -1;"><div><div class="question-index">第 ${String(questionNumber(question.id)).padStart(2, '0')} 题</div>${renderRich(question.title)}${renderRich(question.description)}</div>${question.attribute?.required ? '<div class="chip-row"><span class="chip warn">必填</span></div>' : ''}</div><div style="grid-column:1 / -1;">${renderMedia(question.attribute?.media || [])}${content}</div><div class="actions" style="grid-column:1 / -1;">${allowBack ? '<button class="btn secondary" type="button" data-prev>上一页</button>' : '<span></span>'}<div class="actions-right"><button class="btn" type="button" data-next>下一页</button></div></div>`);
+      return screenShell(question.id, question.type, `<div class="question-stage-meta" style="grid-column:1 / -1;"><div class="question-index">第 ${String(questionNumber(question.id)).padStart(2, '0')} 题</div>${question.attribute?.required ? '<div class="chip-row"><span class="chip warn">必填</span></div>' : ''}</div><div class="question-main" style="grid-column:1 / -1;">${renderRich(question.title)}${renderRich(question.description)}</div><div class="question-content" style="grid-column:1 / -1;">${renderMedia(question.attribute?.media || [], 'question')}${content}</div><div class="actions" style="grid-column:1 / -1;">${allowBack ? '<button class="btn secondary" type="button" data-prev>上一页</button>' : '<span></span>'}<div class="actions-right"><button class="btn" type="button" data-next>下一页</button></div></div>`);
     }
 
 
@@ -1052,11 +1356,11 @@
         : question.type === 'nps'
         ? renderNpsQuestion(question)
         : `<div class="options">${options.map((opt) => renderOption(question, opt)).join('')}</div><div class="error" role="alert" data-error>请完成当前题目。</div>`;
-      return `<section class="field" data-screen-id="${question.id}" data-schema-type="${question.type}"><div class="question-head"><div><div class="question-index">第 ${String(questionNumber(question.id)).padStart(2, '0')} 题</div>${renderRich(question.title)}${renderRich(question.description)}</div>${question.attribute?.required ? '<div class="chip-row"><span class="chip warn">必填</span></div>' : ''}</div>${renderMedia(question.attribute?.media || [])}${content}</section>`;
+      return `<section class="field" data-screen-id="${question.id}" data-schema-type="${question.type}"><div class="question-stage-meta"><div class="question-index">第 ${String(questionNumber(question.id)).padStart(2, '0')} 题</div>${question.attribute?.required ? '<div class="chip-row"><span class="chip warn">必填</span></div>' : ''}</div><div class="question-main">${renderRich(question.title)}${renderRich(question.description)}</div><div class="question-content">${renderMedia(question.attribute?.media || [], 'question')}${content}</div></section>`;
     }
     function renderSurvey() {
       const s = surveySchema.survey;
-      return screenShell(s.id, 'survey', `<div>${renderRich(s.title)}${renderRich(s.description)}</div><div class="meta-grid"><div class="meta"><strong>填写说明</strong><span>请根据你的真实想法完成填写，提交前可返回上一页修改内容。</span></div>${renderMedia(s.attribute.media || [])}</div><div class="actions" style="grid-column:1 / -1;"><span></span><div class="actions-right"><button class="btn" type="button" data-next>开始问卷</button></div></div>`, true);
+      return screenShell(s.id, 'survey', `<section class="survey-hero"><div class="survey-hero-copy"><div class="survey-kicker">问卷邀请</div>${renderRich(s.title)}${renderRich(s.description)}<div class="trust-meta-list"><div class="trust-meta-item"><strong>填写体验</strong><span>单步作答，过程轻量清晰。</span></div><div class="trust-meta-item"><strong>信息说明</strong><span>你的反馈仅用于服务优化与体验改进。</span></div></div><div class="survey-reason-list"><div class="survey-reason-item">预计耗时较短，可随时完成</div><div class="survey-reason-item">问题聚焦，填写过程更轻松</div><div class="survey-reason-item">提交后将直接完成，不会重复打扰</div></div></div>${renderMedia(s.attribute.media || [], 'survey')}</section><div class="actions" style="grid-column:1 / -1;"><span></span><div class="actions-right"><button class="btn" type="button" data-next>开始填写</button></div></div>`, true);
     }
 
 
@@ -1069,7 +1373,7 @@
     function renderFinish() {
       const f = surveySchema.finish;
       const allowBack = surveySchema.survey.attribute?.allowBack === true;
-      return screenShell(f.id, 'finish', `<div>${renderRich(f.title)}${renderRich(f.description)}</div><div class="meta-grid">${renderMedia(f.media || [])}</div><div class="actions" style="grid-column:1 / -1;">${allowBack ? '<button class="btn secondary" type="button" data-prev>上一页</button>' : '<span></span>'}<div class="actions-right"><button class="btn" type="submit">提交问卷</button></div></div>`, true);
+      return screenShell(f.id, 'finish', `<section class="finish-state"><div class="finish-kicker">反馈确认</div><div class="finish-badge">✓ 即将完成提交</div>${renderMedia(f.media || [], 'finish')}<div class="finish-copy">${renderRich(f.title)}${renderRich(f.description)}</div><div class="finish-note">提交后将立即完成本次问卷，页面不会再要求额外填写内容。</div></section><div class="actions" style="grid-column:1 / -1;">${allowBack ? '<button class="btn secondary" type="button" data-prev>上一页</button>' : '<span></span>'}<div class="actions-right"><button class="btn" type="submit">确认并提交</button></div></div>`, true);
     }
 
     function screenShell(id, type, inner, dark = false) {
@@ -1132,9 +1436,15 @@
       if (!list.length) return;
       current = Math.max(0, Math.min(index, list.length - 1));
       const active = list[current];
+      const activeType = active?.dataset?.schemaType;
       screens().forEach((screen) => screen.classList.toggle('is-active', screen === active));
       progressBar.style.width = `${list.length <= 1 ? 100 : (current / (list.length - 1)) * 100}%`;
       stepCounter.textContent = `${current + 1} / ${list.length}`;
+      if (progressCaption) {
+        if (activeType === 'survey') progressCaption.textContent = '当前正在开始填写';
+        else if (activeType === 'finish') progressCaption.textContent = '最后一步，确认并提交';
+        else progressCaption.textContent = `还有 ${Math.max(list.length - current - 1, 0)} 步完成`;
+      }
       if (save) saveCache();
     }
 

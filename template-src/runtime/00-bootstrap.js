@@ -93,6 +93,7 @@
     const form = document.getElementById('surveyForm');
     const progressBar = document.getElementById('progressBar');
     const stepCounter = document.getElementById('stepCounter');
+    const progressCaption = document.getElementById('progressCaption');
     const surveyId = surveySchema.survey.id;
     const cacheKey = `survey_step_cache_${surveyId}`;
     const logicRules = Array.isArray(surveySchema.logic) ? surveySchema.logic : [];
@@ -137,4 +138,3 @@
       if (!pages.length && answerableQuestions.length) pages.push([...answerableQuestions]);
       return pages;
     }
-

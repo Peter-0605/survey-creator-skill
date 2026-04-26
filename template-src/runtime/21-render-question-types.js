@@ -2,9 +2,9 @@
       return `<div class="score-list">${(question.option || []).map((opt) => {
         const descMap = opt.attribute?.scoreDesc || {};
         const values = scoreValues(opt);
-        return `<div class="score-item" data-score-option="${opt.id}" data-option-field="${opt.id}"><div class="field-label">${renderRich(opt.title)}</div>${renderMedia(opt.attribute?.media || [])}<div class="score-scale">${values.map((value) => {
+        return `<div class="score-item score-card" data-score-option="${opt.id}" data-option-field="${opt.id}"><div class="field-label">${renderRich(opt.title)}</div>${renderMedia(opt.attribute?.media || [], 'option')}<div class="score-scale">${values.map((value) => {
           const display = formatScoreValue(value);
-          return `<button class="score-pill" type="button" aria-pressed="false" aria-label="评分 ${display}" data-score-option-id="${opt.id}" data-score-value="${display}">${display}</button>`;
+          return `<button class="score-pill score-pill--card" type="button" aria-pressed="false" aria-label="评分 ${display}" data-score-option-id="${opt.id}" data-score-value="${display}"><span class="score-pill-value">${display}</span><span class="score-pill-hint">分</span></button>`;
         }).join('')}</div><div class="score-desc" data-score-desc-for="${opt.id}"></div></div>`;
       }).join('')}</div><div class="error" role="alert" data-error>请完成当前评分题。</div>`;
     }
@@ -22,9 +22,9 @@
     function renderNpsQuestion(question) {
       const opt = (question.option || [])[0] || { id: `${question.id}_nps`, attribute: { scope: [0, 10] } };
       const values = npsValues(opt);
-      return `<div class="score-list nps-list"><div class="score-item nps-item" data-nps-option="${opt.id}" data-option-field="${opt.id}">${renderMedia(opt.attribute?.media || [])}<div class="score-scale nps-scale">${values.map((value) => {
+      return `<div class="score-list nps-list"><div class="score-item nps-item score-card" data-nps-option="${opt.id}" data-option-field="${opt.id}">${renderMedia(opt.attribute?.media || [], 'option')}<div class="score-scale nps-scale">${values.map((value) => {
         const display = formatScoreValue(value);
-        return `<button class="score-pill nps-pill" type="button" aria-pressed="false" aria-label="NPS ${display} 分" data-score-option-id="${opt.id}" data-score-value="${display}">${display}</button>`;
+        return `<button class="score-pill nps-pill score-pill--card" type="button" aria-pressed="false" aria-label="NPS ${display} 分" data-score-option-id="${opt.id}" data-score-value="${display}"><span class="score-pill-value">${display}</span><span class="score-pill-hint">分</span></button>`;
       }).join('')}</div><div class="score-desc" data-score-desc-for="${opt.id}"></div></div></div><div class="error" role="alert" data-error>请选择一个 NPS 分值。</div>`;
     }
 
@@ -36,7 +36,8 @@
         : '';
       const exclusive = option.attribute?.exclusive === true;
       const mutual = option.attribute?.['mutual-exclusion'] === true;
-      return `<div class="option" data-option-id="${option.id}" data-exclusive="${exclusive}" data-mutual-exclusion="${mutual}"><label class="option-label"><input type="${question.type === 'radio' ? 'radio' : 'checkbox'}" name="${question.id}" value="${option.id}" data-option-id="${option.id}" ${children.length ? 'data-has-child="true"' : ''} /><div class="option-title">${renderRich(option.title)}${renderMedia(option.attribute?.media || [])}</div></label>${childHtml}</div>`;
+      const hasMedia = Array.isArray(option.attribute?.media) && option.attribute.media.length > 0;
+      return `<div class="option ${hasMedia ? 'option--media' : 'option--plain'}" data-option-id="${option.id}" data-exclusive="${exclusive}" data-mutual-exclusion="${mutual}"><label class="option-card"><input type="${question.type === 'radio' ? 'radio' : 'checkbox'}" name="${question.id}" value="${option.id}" data-option-id="${option.id}" ${children.length ? 'data-has-child="true"' : ''} /><span class="option-card-indicator" aria-hidden="true"></span><div class="option-card-body"><div class="option-copy">${renderRich(option.title)}</div>${hasMedia ? renderMedia(option.attribute?.media || [], 'option') : ''}</div><span class="option-card-arrow" aria-hidden="true">›</span></label>${childHtml}</div>`;
     }
 
     function renderQuestion(question) {
@@ -49,7 +50,7 @@
         ? renderNpsQuestion(question)
         : `<div class="options">${options.map((opt) => renderOption(question, opt)).join('')}</div><div class="error" role="alert" data-error>请完成当前题目。</div>`;
       const allowBack = surveySchema.survey.attribute?.allowBack === true;
-      return screenShell(question.id, question.type, `<div class="question-head" style="grid-column:1 / -1;"><div><div class="question-index">第 ${String(questionNumber(question.id)).padStart(2, '0')} 题</div>${renderRich(question.title)}${renderRich(question.description)}</div>${question.attribute?.required ? '<div class="chip-row"><span class="chip warn">必填</span></div>' : ''}</div><div style="grid-column:1 / -1;">${renderMedia(question.attribute?.media || [])}${content}</div><div class="actions" style="grid-column:1 / -1;">${allowBack ? '<button class="btn secondary" type="button" data-prev>上一页</button>' : '<span></span>'}<div class="actions-right"><button class="btn" type="button" data-next>下一页</button></div></div>`);
+      return screenShell(question.id, question.type, `<div class="question-stage-meta" style="grid-column:1 / -1;"><div class="question-index">第 ${String(questionNumber(question.id)).padStart(2, '0')} 题</div>${question.attribute?.required ? '<div class="chip-row"><span class="chip warn">必填</span></div>' : ''}</div><div class="question-main" style="grid-column:1 / -1;">${renderRich(question.title)}${renderRich(question.description)}</div><div class="question-content" style="grid-column:1 / -1;">${renderMedia(question.attribute?.media || [], 'question')}${content}</div><div class="actions" style="grid-column:1 / -1;">${allowBack ? '<button class="btn secondary" type="button" data-prev>上一页</button>' : '<span></span>'}<div class="actions-right"><button class="btn" type="button" data-next>下一页</button></div></div>`);
     }
 
 
@@ -62,5 +63,5 @@
         : question.type === 'nps'
         ? renderNpsQuestion(question)
         : `<div class="options">${options.map((opt) => renderOption(question, opt)).join('')}</div><div class="error" role="alert" data-error>请完成当前题目。</div>`;
-      return `<section class="field" data-screen-id="${question.id}" data-schema-type="${question.type}"><div class="question-head"><div><div class="question-index">第 ${String(questionNumber(question.id)).padStart(2, '0')} 题</div>${renderRich(question.title)}${renderRich(question.description)}</div>${question.attribute?.required ? '<div class="chip-row"><span class="chip warn">必填</span></div>' : ''}</div>${renderMedia(question.attribute?.media || [])}${content}</section>`;
+      return `<section class="field" data-screen-id="${question.id}" data-schema-type="${question.type}"><div class="question-stage-meta"><div class="question-index">第 ${String(questionNumber(question.id)).padStart(2, '0')} 题</div>${question.attribute?.required ? '<div class="chip-row"><span class="chip warn">必填</span></div>' : ''}</div><div class="question-main">${renderRich(question.title)}${renderRich(question.description)}</div><div class="question-content">${renderMedia(question.attribute?.media || [], 'question')}${content}</div></section>`;
     }
