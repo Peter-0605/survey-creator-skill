@@ -1,6 +1,6 @@
     function renderSurvey() {
       const s = surveySchema.survey;
-      return screenShell(s.id, 'survey', `<section class="survey-hero"><div class="survey-hero-copy"><div class="survey-kicker">问卷邀请</div>${renderRich(s.title)}${renderRich(s.description)}<div class="trust-meta-list"><div class="trust-meta-item"><strong>填写体验</strong><span>单步作答，过程轻量清晰。</span></div><div class="trust-meta-item"><strong>信息说明</strong><span>你的反馈仅用于服务优化与体验改进。</span></div></div><div class="survey-reason-list"><div class="survey-reason-item">预计耗时较短，可随时完成</div><div class="survey-reason-item">问题聚焦，填写过程更轻松</div><div class="survey-reason-item">提交后将直接完成，不会重复打扰</div></div></div>${renderMedia(s.attribute.media || [], 'survey')}</section><div class="actions" style="grid-column:1 / -1;"><span></span><div class="actions-right"><button class="btn" type="button" data-next>开始填写</button></div></div>`, true);
+      return screenShell(s.id, 'survey', `<section class="survey-hero"><div class="survey-hero-copy"><div class="survey-kicker">问卷邀请</div>${renderRich(s.title)}${renderRich(s.description)}<div class="trust-meta-list"><div class="trust-meta-item"><strong>填写体验</strong><span>单步作答，过程轻量清晰。</span></div><div class="trust-meta-item"><strong>信息说明</strong><span>你的反馈仅用于服务优化与体验改进。</span></div></div><div class="survey-reason-list"><div class="survey-reason-item">预计耗时较短，可随时完成</div><div class="survey-reason-item">问题聚焦，填写过程更轻松</div><div class="survey-reason-item">提交后将直接完成，不会重复打扰</div></div></div>${renderHeroVisual(s.attribute.media || [], 'survey')}</section><div class="actions" style="grid-column:1 / -1;"><span></span><div class="actions-right"><button class="btn" type="button" data-next>开始填写</button></div></div>`, true);
     }
 
 
@@ -13,7 +13,7 @@
     function renderFinish() {
       const f = surveySchema.finish;
       const allowBack = surveySchema.survey.attribute?.allowBack === true;
-      return screenShell(f.id, 'finish', `<section class="finish-state"><div class="finish-kicker">反馈确认</div><div class="finish-badge">✓ 即将完成提交</div>${renderMedia(f.media || [], 'finish')}<div class="finish-copy">${renderRich(f.title)}${renderRich(f.description)}</div><div class="finish-note">提交后将立即完成本次问卷，页面不会再要求额外填写内容。</div></section><div class="actions" style="grid-column:1 / -1;">${allowBack ? '<button class="btn secondary" type="button" data-prev>上一页</button>' : '<span></span>'}<div class="actions-right"><button class="btn" type="submit">确认并提交</button></div></div>`, true);
+      return screenShell(f.id, 'finish', `<section class="finish-state"><div class="finish-kicker">反馈确认</div><div class="finish-badge">✓ 即将完成提交</div>${renderHeroVisual(f.media || [], 'finish')}<div class="finish-copy">${renderRich(f.title)}${renderRich(f.description)}</div><div class="finish-note">提交后将立即完成本次问卷，页面不会再要求额外填写内容。</div></section><div class="actions" style="grid-column:1 / -1;">${allowBack ? '<button class="btn secondary" type="button" data-prev>上一页</button>' : '<span></span>'}<div class="actions-right"><button class="btn" type="submit">确认并提交</button></div></div>`, true);
     }
 
     function screenShell(id, type, inner, dark = false) {

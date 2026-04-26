@@ -110,6 +110,11 @@
       return `<div class="${containerClass}"><div class="media-stack media-stack--${context}">${media.map((m) => renderMediaItem(m, context)).join('')}</div></div>`;
     }
 
+    function renderHeroVisual(media = [], context = 'survey') {
+      if (Array.isArray(media) && media.length) return renderMedia(media, context);
+      return '';
+    }
+
     function createInputControl(dataType, attrs, name = '', dataOptionId = '', dataChildId = '') {
       const placeholder = attrs?.placeholder || '';
       const maxLength = attrs?.maxLength ?? '';

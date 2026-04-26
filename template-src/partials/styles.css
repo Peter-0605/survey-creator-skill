@@ -98,6 +98,26 @@
       --shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
       --app-max-width: 780px;
     }
+    body[data-style-pack="consumer-campaign"] {
+      --bg: #ffffff;
+      --bg-soft: #f8f7fb;
+      --panel: #ffffff;
+      --panel-dark: #ffffff;
+      --text: #000000;
+      --text-soft: #595566;
+      --text-light: #000000;
+      --text-light-soft: #595566;
+      --line: #ece9f3;
+      --line-dark: #ece9f3;
+      --brand: #000000;
+      --brand-2: #863dfb;
+      --danger: #db2f57;
+      --radius-xl: 26px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --shadow: 0 20px 48px rgba(20, 10, 40, 0.08);
+      --app-max-width: 860px;
+    }
     .app { width: 100%; max-width: var(--app-max-width); margin: 0 auto; }
     .topbar {
       display: flex;
@@ -607,6 +627,133 @@
       cursor: not-allowed;
       box-shadow: none;
     }
+    body[data-style-pack="consumer-campaign"] .topbar .badge:first-child {
+      background: #ffffff;
+      border-color: rgba(134,61,251,.18);
+      color: #111111;
+      font-weight: 700;
+      box-shadow: 0 10px 22px rgba(134, 61, 251, .08);
+    }
+    body[data-style-pack="consumer-campaign"] .progress {
+      height: 10px;
+      background: #f1edf9;
+    }
+    body[data-style-pack="consumer-campaign"] .progress-bar {
+      background: linear-gradient(90deg, #000000 0%, #863dfb 100%);
+      box-shadow: 0 10px 22px rgba(134, 61, 251, .20);
+    }
+    body[data-style-pack="consumer-campaign"] .card {
+      border-color: rgba(134, 61, 251, .10);
+      box-shadow: 0 24px 56px rgba(20, 10, 40, 0.08);
+    }
+    body[data-style-pack="consumer-campaign"] .card.dark {
+      background:
+        radial-gradient(circle at top right, rgba(134,61,251,.10), transparent 24%),
+        radial-gradient(circle at bottom left, rgba(134,61,251,.05), transparent 22%),
+        linear-gradient(180deg, #ffffff 0%, #ffffff 100%);
+    }
+    body[data-style-pack="consumer-campaign"] .survey-kicker,
+    body[data-style-pack="consumer-campaign"] .finish-kicker {
+      background: #f4efff;
+      color: #5d23bd;
+    }
+    body[data-style-pack="consumer-campaign"] .survey-hero,
+    body[data-style-pack="consumer-campaign"] .finish-state {
+      gap: 18px;
+    }
+    body[data-style-pack="consumer-campaign"] .survey-hero-copy .rich h1 {
+      font-size: 40px;
+      line-height: 1.08;
+      margin-bottom: 12px;
+      max-width: 11ch;
+      letter-spacing: -.04em;
+    }
+    body[data-style-pack="consumer-campaign"] .survey-hero-copy .rich p {
+      font-size: 15px;
+      line-height: 1.78;
+      max-width: 56ch;
+    }
+    body[data-style-pack="consumer-campaign"] .trust-meta-item {
+      background: #fcfbff;
+      border-color: rgba(134,61,251,.12);
+    }
+    body[data-style-pack="consumer-campaign"] .survey-reason-item::before {
+      width: 8px;
+      height: 8px;
+      top: 7px;
+      background: #863dfb;
+      box-shadow: 0 4px 10px rgba(134, 61, 251, .24);
+    }
+    body[data-style-pack="consumer-campaign"] .hero-media-wrap,
+    body[data-style-pack="consumer-campaign"] .finish-media-wrap {
+      width: 100%;
+      max-width: 100%;
+      margin: 4px auto 0;
+    }
+    body[data-style-pack="consumer-campaign"] .hero-media-wrap .media-card--survey {
+      padding: 14px;
+      background: #ffffff;
+      border-color: rgba(134,61,251,.12);
+    }
+    body[data-style-pack="consumer-campaign"] .hero-media-wrap .media-frame {
+      border-radius: 18px;
+      border-color: rgba(134,61,251,.12);
+    }
+    body[data-style-pack="consumer-campaign"] .hero-media-wrap .media-frame--image img {
+      height: 220px;
+    }
+    body[data-style-pack="consumer-campaign"] .question-index {
+      color: #5d23bd;
+    }
+    body[data-style-pack="consumer-campaign"] .question-stage-meta .chip.warn {
+      background: rgba(255, 184, 78, .18);
+      color: #b96f15;
+    }
+    body[data-style-pack="consumer-campaign"] .option {
+      background: linear-gradient(180deg, #ffffff 0%, #fcfbff 100%);
+      border-color: rgba(134,61,251,.10);
+    }
+    body[data-style-pack="consumer-campaign"] .option:hover {
+      border-color: rgba(134,61,251,.28);
+      box-shadow: 0 16px 36px rgba(134, 61, 251, 0.10);
+      transform: translateY(-1px);
+    }
+    body[data-style-pack="consumer-campaign"] .option:has(input:checked) {
+      background: linear-gradient(180deg, rgba(134,61,251,.08) 0%, rgba(134,61,251,.03) 100%);
+      border-color: rgba(134,61,251,.36);
+      box-shadow: 0 18px 40px rgba(134, 61, 251, .12);
+    }
+    body[data-style-pack="consumer-campaign"] .option-card-arrow {
+      color: #6e56a6;
+    }
+    body[data-style-pack="consumer-campaign"] .option--media .option-media-wrap .media-card {
+      background: #fff;
+      border-color: rgba(134,61,251,.10);
+    }
+    body[data-style-pack="consumer-campaign"] .score-card {
+      background: linear-gradient(180deg, #ffffff 0%, #fcfbff 100%);
+      border-color: rgba(134,61,251,.10);
+    }
+    body[data-style-pack="consumer-campaign"] .score-pill--card {
+      border-radius: 16px;
+    }
+    body[data-style-pack="consumer-campaign"] .score-pill.is-active {
+      background: linear-gradient(135deg, var(--brand) 0%, var(--brand-2) 100%);
+      box-shadow: 0 16px 32px rgba(134, 61, 251, .22);
+    }
+    body[data-style-pack="consumer-campaign"] .finish-badge {
+      background: rgba(134,61,251,.08);
+      color: #5d23bd;
+    }
+    body[data-style-pack="consumer-campaign"] .btn {
+      background: linear-gradient(135deg, #000000 0%, #863dfb 100%);
+      box-shadow: 0 18px 36px rgba(134, 61, 251, .20);
+    }
+    body[data-style-pack="consumer-campaign"] .btn.secondary {
+      background: rgba(255,255,255,.90);
+      border-color: rgba(134,61,251,.10);
+      color: #6e6e79;
+    }
     @media (max-width: 900px) {
       .hero-grid, .finish-grid { grid-template-columns: 1fr; }
       .media-stack--question,
@@ -614,6 +761,9 @@
       .trust-meta-list { grid-template-columns: 1fr; }
       .hero-media-wrap .media-frame--image img {
         height: 220px;
+      }
+      body[data-style-pack="consumer-campaign"] .hero-media-wrap .media-frame--image img {
+        height: 210px;
       }
     }
     @media (max-width: 640px) {
@@ -722,5 +872,11 @@
         min-height: 48px;
         padding: 0 18px;
         font-size: 15px;
+      }
+      body[data-style-pack="consumer-campaign"] .survey-hero-copy .rich h1 {
+        font-size: 32px;
+      }
+      body[data-style-pack="consumer-campaign"] .hero-media-wrap .media-frame--image img {
+        height: 188px;
       }
     }
