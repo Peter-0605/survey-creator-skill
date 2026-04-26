@@ -59,6 +59,47 @@ def collect_manual_review_items(report, section_name):
     return items
 
 
+def validate_browser_payloads_against_schema(schema, interaction_report):
+    errors = []
+    warnings = []
+    viewport_reports = {}
+    viewports = (interaction_report or {}).get("viewports") or {}
+
+    for viewport_name, viewport_report in viewports.items():
+        payload = viewport_report.get("payload") if isinstance(viewport_report, dict) else None
+        if not payload:
+            report = {
+                "valid": False,
+                "errors": [{
+                    "path": f"browserPayload.{viewport_name}.payload",
+                    "message": "Browser interaction did not produce a payload to validate against schema.",
+                }],
+                "warnings": [],
+            }
+        else:
+            report = validate_payload_against_schema(schema, payload, enforce_required_questions=False)
+            for item in report.get("errors", []):
+                item["path"] = f"browserPayload.{viewport_name}.{item.get('path', 'unknown')}"
+            for item in report.get("warnings", []):
+                item["path"] = f"browserPayload.{viewport_name}.{item.get('path', 'unknown')}"
+        viewport_reports[viewport_name] = report
+        errors.extend(report.get("errors", []))
+        warnings.extend(report.get("warnings", []))
+
+    if not viewports:
+        errors.append({
+            "path": "browserPayload.viewports",
+            "message": "No browser interaction viewport reports are available for payload/schema validation.",
+        })
+
+    return {
+        "valid": len(errors) == 0,
+        "errors": errors,
+        "warnings": warnings,
+        "viewports": viewport_reports,
+    }
+
+
 def syntax_to_report(syntax):
     valid = syntax.get("valid", False)
     errors = []
@@ -88,6 +129,7 @@ def compute_release_decision(full_report, fail_on_high_warning=False):
     user_visible_report = full_report.get("userVisible")
     payload_report = full_report.get("payload")
     payload_against_schema_report = full_report.get("payloadAgainstSchema")
+    browser_payload_against_schema_report = full_report.get("browserPayloadAgainstSchema")
     schema_summary = full_report.get("summary", {}).get("schema", {})
     schema_warning_severity = schema_summary.get("warning_severity", {"high": 0, "medium": 0, "low": 0})
 
@@ -145,6 +187,12 @@ def compute_release_decision(full_report, fail_on_high_warning=False):
             "message": "Payload does not match the concrete schema ids/types/value constraints.",
             "details": payload_against_schema_report.get("errors", []),
         })
+    if browser_payload_against_schema_report and not browser_payload_against_schema_report.get("valid", False):
+        blocked_reasons.append({
+            "type": "browser-payload-schema-mismatch",
+            "message": "Actual browser-submitted payload does not match the concrete schema.",
+            "details": browser_payload_against_schema_report.get("errors", []),
+        })
     if fail_on_high_warning and schema_warning_severity.get("high", 0) > 0:
         blocked_reasons.append({
             "type": "high-schema-warning",
@@ -200,6 +248,11 @@ def compute_release_decision(full_report, fail_on_high_warning=False):
         manual_review_required.extend([
             {**item, "reviewReason": "payload-schema-warning"}
             for item in collect_manual_review_items(payload_against_schema_report, "payloadAgainstSchema")
+        ])
+    if browser_payload_against_schema_report and browser_payload_against_schema_report.get("warnings"):
+        manual_review_required.extend([
+            {**item, "reviewReason": "browser-payload-schema-warning"}
+            for item in collect_manual_review_items(browser_payload_against_schema_report, "browserPayloadAgainstSchema")
         ])
 
     ship_ready = len(blocked_reasons) == 0
@@ -266,6 +319,7 @@ def run_pipeline(schema, template_text, auto_repair=False, fail_on_high_warning=
         "htmlRepair": None,
         "payload": None,
         "payloadAgainstSchema": None,
+        "browserPayloadAgainstSchema": None,
         "repair": None,
         "summary": {},
     }
@@ -294,7 +348,7 @@ def run_pipeline(schema, template_text, auto_repair=False, fail_on_high_warning=
         return full_report, working_schema, None, None
 
     html = render_html_from_schema(working_schema, template_text, style_pack=style_pack)
-    html_repair_report = auto_repair_html(html)
+    html_repair_report = auto_repair_html(html, style_pack=style_pack)
     full_report["htmlRepair"] = {k: v for k, v in html_repair_report.items() if k != "html"}
     html = html_repair_report["html"]
 
@@ -326,6 +380,11 @@ def run_pipeline(schema, template_text, auto_repair=False, fail_on_high_warning=
     full_report["htmlInteractionE2E"] = html_interaction_e2e_report
     full_report["summary"]["htmlInteractionE2E"] = summarize(html_interaction_e2e_report)
     full_report["valid"] = full_report["valid"] and html_interaction_e2e_report.get("valid", False)
+
+    browser_payload_schema_report = validate_browser_payloads_against_schema(working_schema, html_interaction_e2e_report)
+    full_report["browserPayloadAgainstSchema"] = browser_payload_schema_report
+    full_report["summary"]["browserPayloadAgainstSchema"] = summarize(browser_payload_schema_report)
+    full_report["valid"] = full_report["valid"] and browser_payload_schema_report.get("valid", False)
 
     full_report["htmlAccessibility"] = html_accessibility_report
     full_report["summary"]["htmlAccessibility"] = summarize(html_accessibility_report)
@@ -433,6 +492,8 @@ def main():
             print_section("PAYLOAD", final_report["payload"])
         if final_report.get("payloadAgainstSchema") is not None:
             print_section("PAYLOAD AGAINST SCHEMA", final_report["payloadAgainstSchema"])
+        if final_report.get("browserPayloadAgainstSchema") is not None:
+            print_section("BROWSER PAYLOAD AGAINST SCHEMA", final_report["browserPayloadAgainstSchema"])
         print("\nOutput:")
         for key, value in outputs.items():
             print(f"- {key}: {value}")

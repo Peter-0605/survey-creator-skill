@@ -53,6 +53,8 @@ SCHEMA_CASES = {
     'invalid-pagination-missing-id.json': False,
     'invalid-pagination-extra-fields.json': False,
     'invalid-media-type.json': False,
+    'invalid-media-url-scheme.json': False,
+    'invalid-id-unsafe-chars.json': False,
     'invalid-nps-scope-reversed.json': False,
 }
 
@@ -809,7 +811,7 @@ def test_accessibility_rejects_unlabeled_control():
             raise AssertionError('setup pipeline for a11y test returned non-zero')
         html_path = tmp_path / 'full-all-types.html'
         html = html_path.read_text(encoding='utf-8')
-        html = html.replace('<label class="option-label"><input', '<div class="option-label"><input', 1)
+        html = html.replace('<label class="option-card"><input', '<div class="option-card"><input', 1)
         html = html.replace('</label>', '</div>', 1)
         html_path.write_text(html, encoding='utf-8')
         code, report, _ = run_json(['python3', str(VALIDATE_ACCESSIBILITY), str(html_path), '--json', '--viewport', 'desktop'])

@@ -65,8 +65,25 @@
       return `<div class="rich">${sanitizeRichText(html || '')}</div>`;
     }
 
+    function escapeAttr(value) {
+      return String(value ?? '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;');
+    }
+
+    function safeJsonAttr(value) {
+      return escapeAttr(JSON.stringify(value || {}));
+    }
+
     function isDataUrl(value) {
       return typeof value === 'string' && value.startsWith('data:');
+    }
+
+    function isSafeMediaUrl(value) {
+      return typeof value === 'string' && /^(https?:\/\/|data:(image|audio|video)\/)/i.test(value);
     }
 
     function mediaTitle(type) {
@@ -79,21 +96,22 @@
     }
 
     function renderMediaLink(url, text = '查看原始资源') {
-      if (!url || isDataUrl(url)) return '';
-      return `<a class="media-link" href="${url}" target="_blank" rel="noopener noreferrer">${text}</a>`;
+      if (!url || isDataUrl(url) || !isSafeMediaUrl(url)) return '';
+      return `<a class="media-link" href="${escapeAttr(url)}" target="_blank" rel="noopener noreferrer">${escapeAttr(text)}</a>`;
     }
 
     function renderMediaItem(m, context = 'question') {
       const label = `<small>${mediaTitle(m.type)}</small>`;
-      const variantClass = context ? `media-card--${context}` : '';
+      const variantClass = context ? `media-card--${escapeAttr(context)}` : '';
+      const mediaUrl = isSafeMediaUrl(m.url) ? escapeAttr(m.url) : '';
       if (m.type === 'image') {
-        return `<div class="media-card ${variantClass}">${label}<div class="media-frame media-frame--image"><img src="${m.url}" alt="问卷图片资源" /></div>${renderMediaLink(m.url, '打开原图')}</div>`;
+        return `<div class="media-card ${variantClass}">${label}<div class="media-frame media-frame--image"><img src="${mediaUrl}" alt="问卷图片资源" /></div>${renderMediaLink(m.url, '打开原图')}</div>`;
       }
       if (m.type === 'audio') {
-        return `<div class="media-card ${variantClass}">${label}<div class="media-frame media-frame--audio"><audio controls preload="metadata" src="${m.url}"></audio></div><div class="media-fallback">可直接播放音频内容。</div>${renderMediaLink(m.url)}</div>`;
+        return `<div class="media-card ${variantClass}">${label}<div class="media-frame media-frame--audio"><audio controls preload="metadata" src="${mediaUrl}"></audio></div><div class="media-fallback">可直接播放音频内容。</div>${renderMediaLink(m.url)}</div>`;
       }
       if (m.type === 'video') {
-        return `<div class="media-card ${variantClass}">${label}<div class="media-frame media-frame--video"><video controls preload="metadata" playsinline src="${m.url}"></video></div><div class="media-fallback">可直接播放视频内容。</div>${renderMediaLink(m.url)}</div>`;
+        return `<div class="media-card ${variantClass}">${label}<div class="media-frame media-frame--video"><video controls preload="metadata" playsinline src="${mediaUrl}"></video></div><div class="media-fallback">可直接播放视频内容。</div>${renderMediaLink(m.url)}</div>`;
       }
       return `<div class="media-card ${variantClass}">${label}<div class="media-fallback">当前资源类型暂不支持内嵌预览，请打开原始资源查看。</div>${renderMediaLink(m.url)}</div>`;
     }
@@ -116,21 +134,24 @@
     }
 
     function createInputControl(dataType, attrs, name = '', dataOptionId = '', dataChildId = '') {
-      const placeholder = attrs?.placeholder || '';
-      const maxLength = attrs?.maxLength ?? '';
+      const placeholder = escapeAttr(attrs?.placeholder || '');
+      const maxLength = escapeAttr(attrs?.maxLength ?? '');
+      const safeName = escapeAttr(name);
+      const safeOptionId = escapeAttr(dataOptionId);
+      const safeChildId = escapeAttr(dataChildId);
       const dt = dataType || 'text';
       if (dt === 'text' && Number(attrs?.maxLength || 0) > 100) {
-        return `<textarea class="textarea" ${name ? `name="${name}"` : ''} ${dataOptionId ? `data-option-id="${dataOptionId}"` : ''} ${dataChildId ? `data-child-id="${dataChildId}"` : ''} data-input-attribute='${JSON.stringify(attrs || {})}' placeholder="${placeholder}" maxlength="${maxLength}"></textarea>`;
+        return `<textarea class="textarea" ${safeName ? `name="${safeName}"` : ''} ${safeOptionId ? `data-option-id="${safeOptionId}"` : ''} ${safeChildId ? `data-child-id="${safeChildId}"` : ''} data-input-attribute='${safeJsonAttr(attrs)}' placeholder="${placeholder}" maxlength="${maxLength}"></textarea>`;
       }
       if (dt === 'dateRange' || dt === 'timeRange' || dt === 'dateTimeRange') {
         const type = dt === 'dateRange' ? 'date' : dt === 'timeRange' ? 'time' : 'datetime-local';
-        const startName = name ? `${name}__start` : '';
-        const endName = name ? `${name}__end` : '';
-        return `<div class="field-row" data-range-type="${dt}" ${dataOptionId ? `data-option-id="${dataOptionId}"` : ''} ${dataChildId ? `data-child-id="${dataChildId}"` : ''} data-input-attribute='${JSON.stringify(attrs || {})}'><input class="input" type="${type}" ${startName ? `name="${startName}"` : ''} data-range-role="start" /><input class="input" type="${type}" ${endName ? `name="${endName}"` : ''} data-range-role="end" /></div>`;
+        const startName = name ? escapeAttr(`${name}__start`) : '';
+        const endName = name ? escapeAttr(`${name}__end`) : '';
+        return `<div class="field-row" data-range-type="${escapeAttr(dt)}" ${safeOptionId ? `data-option-id="${safeOptionId}"` : ''} ${safeChildId ? `data-child-id="${safeChildId}"` : ''} data-input-attribute='${safeJsonAttr(attrs)}'><input class="input" type="${type}" ${startName ? `name="${startName}"` : ''} data-range-role="start" /><input class="input" type="${type}" ${endName ? `name="${endName}"` : ''} data-range-role="end" /></div>`;
       }
       const typeMap = { text: 'text', email: 'email', tel: 'tel', number: 'number', date: 'date', time: 'time', dateTime: 'datetime-local' };
       const htmlType = typeMap[dt] || 'text';
-      return `<input class="input" type="${htmlType}" ${name ? `name="${name}"` : ''} ${dataOptionId ? `data-option-id="${dataOptionId}"` : ''} ${dataChildId ? `data-child-id="${dataChildId}"` : ''} data-input-attribute='${JSON.stringify(attrs || {})}' placeholder="${placeholder}" maxlength="${maxLength}" />`;
+      return `<input class="input" type="${htmlType}" ${safeName ? `name="${safeName}"` : ''} ${safeOptionId ? `data-option-id="${safeOptionId}"` : ''} ${safeChildId ? `data-child-id="${safeChildId}"` : ''} data-input-attribute='${safeJsonAttr(attrs)}' placeholder="${placeholder}" maxlength="${maxLength}" />`;
     }
 
     function scoreValues(option) {

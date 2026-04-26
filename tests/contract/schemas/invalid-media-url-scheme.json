@@ -1,0 +1,50 @@
+{
+  "survey": {
+    "type": "survey",
+    "id": "survey_invalid_media_url",
+    "title": "<h1>Invalid media url</h1>",
+    "description": "<p>contract</p>",
+    "attribute": {
+      "onePageOneQuestion": true,
+      "allowBack": true,
+      "media": [
+        {
+          "type": "image",
+          "url": "javascript:alert(1)"
+        }
+      ]
+    }
+  },
+  "questions": [
+    {
+      "type": "radio",
+      "id": "question_radio",
+      "title": "<h2>Question</h2>",
+      "description": "<p>Choose one</p>",
+      "attribute": {
+        "required": true,
+        "random": false,
+        "media": []
+      },
+      "option": [
+        {
+          "id": "option_a",
+          "title": "<p>A</p>",
+          "attribute": {}
+        },
+        {
+          "id": "option_b",
+          "title": "<p>B</p>",
+          "attribute": {}
+        }
+      ]
+    }
+  ],
+  "finish": {
+    "type": "finish",
+    "id": "finish_contract",
+    "title": "<h2>Done</h2>",
+    "description": "<p>Thanks</p>",
+    "media": []
+  }
+}

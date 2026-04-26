@@ -283,7 +283,7 @@ def validate_nps_answer(answer, meta, answer_path, reporter):
     validate_score(value.get("score"), option, f"{answer_path}.value.score", reporter, integer_only=True)
 
 
-def validate_payload_against_schema(schema, payload, include_base_validation=True):
+def validate_payload_against_schema(schema, payload, include_base_validation=True, enforce_required_questions=True):
     reporter = Reporter()
     schema = normalize_schema(schema)
 
@@ -332,10 +332,11 @@ def validate_payload_against_schema(schema, payload, include_base_validation=Tru
         elif qtype == "nps":
             validate_nps_answer(answer, meta, answer_path, reporter)
 
-    for qid, meta in question_map.items():
-        question = meta["question"]
-        if attr(question).get("required") is True and qid not in answer_map:
-            reporter.error("payload.answers", f"Required question {qid} ({question.get('type')}) is missing from answers.")
+    if enforce_required_questions:
+        for qid, meta in question_map.items():
+            question = meta["question"]
+            if attr(question).get("required") is True and qid not in answer_map:
+                reporter.error("payload.answers", f"Required question {qid} ({question.get('type')}) is missing from answers.")
 
     return reporter.result()
 

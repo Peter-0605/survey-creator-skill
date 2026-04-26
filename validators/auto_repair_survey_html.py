@@ -90,7 +90,7 @@ def merge_template_with_current_shell(current_html, base_template_text):
     return result
 
 
-def auto_repair_html(html):
+def auto_repair_html(html, style_pack='consumer-minimal'):
     initial = validate_html_bundle(html)
     if initial["valid"]:
         return {
@@ -127,7 +127,7 @@ def auto_repair_html(html):
             schema = json.loads(schema_literal)
             base_template_text = DEFAULT_TEMPLATE.read_text(encoding="utf-8")
             merged_template = merge_template_with_current_shell(working, base_template_text)
-            rerendered = render_html_from_schema(schema, merged_template)
+            rerendered = render_html_from_schema(schema, merged_template, style_pack=style_pack)
             applied.append({"action": "rerendered-from-extracted-schema", "type": "template-rerender"})
             after_rerender = validate_html_bundle(rerendered)
             if after_rerender["valid"]:
@@ -180,6 +180,11 @@ def main():
         out_idx = args.index("--out")
         if out_idx + 1 < len(args):
             out_path = args[out_idx + 1]
+    style_pack = "consumer-minimal"
+    if "--style-pack" in args:
+        style_idx = args.index("--style-pack")
+        if style_idx + 1 < len(args):
+            style_pack = args[style_idx + 1]
     if not file_arg:
         print("Usage: auto_repair_survey_html.py /absolute/path/to/file.html [--out /path/to/output.html] [--json]", file=sys.stderr)
         sys.exit(1)
@@ -189,7 +194,7 @@ def main():
         sys.exit(1)
 
     html = html_path.read_text(encoding="utf-8")
-    report = auto_repair_html(html)
+    report = auto_repair_html(html, style_pack=style_pack)
     if out_path:
         Path(out_path).write_text(report["html"], encoding="utf-8")
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import json, sys
+import json, re, sys
 from pathlib import Path
 
 ALLOWED_MEDIA_TYPES = {"image", "audio", "video"}
@@ -8,6 +8,8 @@ PAGINATION_TYPE = "Pagination"
 ALLOWED_DATA_TYPES = {"email", "tel", "number", "text", "date", "time", "dateTime", "dateRange", "timeRange", "dateTimeRange"}
 ALLOWED_LOGIC_OPERATORS = {"selected", "not_selected", "contains", "not_contains", "exists", "not_exists", "answered", "not_answered", "eq", "neq", "gt", "lt"}
 ALLOWED_LOGIC_ACTIONS = {"show_question", "hide_question", "show_option", "hide_option", "auto_select_option", "jump_to_question", "jump_to_page", "end_survey"}
+ID_PATTERN = re.compile(r"^[A-Za-z][A-Za-z0-9_-]*$")
+MEDIA_URL_PATTERN = re.compile(r"^(https?://|data:(image|audio|video)/)", re.I)
 
 
 def is_plain_object(v):
@@ -79,6 +81,8 @@ def validate_media_list(media, node_path, reporter, required=False):
             reporter.error(f"{item_path}.type", "Media type must be image, audio, or video.")
         if not is_non_empty_string(item.get("url")):
             reporter.error(f"{item_path}.url", "Media url must be a non-empty string.")
+        elif not MEDIA_URL_PATTERN.match(item.get("url")):
+            reporter.error(f"{item_path}.url", "Media url must start with http://, https://, or a data:image/audio/video URL.")
 
 
 def validate_rich_text_string(value, node_path, reporter, required=True):
@@ -143,6 +147,9 @@ def is_range_type(data_type):
 def register_id(id_value, path_name, reporter, id_map):
     if not is_non_empty_string(id_value):
         reporter.error(path_name, "id must be a non-empty string.")
+        return
+    if not ID_PATTERN.match(id_value):
+        reporter.error(path_name, "id must start with a letter and contain only letters, numbers, underscores, or hyphens.")
         return
     if id_value in id_map:
         reporter.error(path_name, f'Duplicate id "{id_value}" already used at {id_map[id_value]}.')

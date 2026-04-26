@@ -2,10 +2,11 @@
       return `<div class="score-list">${(question.option || []).map((opt) => {
         const descMap = opt.attribute?.scoreDesc || {};
         const values = scoreValues(opt);
-        return `<div class="score-item score-card" data-score-option="${opt.id}" data-option-field="${opt.id}"><div class="field-label">${renderRich(opt.title)}</div>${renderMedia(opt.attribute?.media || [], 'option')}<div class="score-scale">${values.map((value) => {
+        const safeOptionId = escapeAttr(opt.id);
+        return `<div class="score-item score-card" data-score-option="${safeOptionId}" data-option-field="${safeOptionId}"><div class="field-label">${renderRich(opt.title)}</div>${renderMedia(opt.attribute?.media || [], 'option')}<div class="score-scale">${values.map((value) => {
           const display = formatScoreValue(value);
-          return `<button class="score-pill score-pill--card" type="button" aria-pressed="false" aria-label="评分 ${display}" data-score-option-id="${opt.id}" data-score-value="${display}"><span class="score-pill-value">${display}</span><span class="score-pill-hint">分</span></button>`;
-        }).join('')}</div><div class="score-desc" data-score-desc-for="${opt.id}"></div></div>`;
+          return `<button class="score-pill score-pill--card" type="button" aria-pressed="false" aria-label="评分 ${escapeAttr(display)}" data-score-option-id="${safeOptionId}" data-score-value="${escapeAttr(display)}"><span class="score-pill-value">${escapeAttr(display)}</span><span class="score-pill-hint">分</span></button>`;
+        }).join('')}</div><div class="score-desc" data-score-desc-for="${safeOptionId}"></div></div>`;
       }).join('')}</div><div class="error" role="alert" data-error>请完成当前评分题。</div>`;
     }
 
@@ -22,28 +23,31 @@
     function renderNpsQuestion(question) {
       const opt = (question.option || [])[0] || { id: `${question.id}_nps`, attribute: { scope: [0, 10] } };
       const values = npsValues(opt);
-      return `<div class="score-list nps-list"><div class="score-item nps-item score-card" data-nps-option="${opt.id}" data-option-field="${opt.id}">${renderMedia(opt.attribute?.media || [], 'option')}<div class="score-scale nps-scale">${values.map((value) => {
+      const safeOptionId = escapeAttr(opt.id);
+      return `<div class="score-list nps-list"><div class="score-item nps-item score-card" data-nps-option="${safeOptionId}" data-option-field="${safeOptionId}">${renderMedia(opt.attribute?.media || [], 'option')}<div class="score-scale nps-scale">${values.map((value) => {
         const display = formatScoreValue(value);
-        return `<button class="score-pill nps-pill score-pill--card" type="button" aria-pressed="false" aria-label="NPS ${display} 分" data-score-option-id="${opt.id}" data-score-value="${display}"><span class="score-pill-value">${display}</span><span class="score-pill-hint">分</span></button>`;
-      }).join('')}</div><div class="score-desc" data-score-desc-for="${opt.id}"></div></div></div><div class="error" role="alert" data-error>请选择一个 NPS 分值。</div>`;
+        return `<button class="score-pill nps-pill score-pill--card" type="button" aria-pressed="false" aria-label="NPS ${escapeAttr(display)} 分" data-score-option-id="${safeOptionId}" data-score-value="${escapeAttr(display)}"><span class="score-pill-value">${escapeAttr(display)}</span><span class="score-pill-hint">分</span></button>`;
+      }).join('')}</div><div class="score-desc" data-score-desc-for="${safeOptionId}"></div></div></div><div class="error" role="alert" data-error>请选择一个 NPS 分值。</div>`;
     }
 
 
     function renderOption(question, option) {
       const children = option.child || [];
+      const safeQuestionId = escapeAttr(question.id);
+      const safeOptionId = escapeAttr(option.id);
       const childHtml = children.length
-        ? `<div class="child-list" data-child-wrap="${option.id}">${children.map((child) => `<div class="field"><div class="field-label">${renderRich(child.title)}</div>${createInputControl(child.attribute?.dataType || 'text', child.attribute || {}, `${question.id}__${option.id}__${child.id}`, '', child.id)}<div class="error" role="alert" data-child-error="${child.id}">请完善该补充内容。</div></div>`).join('')}</div>`
+        ? `<div class="child-list" data-child-wrap="${safeOptionId}">${children.map((child) => `<div class="field"><div class="field-label">${renderRich(child.title)}</div>${createInputControl(child.attribute?.dataType || 'text', child.attribute || {}, `${question.id}__${option.id}__${child.id}`, '', child.id)}<div class="error" role="alert" data-child-error="${escapeAttr(child.id)}">请完善该补充内容。</div></div>`).join('')}</div>`
         : '';
       const exclusive = option.attribute?.exclusive === true;
       const mutual = option.attribute?.['mutual-exclusion'] === true;
       const hasMedia = Array.isArray(option.attribute?.media) && option.attribute.media.length > 0;
-      return `<div class="option ${hasMedia ? 'option--media' : 'option--plain'}" data-option-id="${option.id}" data-exclusive="${exclusive}" data-mutual-exclusion="${mutual}"><label class="option-card"><input type="${question.type === 'radio' ? 'radio' : 'checkbox'}" name="${question.id}" value="${option.id}" data-option-id="${option.id}" ${children.length ? 'data-has-child="true"' : ''} /><span class="option-card-indicator" aria-hidden="true"></span><div class="option-card-body"><div class="option-copy">${renderRich(option.title)}</div>${hasMedia ? renderMedia(option.attribute?.media || [], 'option') : ''}</div><span class="option-card-arrow" aria-hidden="true">›</span></label>${childHtml}</div>`;
+      return `<div class="option ${hasMedia ? 'option--media' : 'option--plain'}" data-option-id="${safeOptionId}" data-exclusive="${exclusive}" data-mutual-exclusion="${mutual}"><label class="option-card"><input type="${question.type === 'radio' ? 'radio' : 'checkbox'}" name="${safeQuestionId}" value="${safeOptionId}" data-option-id="${safeOptionId}" ${children.length ? 'data-has-child="true"' : ''} /><span class="option-card-indicator" aria-hidden="true"></span><div class="option-card-body"><div class="option-copy">${renderRich(option.title)}</div>${hasMedia ? renderMedia(option.attribute?.media || [], 'option') : ''}</div><span class="option-card-arrow" aria-hidden="true">›</span></label>${childHtml}</div>`;
     }
 
     function renderQuestion(question) {
       const options = question.option ? shuffleIfNeeded(question.option, question.attribute?.random === true) : [];
       const content = question.type === 'input'
-        ? `<div class="fields">${question.option.map((opt) => `<div class="field" data-option-field="${opt.id}"><div class="field-label">${renderRich(opt.title)}</div>${createInputControl(opt.attribute?.dataType || 'text', opt.attribute || {}, question.id, opt.id, '')}</div>`).join('')}<div class="error" role="alert" data-error>请按输入题规则完成填写。</div></div>`
+        ? `<div class="fields">${question.option.map((opt) => `<div class="field" data-option-field="${escapeAttr(opt.id)}"><div class="field-label">${renderRich(opt.title)}</div>${createInputControl(opt.attribute?.dataType || 'text', opt.attribute || {}, question.id, opt.id, '')}</div>`).join('')}<div class="error" role="alert" data-error>请按输入题规则完成填写。</div></div>`
         : question.type === 'score'
         ? renderScoreQuestion(question)
         : question.type === 'nps'
@@ -57,11 +61,11 @@
     function renderQuestionBlock(question) {
       const options = question.option ? shuffleIfNeeded(question.option, question.attribute?.random === true) : [];
       const content = question.type === 'input'
-        ? `<div class="fields">${question.option.map((opt) => `<div class="field" data-option-field="${opt.id}"><div class="field-label">${renderRich(opt.title)}</div>${createInputControl(opt.attribute?.dataType || 'text', opt.attribute || {}, question.id, opt.id, '')}</div>`).join('')}<div class="error" role="alert" data-error>请按输入题规则完成填写。</div></div>`
+        ? `<div class="fields">${question.option.map((opt) => `<div class="field" data-option-field="${escapeAttr(opt.id)}"><div class="field-label">${renderRich(opt.title)}</div>${createInputControl(opt.attribute?.dataType || 'text', opt.attribute || {}, question.id, opt.id, '')}</div>`).join('')}<div class="error" role="alert" data-error>请按输入题规则完成填写。</div></div>`
         : question.type === 'score'
         ? renderScoreQuestion(question)
         : question.type === 'nps'
         ? renderNpsQuestion(question)
         : `<div class="options">${options.map((opt) => renderOption(question, opt)).join('')}</div><div class="error" role="alert" data-error>请完成当前题目。</div>`;
-      return `<section class="field" data-screen-id="${question.id}" data-schema-type="${question.type}"><div class="question-stage-meta"><div class="question-index">第 ${String(questionNumber(question.id)).padStart(2, '0')} 题</div>${question.attribute?.required ? '<div class="chip-row"><span class="chip warn">必填</span></div>' : ''}</div><div class="question-main">${renderRich(question.title)}${renderRich(question.description)}</div><div class="question-content">${renderMedia(question.attribute?.media || [], 'question')}${content}</div></section>`;
+      return `<section class="field" data-screen-id="${escapeAttr(question.id)}" data-schema-type="${escapeAttr(question.type)}"><div class="question-stage-meta"><div class="question-index">第 ${String(questionNumber(question.id)).padStart(2, '0')} 题</div>${question.attribute?.required ? '<div class="chip-row"><span class="chip warn">必填</span></div>' : ''}</div><div class="question-main">${renderRich(question.title)}${renderRich(question.description)}</div><div class="question-content">${renderMedia(question.attribute?.media || [], 'question')}${content}</div></section>`;
     }

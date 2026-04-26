@@ -17,7 +17,7 @@
     }
 
     function screenShell(id, type, inner, dark = false) {
-      return `<section class="screen" data-screen-id="${id}" data-schema-type="${type}"><article class="card ${dark ? 'dark' : ''}"><div class="card-body ${type === 'survey' ? 'hero-grid' : type === 'finish' ? 'finish-grid' : ''}">${inner}</div></article></section>`;
+      return `<section class="screen" data-screen-id="${escapeAttr(id)}" data-schema-type="${escapeAttr(type)}"><article class="card ${dark ? 'dark' : ''}"><div class="card-body ${type === 'survey' ? 'hero-grid' : type === 'finish' ? 'finish-grid' : ''}">${inner}</div></article></section>`;
     }
 
 

@@ -127,6 +127,7 @@ Use only the generic toC packs:
 - `consumer-trust`
 - `consumer-editorial`
 - `consumer-utility`
+- `consumer-campaign`
 
 #### Explicit mapping
 - mentions WeChat / 微信 / 小程序 / 表单感 / 轻量填写  
@@ -139,6 +140,8 @@ Use only the generic toC packs:
   → `consumer-editorial`
 - mentions 克制 / 干净 / 工具型 / 平台感 / 高效率  
   → `consumer-utility`
+- mentions 运营活动 / 活动页 / 更强视觉冲击 / 黑白紫活动风  
+  → `consumer-campaign`
 
 #### Implicit mapping
 - generic toC without a strong aesthetic signal  
@@ -397,6 +400,8 @@ Unless the user explicitly asks to extend the schema, only use:
 - `radio`
 - `checkbox`
 - `input`
+- `score`
+- `nps`
 - `finish`
 
 ## Schema behavior rules
